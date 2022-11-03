@@ -1,0 +1,93 @@
+@use '../../variables';
+
+nav {
+  position: relative;
+  display: flex;
+  height: 80px;
+  width: 1238px;
+  margin: 0 auto;
+
+  .link-group {
+    position: absolute;
+    display: flex;
+    height: 100%;
+  }
+
+  .link {
+    align-items: center;
+    font-size: 16px;
+    text-decoration: none;
+    padding: 0 16px;
+    padding-top: 30px;
+    text-transform: uppercase;
+    font-family: variables.$regular;
+    color: variables.$black;
+  }
+
+  .active {
+    font-family: variables.$semibold;
+    border-bottom: 4px solid variables.$primary;
+    color: variables.$primary;
+  }
+
+  .link:hover {
+    // FIXME: The transition from regular to semibold is wanky font makes
+    border-bottom: 4px solid variables.$primary;
+    // font-family: variables.$semibold;
+    color: variables.$primary;
+  }
+
+  .brand {
+    height: 41px;
+    width: 41px;
+
+    position: absolute;
+    left: 50%;
+    margin-left: -20px !important;
+
+    top: 50%;
+    margin-top: -20px !important;
+    display: block;
+  }
+
+  .actions {
+    position: absolute;
+    display: flex;
+    column-gap: 20px;
+    right: 0;
+    padding-top: 30px;
+  }
+
+  .currency {
+    box-sizing: border-box;
+    width: 50px;
+    height: 36px;
+    padding-top: 10px;
+    padding-left: 10px;
+    border-radius: 18px;
+
+  }
+    .rotated {
+      transform: rotate(180deg);
+    }
+    .currency:hover {
+      background-color: #aaa;
+    }
+
+  .round {
+    box-sizing: border-box;
+    width: 36px;
+    height: 36px;
+    padding-top: 10px;
+    padding-left: 8px;
+    border-radius: 18px;
+
+  }
+    .round:hover {
+      background-color: #aaa;
+    }
+}
+
+.sign {
+  fill: variables.$black;
+}

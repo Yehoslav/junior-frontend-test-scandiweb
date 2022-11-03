@@ -1,0 +1,14 @@
+@font-face {
+  font-family: RalewaySemiBold;
+  src: url(./res/fonts/EncodeSansSemiExpanded-SemiBold.ttf);
+}
+
+@font-face {
+  font-family: RalewayRegular;
+  src: url(./res/fonts/EncodeSansSemiExpanded-Regular.ttf);
+}
+
+$primary: #5ECE7B;
+$semibold: RalewaySemiBold;
+$regular: RalewayRegular;
+$black: #1D1F22;
