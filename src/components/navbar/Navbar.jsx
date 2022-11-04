@@ -5,21 +5,42 @@ import { NavLink } from "react-router-dom";
 import "./navbar.scss";
 import logo from "../../res/img/logo.svg";
 import CartIcon from "./CartIcon";
-import Currency from "./Currency";
+// import Currency from "./Currency";
 
 
 class Navbar extends Component {
   state = {
-    showDropdown: false,
+    showCurrList: false,
+    showMiniCart: false,
+    currency: {
+      symbol: "$",
+      name: "USD",
+    },
   }
 
-  toggleDropdown = () => {
-    this.setState(({showDropdown}) => ({showDropdown: !showDropdown}));
+  toggleDropdown = (prop) => {
+    this.setState((state) => ({[prop]: !state[prop]}));
+  }
+
+  selectCurrency = (currency) => {
+    this.setState({
+      showCurrList: false,
+      currency,
+    })
   }
 
   render() {
     const { rotated } = this.props
     const rotStyle = rotated? " rotated":""
+    const currencies = [
+      {symbol: "$", name: "USD"},
+      {symbol: "€", name: "EUR"},
+      {symbol: "Y", name: "YEN"},
+      {symbol: "R", name: "RON"},
+      {symbol: "P", name: "RUB"}];
+
+    const arrowDir = this.state.showCurrList? "__up" : "__down";
+
     return (
       <nav>
         <div className="link-group">
@@ -35,36 +56,50 @@ class Navbar extends Component {
         </div>
         <img className="brand" src={logo} alt="Site logo" />
         <div className="actions">
-          {/* TODO: The currency and the arrow should be separate entities
-           *        the arrow should be animated
-           *        the currency icon should change based on the selected currency
-           */}
-          <div 
-            className="dropdown"
-          onClick={this.toggleDropdown}>
-            <div className={"currency" + rotStyle}>
-              {/* <img src={currency} alt="Dollar icon" /> */}
-              <Currency />
-            
-            </div>
-              {/** FIXME: Extract the currency list as a separate component*/}
-            { this.state.showDropdown? 
-            <ul className="currency-list">
-              <li><button className="currency-btn">USD</button></li>
-              <li><button className="currency-btn">EUR</button></li>
-              <li><button className="currency-btn">YEN</button></li>
-              {/* <li><button className="currency-btn">RUB</button></li> */}
-              </ul> : null
+          <div className="dropdown" >
+            <button 
+              onClick={() => this.toggleDropdown("showCurrList")} 
+              // onBlur={this.toggleDropdown}
+              className={"currency" + rotStyle}>
+              {this.state.currency.symbol} <i className={"arrow arrow" + arrowDir} />
+            </button>
+            { this.state.showCurrList
+              ? <Dropdown 
+                  onCurrencySelect={this.selectCurrency} 
+                  currencies={currencies} /> 
+              : null
           }
           </div>
           {/* TODO: Maybe create a component for the cart icon (inside this file)  */}
-          <div className="round">
-            {/* <img src={cart} alt="Cart icon" /> */}
-            <CartIcon />
+          <div className="dropdown">
+            <button 
+              onClick={() => this.toggleDropdown("showMiniCart")} 
+              className={"currency" + rotStyle}>
+              <CartIcon  />
+            </button>
           </div>
         </div>
       </nav>
     );
+  }
+}
+
+class Dropdown extends Component {
+  render () {
+    const {  onCurrencySelect ,currencies } = this.props
+
+    return (
+      <ul className="currency-list">
+        {currencies.map(item => (
+          <li key={item.name}>
+            <button 
+              onClick={() => onCurrencySelect(item)}
+              className="currency-btn">
+              {item.symbol} {item.name}</button>
+
+          </li>))}
+      </ul>
+    )
   }
 }
 

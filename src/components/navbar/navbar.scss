@@ -1,5 +1,12 @@
 @use '../../variables';
 
+  *:focus {
+    // outline: none;
+    // background-color: #aaa0;
+    // box-shadow: 0px 3px 11px 0px #a8acb035;
+    outline-color: variables.$primary;
+  }
+
 nav {
   position: relative;
   display: flex;
@@ -55,28 +62,47 @@ nav {
     display: flex;
     column-gap: 20px;
     right: 0;
-    padding-top: 30px;
+    padding-top: 24px;
   }
 
   .currency {
-    box-sizing: border-box;
-    width: 50px;
+    width: 36px;
     height: 36px;
-    padding-top: 10px;
-    padding-left: 10px;
+    // padding-top: 7px;
+    padding: 0;
+    border: none;
+
+    background-color: #fff;
+    // padding-left: 10px;
     border-radius: 18px;
+    font-family: variables.$medium;
+    font-size: 16px;
+    line-height: 10px;
+    color: variables.$black;
   }
 
+  .hvr {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    display: block;
+    // background-color: pink;
+    z-index: 0;
+    top: -4px;
+    left: -9px;
+    border-radius: 20px;
+  }
   .currency:hover {
-    background-color: #aaa;
+    background-color: #aaa0;
+    box-shadow: 0px 3px 11px 0px #a8acb035;
   }
 
   .round {
     box-sizing: border-box;
-    width: 36px;
+    // width: 36px;
     height: 36px;
     padding-top: 10px;
-    padding-left: 8px;
+    // padding-left: 8px;
     border-radius: 18px;
   }
   .round:hover {
@@ -98,6 +124,7 @@ nav {
     min-width: 114px;
     box-shadow: 0px 4px 35px 0px #a8acb012;
     padding: 15px 0px;
+    left: -30px;
     margin: 0;
     top: 43px;
     z-index: 1;
@@ -120,6 +147,34 @@ nav {
       background-color: #eee;
     }
   }
+}
+
+.arrow {
+  border: solid variables.$black;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  // border-end-end-radius: 2px 2px;
+  padding: 2px;
+  margin: 0px 0px 2px 2px;
+  transition: 300ms;
+
+  &__down {
+    transform: translateY(2px);
+    transform: rotate(45deg);
+  }
+
+  &__up {
+    transform: rotate(-135deg);
+  }
+}
+
+.overlay {
+  width: 100vw;
+  height: calc(100vh - 80px);
+  background-color: #39374883;
+  position: absolute;
+  top: 80px;
+  left: 0;
 }
 
 @media screen and (max-width: 1000px) {
