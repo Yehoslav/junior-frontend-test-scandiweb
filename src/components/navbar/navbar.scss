@@ -65,14 +65,11 @@ nav {
     padding-top: 10px;
     padding-left: 10px;
     border-radius: 18px;
-
   }
-    .rotated {
-      transform: rotate(180deg);
-    }
-    .currency:hover {
-      background-color: #aaa;
-    }
+
+  .currency:hover {
+    background-color: #aaa;
+  }
 
   .round {
     box-sizing: border-box;
@@ -81,13 +78,52 @@ nav {
     padding-top: 10px;
     padding-left: 8px;
     border-radius: 18px;
-
   }
-    .round:hover {
-      background-color: #aaa;
-    }
+  .round:hover {
+    background-color: #aaa;
+  }
 }
 
 .sign {
   fill: variables.$black;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+
+  .currency-list {
+    display: block;
+    position: absolute;
+    min-width: 114px;
+    box-shadow: 0px 4px 35px 0px #a8acb012;
+    padding: 15px 0px;
+    margin: 0;
+    top: 43px;
+    z-index: 1;
+
+    li {
+      list-style: none;
+    }
+
+    .currency-btn {
+      width: 100%;
+      background-color: #fff;
+      border: none;
+      font-family: variables.$regular;
+      font-size: 18px;
+      line-height: 180%;
+      height: 45px;
+    }
+
+    .currency-btn:hover {
+      background-color: #eee;
+    }
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  nav {
+    width: 700px;
+  }
 }

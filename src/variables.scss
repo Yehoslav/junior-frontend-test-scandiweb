@@ -8,7 +8,14 @@
   src: url(./res/fonts/EncodeSansSemiExpanded-Regular.ttf);
 }
 
+@font-face {
+  font-family: RalewayMedium;
+  src: url(./res/fonts/EncodeSansSemiExpanded-Medium.ttf);
+}
+
 $primary: #5ECE7B;
 $semibold: RalewaySemiBold;
 $regular: RalewayRegular;
+$regular: RalewayRegular;
+$medium: RalewayMedium;
 $black: #1D1F22;
