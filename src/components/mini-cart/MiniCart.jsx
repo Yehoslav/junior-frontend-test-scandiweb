@@ -1,14 +1,14 @@
-import {Component} from 'react';
+import { Component } from "react";
 
 import CartIcon from "./CartIcon";
 import CartItem from "../cart-item";
 
-import './mini-cart.scss';
+import "./mini-cart.scss";
 
 class MiniCart extends Component {
   state = {
     showMiniCart: false,
-  }
+  };
 
   toggleDropdown = (prop) => {
     this.setState((state) => ({ [prop]: !state[prop] }));
@@ -36,7 +36,7 @@ class MiniCart extends Component {
           <button className="btn-lg btn__pri font-ty">check out</button>
         </div>
       </ul>
-    )
+    );
 
     return (
       <div className="dropdown">

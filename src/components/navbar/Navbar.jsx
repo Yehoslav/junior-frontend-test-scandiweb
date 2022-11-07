@@ -8,28 +8,8 @@ import "./navbar.scss";
 import logo from "../../res/img/logo.svg";
 
 class Navbar extends Component {
-  state = {
-    currency: {
-      symbol: "$",
-      name: "USD",
-    },
-  };
-
-  selectCurrency = (currency) => {
-    this.setState({
-      showCurrList: false,
-      currency,
-    });
-  };
 
   render() {
-    const currencies = [
-      { symbol: "$", name: "USD" },
-      { symbol: "€", name: "EUR" },
-      { symbol: "Y", name: "YEN" },
-      { symbol: "R", name: "RON" },
-      { symbol: "P", name: "RUB" },
-    ];
 
     return (
       <nav>
@@ -47,11 +27,7 @@ class Navbar extends Component {
         <img className="brand" src={logo} alt="Site logo" />
         <div className="actions">
 {/* // FIXME: Make dropdown into a general element that could warp other elements */}
-          <CurrencySelector
-            onCurrencySelect={this.selectCurrency}
-            currencies={currencies}
-            currency={this.state.currency}
-          />
+          <CurrencySelector />
           <MiniCart />
         </div>
       </nav>

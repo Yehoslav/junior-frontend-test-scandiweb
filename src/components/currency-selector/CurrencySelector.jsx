@@ -1,26 +1,44 @@
-import {Component} from 'react';
+import { Component } from "react";
 
-import './currency-selector.scss';
+import "./currency-selector.scss";
 
 class CurrencySelector extends Component {
   state = {
     showCurrList: false,
-  }
+    currency: {
+      symbol: "$",
+      name: "USD",
+    },
+  };
 
   toggleDropdown = (prop) => {
     this.setState((state) => ({ [prop]: !state[prop] }));
   };
 
+  selectCurrency = (currency) => {
+    this.setState({
+      showCurrList: false,
+      currency,
+    });
+  };
+
   render() {
-    const { currency, onCurrencySelect, currencies } = this.props;
     const arrowDir = this.state.showCurrList ? "__up" : "__down";
+    // HACK: This variable is to make the component work before introducing redux
+    const currencies = [
+      { symbol: "$", name: "USD" },
+      { symbol: "€", name: "EUR" },
+      { symbol: "Y", name: "YEN" },
+      { symbol: "R", name: "RON" },
+      { symbol: "P", name: "RUB" },
+    ];
 
     const content = (
       <ul className="currency-list">
         {currencies.map((item) => (
           <li key={item.name}>
             <button
-              onClick={() => onCurrencySelect(item)}
+              onClick={() => this.selectCurrency(item)}
               className="font font-m currency-btn"
             >
               {item.symbol} {item.name}
@@ -28,22 +46,20 @@ class CurrencySelector extends Component {
           </li>
         ))}
       </ul>
-    )
+    );
 
     return (
-          <div className="dropdown">
-            <button
-              onClick={() => this.toggleDropdown("showCurrList")}
-              // onBlur={this.toggleDropdown}
-              className="currency"
-            >
-              {currency.symbol}{" "}
-              <i className={"arrow arrow" + arrowDir} />
-            </button>
-            {this.state.showCurrList ? (
-            content
-            ) : null}
-          </div>
+      <div className="dropdown">
+        <button
+          onClick={() => this.toggleDropdown("showCurrList")}
+          // onBlur={this.toggleDropdown}
+          className="currency"
+        >
+          {this.state.currency.symbol}{" "}
+          <i className={"arrow arrow" + arrowDir} />
+        </button>
+        {this.state.showCurrList ? content : null}
+      </div>
     );
   }
 }
