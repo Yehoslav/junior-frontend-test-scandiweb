@@ -3,7 +3,6 @@
 :root {
   --primary: #5ece7b;
   --black: #1d1f22;
-
 }
 
 * {
@@ -17,9 +16,165 @@
 body {
   margin: 0;
   font-family: F.$regular;
+  font-size: 18px;
+  text-align: left;
   // font-family: -apple-system, Raleway, 'Segoe UI', 'Roboto', 'Oxygen',
-    // 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    // font-family: RalewaySemiBold;
+  // 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  // font-family: RalewaySemiBold;
   // -webkit-font-smoothing: antialiased;
   // -moz-osx-font-smoothing: grayscale;
+}
+
+.t {
+  &__left {
+    text-align: left;
+  }
+
+  &__center {
+    text-align: center;
+  }
+
+  &__right{
+    text-align: right;
+  }
+}
+
+.font {
+  font-family: F.$regular;
+  font-size: 18px;
+
+  &-eb {
+    font-family: F.$extrabold;
+  }
+
+  &-b {
+    font-family: F.$bold;
+  }
+
+  &-sb {
+    font-family: F.$semibold;
+  }
+
+  &-m {
+    font-family: F.$medium;
+  }
+
+  &-l {
+    font-family: F.$light;
+  }
+
+  &-el {
+    font-family: F.$extralight;
+  }
+
+  &-t {
+    font-family: F.$thin;
+  }
+
+  &-xl {
+    font-size: 30px;
+  }
+
+  &-lg {
+    font-size: 24px;
+  }
+
+  &-sm {
+    font-size: 16px;
+  }
+
+  &-ty {
+    font-size: 14px;
+  }
+}
+
+.p {
+  &b-40 {
+    padding-bottom: 40px;
+  }
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+
+  &-g12 {
+    @extend .row;
+    gap: 12px;
+  }
+
+  &-g8 {
+    @extend .row;
+    gap: 8px;
+  }
+
+  &-g8 {
+    @extend .row;
+    gap: 8px;
+  }
+
+  &-g4 {
+    @extend .row;
+    gap: 4px;
+  }
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+
+  &-g12 {
+    @extend .col;
+    gap: 12px;
+  }
+
+  &-g8 {
+    @extend .col;
+    gap: 8px;
+  }
+
+  &-g4 {
+    @extend .col;
+    gap: 4px;
+  }
+}
+
+.row.sb,
+.col.sb {
+  justify-content: space-between;
+}
+
+.btn {
+  border-radius: 0;
+  text-transform: uppercase;
+  font-family: F.$semibold;
+
+  &__pri {
+    border: none;
+    background-color: var(--primary);
+    color: white;
+  }
+
+  &__sec {
+    border: 1px solid var(--black);
+    background-color: #fff;
+
+    &.sel {
+      background-color: var(--black);
+      color: white;
+    }
+  }
+
+  &-lg {
+    @extend .btn;
+    width: 140px;
+    height: 43px;
+  }
+
+  &-sm {
+    @extend .btn;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+  }
 }

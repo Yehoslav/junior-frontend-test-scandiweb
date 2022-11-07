@@ -1,105 +1,91 @@
 @use '../../fonts' as F;
 
+@mixin flex-element($direction: row, $gap: 0) {
+  display: flex;
+  flex-direction: $direction;
+  gap: $gap;
+}
+
+ul {
+  list-style: none;
+}
+
 nav {
   position: relative;
-  display: flex;
+  @include flex-element;
   height: 80px;
   width: 1238px;
   margin: 0 auto;
+}
 
-  .link-group {
-    position: absolute;
-    display: flex;
-    height: 100%;
-  }
+.link-group {
+  position: absolute;
+  display: flex;
+  height: 100%;
 
-  .link {
+  a {
     align-items: center;
-    font-size: 16px;
     text-decoration: none;
     padding: 0 16px;
     padding-top: 30px;
     text-transform: uppercase;
     font-family: F.$regular;
     color: var(--black);
+
+    &.active {
+      font-family: F.$semibold;
+      border-bottom: 4px solid var(--primary);
+      color: var(--primary);
+    }
+
+    &:hover {
+      // FIXME: The transition from regular to semibold is wanky font makes
+      border-bottom: 4px solid var(--primary);
+      color: var(--primary);
+    }
   }
-
-  .active {
-    font-family: F.$semibold;
-    border-bottom: 4px solid var(--primary);
-    color: var(--primary);
-  }
-
-  .link:hover {
-    // FIXME: The transition from regular to semibold is wanky font makes
-    border-bottom: 4px solid var(--primary);
-    color: var(--primary);
-  }
-
-  .brand {
-    height: 41px;
-    width: 41px;
-
-    position: absolute;
-    left: 50%;
-    margin-left: -20px !important;
-
-    top: 50%;
-    margin-top: -20px !important;
-    display: block;
-  }
-
-  .actions {
-    position: absolute;
-    display: flex;
-    column-gap: 20px;
-    right: 0;
-    padding-top: 24px;
-  }
-
-  .currency {
-    background-color: #fff;
-    width: 36px;
-    height: 36px;
-    padding: 0;
-
-    border: none;
-    border-radius: 18px;
-
-    font-family: F.$medium;
-    font-size: 16px;
-    line-height: 10px;
-    color: var(--black);
-  }
-
-  // .currency:hover {
-  //   background-color: #aaa0;
-  //   box-shadow: 0px 3px 11px 0px #a8acb035;
-  // }
-
 }
 
-.bag-title{
-  text-align: left;
-  font-family: F.$regular;
+.brand {
+  height: 41px;
+  width: 41px;
 
+  position: absolute;
+  left: 50%;
+  margin-left: -20px !important;
 
+  top: 50%;
+  margin-top: -20px !important;
+  display: block;
 }
 
-.tot-price {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+.actions {
+  position: absolute;
+  @include flex-element($gap: 20px);
+  right: 0;
+  padding-top: 24px;
 }
 
-.semibold {
-  font-family: F.$semibold;
+.currency {
+  background-color: #fff;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+
+  border: none;
+  border-radius: 18px;
+
+  font-family: F.$medium;
+  line-height: 10px;
+  color: var(--black);
+
+// &:hover {
+//   background-color: #aaa0;
+//   box-shadow: 0px 3px 11px 0px #a8acb035;
+// }
 }
 
-.bold {
-  font-family: F.$bold;
-}
-
+// FIXME: Is this from svg components, maybe a separate file?
 .sign {
   fill: var(--black);
 }
@@ -120,16 +106,15 @@ nav {
     top: 43px;
     z-index: 1;
 
-    li {
-      list-style: none;
+    button {
+      text-align: left;
+      padding-left: 20px;
     }
 
     .currency-btn {
       width: 100%;
       background-color: #fff;
       border: none;
-      font-family: F.$regular;
-      font-size: 18px;
       line-height: 180%;
       height: 45px;
     }
@@ -137,152 +122,65 @@ nav {
     .currency-btn:hover {
       background-color: #eee;
     }
-
   }
+}
 
-  .cart-list {
+.cart-list {
+  @include flex-element(column, 32px);
+  // display: flex;
+  // flex-direction: column;
+  // gap: 32px;
+  background-color: white;
+  position: absolute;
+  min-width: 325px;
+  // box-shadow: 0px 4px 35px 0px #a8acb012;
+  padding: 32px 16px;
+  right: -16px;
+  margin: 0;
+  top: 56px;
+  z-index: 1;
+
+  .item-list {
     display: flex;
     flex-direction: column;
-    gap: 32px;
-    background-color: white;
-    position: absolute;
-    min-width: 325px;
-    // box-shadow: 0px 4px 35px 0px #a8acb012;
-    padding: 32px 16px;
-    right: -16px;
-    margin: 0;
-    top: 56px;
-    list-style: none;
-    z-index: 1;
-
-    .button-group {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between ;
-    }
-
-    .button {
-      border-radius: 0;
-      text-transform: uppercase;
-      font-family: F.$semibold;
-      height: 43px;
-      width: 140px;
-
-      &__primary {
-        border: none;
-        background-color: var(--primary);
-        color: white;
-      }
-
-      &__secondary {
-        border: 1px solid var(--black);
-        background-color: #fff;
-      }
-
-      &__attr {
-        border: 1px solid var(--black);
-        background-color: #fff;
-        height: 24px;
-        width: 24px;
-        padding: 0;
-
-      }
-
-    }
-      .button.sel {
-        background-color: var(--black);
-        color: white;
-      }
-
-    .item-list {
-      display: flex;
-      flex-direction: column;
-      gap: 40px;
-      max-height: 400px;
-      overflow-y: scroll;
-    }
-
-    .col {
-      display: flex;
-      gap: 4px;
-      // padding-bottom: 40px;
-
-      .attributes {
-        width: 100%;
-        text-align: left;
-        line-height: 160%;
-
-        .brand-name {
-          font-family: F.$light;
-        }
-
-        .price {
-          font-family: F.$medium;
-        }
-
-        .title {
-          font-size: 14px;
-          font-family: F.$regular;
-        }
-
-      }
-
-      .ammount {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        font-family: F.$medium;
-
-        button {
-          width: 24px;
-          height: 24px;
-          background-color: #fff;
-          border: 1px solid var(--black);
-          border-radius: 0;
-        }
-
-      }
-
-      .image {
-        // overflow: hidden;
-        // display: block;
-        padding-left: 4px;
-          // width: 121px;
-          // height: 190px;
-        img {
-          object-fit: cover;
-          display: block;
-          // width: 121px;
-          height: 190px;
-          // left: -20pc;
-        }
-      }
-
-    }
-
-    .item-btn {
-      width: 100%;
-      background-color: #fff;
-      border: none;
-      font-family: F.$regular;
-      font-size: 18px;
-      line-height: 180%;
-      height: 45px;
-
-    }
-
-    .item-btn:hover {
-      background-color: #eee;
-    }
+    gap: 40px;
+    max-height: 400px;
+    overflow-y: scroll;
   }
 
+  .item-btn {
+    width: 100%;
+    background-color: #fff;
+    border: none;
+    font-family: F.$regular;
+    line-height: 180%;
+    height: 45px;
+  }
+
+  .item-btn:hover {
+    background-color: #eee;
+  }
+}
+
+.image {
+  padding-left: 4px;
+  img {
+    object-fit: cover;
+    display: block;
+    height: 190px;
+  }
+}
+
+.attributes {
+  width: 100%;
+  text-align: left;
+  line-height: 160%;
 }
 
 .arrow {
   border: solid var(--black);
   border-width: 0 2px 2px 0;
   display: inline-block;
-  // border-end-end-radius: 2px 2px;
   padding: 2px;
   margin: 0px 0px 2px 2px;
   transition: 300ms;

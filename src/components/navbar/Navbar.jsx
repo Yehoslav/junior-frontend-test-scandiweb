@@ -10,16 +10,10 @@ import CartIcon from "./CartIcon";
 
 class Navbar extends Component {
   state = {
-    showCurrList: false,
-    showMiniCart: true,
     currency: {
       symbol: "$",
       name: "USD",
     },
-  };
-
-  toggleDropdown = (prop) => {
-    this.setState((state) => ({ [prop]: !state[prop] }));
   };
 
   selectCurrency = (currency) => {
@@ -30,8 +24,6 @@ class Navbar extends Component {
   };
 
   render() {
-    const { rotated } = this.props;
-    const rotStyle = rotated ? " rotated" : "";
     const currencies = [
       { symbol: "$", name: "USD" },
       { symbol: "€", name: "EUR" },
@@ -39,8 +31,6 @@ class Navbar extends Component {
       { symbol: "R", name: "RON" },
       { symbol: "P", name: "RUB" },
     ];
-
-    const arrowDir = this.state.showCurrList ? "__up" : "__down";
 
     return (
       <nav>
@@ -57,31 +47,12 @@ class Navbar extends Component {
         </div>
         <img className="brand" src={logo} alt="Site logo" />
         <div className="actions">
-          <div className="dropdown">
-            <button
-              onClick={() => this.toggleDropdown("showCurrList")}
-              // onBlur={this.toggleDropdown}
-              className={"currency" + rotStyle}
-            >
-              {this.state.currency.symbol}{" "}
-              <i className={"arrow arrow" + arrowDir} />
-            </button>
-            {this.state.showCurrList ? (
-              <Dropdown
-                onCurrencySelect={this.selectCurrency}
-                currencies={currencies}
-              />
-            ) : null}
-          </div>
-          <div className="dropdown">
-            <button
-              onClick={() => this.toggleDropdown("showMiniCart")}
-              className={"currency" + rotStyle}
-            >
-              <CartIcon />
-            </button>
-            {this.state.showMiniCart ? <CartDropdown /> : null}
-          </div>
+          <Dropdown
+            onCurrencySelect={this.selectCurrency}
+            currencies={currencies}
+            currency={this.state.currency}
+          />
+          <CartDropdown />
         </div>
       </nav>
     );
@@ -91,29 +62,29 @@ class Navbar extends Component {
 class CartItem extends Component {
   render() {
     return (
-      <div className="col">
+      <div className="row-g4">
 
         <div className="attributes">
-          <div className="brand-name">Brand name</div>
-          <div className="brand-name">Item name</div>
-          <div className="price">$50.00</div>
+          <div className="font-l">Brand name</div>
+          <div className="font-l">Item name</div>
+          <div className="font-sb">$50.00</div>
           <div>
-            <div className="title">
+            <div className="font-ty">
               Size:
             </div>
-            <div className="button-group">
-              <button className="button button__attr">XS</button>
-              <button className="button button__attr">S</button>
-              <button className="button button__attr sel">M</button>
-              <button className="button button__attr">L</button>
+            <div className="row-g8">
+              <button className="btn-sm btn__sec">XS</button>
+              <button className="btn-sm btn__sec">S</button>
+              <button className="btn-sm btn__sec sel">M</button>
+              <button className="btn-sm btn__sec">L</button>
             </div>
           </div>
         </div>
 
-        <div className="ammount">
-          <button>+</button>
+        <div className="font-m col sb t__center">
+          <button className="btn-sm btn__sec">+</button>
           <p>1</p>
-          <button>-</button>
+          <button className="btn-sm btn__sec">-</button>
         </div>
 
         <div className="image">
@@ -132,50 +103,95 @@ class CartItem extends Component {
 
 // FIXME: Make dropdown into a general element that could warp other elements
 class CartDropdown extends Component {
+  state = {
+    showMiniCart: false,
+  }
+
+  toggleDropdown = (prop) => {
+    this.setState((state) => ({ [prop]: !state[prop] }));
+  };
+
   render() {
     // const { onCurrencySelect, currencies } = this.props;
 
-    return (
-      <ul className="cart-list">
-        <div className="bag-title">
-          <span className="bold">My bag</span>, 3 items
+    const content = (
+      <ul className="cart-list font-sm">
+        <div>
+          <span className="font-b">My bag</span>, 3 items
         </div>
         <div className="item-list">
           <CartItem />
           <CartItem />
           <CartItem />
         </div>
-        <div className="tot-price semibold">
+        <div className="row sb font-sb">
           <div>Total</div>
           <div> $200.00</div>
         </div>
-        <div className="button-group">
-          <button className="button button__secondary">view bag</button>
-          <button className="button button__primary">check out</button>
+        <div className="row-g12">
+          <button className="btn-lg btn__sec font-ty">view bag</button>
+          <button className="btn-lg btn__pri font-ty">check out</button>
         </div>
       </ul>
+    )
+
+    return (
+          <div className="dropdown">
+            <button
+              onClick={() => this.toggleDropdown("showMiniCart")}
+              className="currency"
+            >
+              <CartIcon />
+            </button>
+            {this.state.showMiniCart ? content : null}
+          </div>
     );
   }
 }
 
 // FIXME: Make dropdown into a general element that could warp other elements
 class Dropdown extends Component {
-  render() {
-    const { onCurrencySelect, currencies } = this.props;
+  state = {
+    showCurrList: false,
+  }
 
-    return (
+  toggleDropdown = (prop) => {
+    this.setState((state) => ({ [prop]: !state[prop] }));
+  };
+
+  render() {
+    const { currency, onCurrencySelect, currencies } = this.props;
+    const arrowDir = this.state.showCurrList ? "__up" : "__down";
+
+    const content = (
       <ul className="currency-list">
         {currencies.map((item) => (
           <li key={item.name}>
             <button
               onClick={() => onCurrencySelect(item)}
-              className="currency-btn"
+              className="font font-m currency-btn"
             >
               {item.symbol} {item.name}
             </button>
           </li>
         ))}
       </ul>
+    )
+
+    return (
+          <div className="dropdown">
+            <button
+              onClick={() => this.toggleDropdown("showCurrList")}
+              // onBlur={this.toggleDropdown}
+              className="currency"
+            >
+              {currency.symbol}{" "}
+              <i className={"arrow arrow" + arrowDir} />
+            </button>
+            {this.state.showCurrList ? (
+            content
+            ) : null}
+          </div>
     );
   }
 }
