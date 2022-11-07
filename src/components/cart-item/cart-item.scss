@@ -1,0 +1,76 @@
+.image {
+  padding-left: 4px;
+  img {
+    object-fit: cover;
+    display: block;
+    height: 190px;
+  }
+}
+
+.attributes {
+  width: 100%;
+  text-align: left;
+  line-height: 160%;
+}
+
+.atts {
+  width: 136px;
+}
+
+.load {
+  overflow: hidden;
+  min-height: 190px;
+}
+
+.loading {
+  position: relative;
+  background-color: #e2e2e2;
+
+  &.text {
+    height: 1.3rem;
+    width: 100px;
+    margin-bottom: 1rem;
+    border-radius: 3px;
+  }
+
+  &.image {
+    padding-left: 4px;
+    width: 121px;
+    height: 190px;
+  }
+}
+
+/* The moving element */
+.loading::after {
+  display: block;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-100%);
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    from(transparent),
+    color-stop(rgba(255, 255, 255, 0.2)),
+    to(transparent)
+  );
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+
+  /* Adding animation */
+  animation: loading 0.8s infinite;
+}
+
+/* Loading Animation */
+@keyframes loading {
+  100% {
+    transform: translateX(100%);
+  }
+}
