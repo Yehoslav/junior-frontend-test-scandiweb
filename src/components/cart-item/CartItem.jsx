@@ -59,9 +59,8 @@ class CartItem extends Component {
         <div className="image">
           <img
             width="121px"
-            // height="190px"
             src={placeholder}
-            alt="Image placeholder"
+            alt="Product image"
           />
         </div>
       </div>
