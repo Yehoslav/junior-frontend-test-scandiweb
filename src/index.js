@@ -2,30 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 import {
-  createBrowserRouter,
   RouterProvider,
   Route
 } from "react-router-dom";
-
+import router from './components/routes/router';
 import './index.scss';
-import App from './components/app/App';
+
 import reportWebVitals from './reportWebVitals';
-
-const router = createBrowserRouter ([
-  {
-    path: "/",
-    element: <App />,
-    // FIXME: ADD error element :)
-    children: [
-      {
-        index: true, 
-        // loader: storeLoader,
-        element: <h1> Loading the page </h1>
-      },
-
-    ],
-  }
-])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
