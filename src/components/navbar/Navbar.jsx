@@ -14,7 +14,7 @@ class Navbar extends Component {
     return (
       <nav>
         <div className="link-group">
-          <NavLink className="link active" to="/store/all">
+          <NavLink className="link" to="/store/all">
             <span>All</span>
           </NavLink>
           <NavLink className="link" to="/store/clothes">
