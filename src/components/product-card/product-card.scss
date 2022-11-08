@@ -26,9 +26,12 @@
     // box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
 
     .cart-icon {
+      fill: white;
+    }
+
+    svg {
       width: 24px;
       height: 24px;
-      fill: white;
     }
   }
 
