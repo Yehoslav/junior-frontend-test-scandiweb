@@ -1,15 +1,40 @@
 .card {
-  height: 444px;
   width: 386px;
+  height: 444px;
   padding: 16px;
   line-height: 160%;
 
   &:hover {
     box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
+
+    .add-btn {
+      display: block;
+    }
+  }
+
+  .add-btn {
+    border: none;
+    display: none;
+    position: absolute;
+    width: 52px;
+    height: 52px;
+    right: 15px;
+    bottom: -26px;
+    background-color: var(--primary);
+    border-radius: 26px;
+    filter: drop-shadow(0px 4px 11px rgba(29, 31, 34, 0.1));
+    // box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
+
+    .cart-icon {
+      width: 24px;
+      height: 24px;
+      fill: white;
+    }
   }
 
   .image {
     padding: 0;
+    position: relative;
     width: 354px;
     height: 330px;
     margin-bottom: 24px;
