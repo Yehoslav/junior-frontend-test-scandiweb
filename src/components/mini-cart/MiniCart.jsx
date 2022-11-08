@@ -15,16 +15,12 @@ class MiniCart extends Component {
   };
 
   render() {
-    // const { onCurrencySelect, currencies } = this.props;
-
     const content = (
       <ul className="cart-list font-sm">
         <div>
-          <span className="font-b">My bag</span>, 3 items
+          <span className="font-b">My bag</span>, 13 items
         </div>
         <div className="item-list">
-          <CartItem />
-          <CartItem />
           <CartItem />
         </div>
         <div className="row sb font-sb">
@@ -44,6 +40,9 @@ class MiniCart extends Component {
           onClick={() => this.toggleDropdown("showMiniCart")}
           className="currency"
         >
+          <div className="font-ty font-b num">
+            9+
+          </div>
           <CartIcon />
         </button>
         {this.state.showMiniCart ? content : null}
