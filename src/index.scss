@@ -144,6 +144,12 @@ body {
   justify-content: space-between;
 }
 
+.row, .col {
+  &.wrap {
+    flex-wrap: wrap;
+  }
+}
+
 .btn {
   border-radius: 0;
   text-transform: uppercase;
