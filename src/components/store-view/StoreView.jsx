@@ -1,14 +1,16 @@
 import {Component} from 'react';
 
-import ProductCard from '../product-card';
-
 import './store-view.scss';
+import withRouter from '../../lib/withRouter';
+
+import ProductCard from '../product-card';
 
 class StoreView extends Component {
   render() {
+    const {params: {category}} = this.props.router
     return (
       <>
-        <h1>All</h1>
+        <h1>{category}</h1>
       <div className="row-g12 wrap">
           <ProductCard />
           <ProductCard />
@@ -21,4 +23,4 @@ class StoreView extends Component {
   }
 }
 
-export default StoreView;
+export default withRouter(StoreView);
