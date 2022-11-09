@@ -38,6 +38,11 @@
   }
 }
 
+@media screen and (max-width: 1200px) {
+  .App {
+    width: 800px;
+  }
+}
 
 @media screen and (max-width: 1000px) {
   .App {
