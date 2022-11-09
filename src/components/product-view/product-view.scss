@@ -1,0 +1,31 @@
+img {
+  display: block;
+  object-fit: cover;
+}
+
+.prd-thumb {
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+  img {
+    height: 100%;
+  }
+}
+
+.prod-img {
+  width: 610px;
+  height: 511px;
+  overflow: hidden;
+  img {
+    width: 100%;
+  }
+}
+
+.img {
+  padding-left: 25px;
+}
+
+.info {
+  padding-left: 96px;
+  max-width: 400px;
+}
