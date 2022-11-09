@@ -53,7 +53,7 @@ class CurrencySelector extends Component {
         <button
           onClick={() => this.toggleDropdown("showCurrList")}
           // onBlur={this.toggleDropdown}
-          className="currency"
+          className="currency font"
         >
           {this.state.currency.symbol}{" "}
           <i className={"arrow arrow" + arrowDir} />
