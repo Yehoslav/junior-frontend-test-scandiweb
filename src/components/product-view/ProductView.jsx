@@ -3,6 +3,8 @@ import {Component} from 'react';
 import './product-view.scss';
 import placeholder from "../../res/img/placeholder.png";
 
+import AttributeSelector from '../attribute-selector/AttributeSelector';
+
 class ProductView extends Component {
   render() {
     return (
@@ -28,24 +30,23 @@ class ProductView extends Component {
         </div>
         <div className="col-g4 info">
           {/** FIXME: Add roboto and roboto condensed as fonts */}
-          <div className="font-b font-xl">Apollo</div>
-          <div className="font-xl">Something more</div>
+          <div className="fp-b f-xl">Apollo</div>
+          <div className="f-xl">Something more</div>
           {/** HACK: Move styles to the css (unless its dynamic) */}
-          <div className="font-b"
-            style={{paddingTop: 38}}>SIZE:</div>
-          <div className="row-g4">
-            <button className="sel btn__sec btn-sm">S</button>
-            <button className="btn__sec btn-sm">M</button>
-            <button className="btn__sec btn-sm">L</button>
-            <button className="btn__sec btn-sm">XL</button>
-          </div>
+          <AttributeSelector 
+            title="title:"
+            attributes={["XL", "L", "M", "S"]}/>
+          <AttributeSelector 
+            title="color:"
+            color={true}
+            attributes={["red", "yellow", "green", "gray"]}/>
           {/** INFO: make attributes a sepparate component */}
-          <div className="font-b"
+          <div className="fp-b"
             style={{paddingTop: 20}}>PRICE:</div>
-          <div className="font-b font-lg">$50.00</div>
-          <button className="btn__pri font-sm btn-lg"
-            style={{marginTop: 30}}>ADD TO CART</button>
-          <div className="font-sm"
+          <div className="fp-b f-lg">$50.00</div>
+          <button className="btn__pri f-sm"
+            style={{marginTop: 30, padding: 16}}>ADD TO CART</button>
+          <div className="f-sm"
             style={{paddingTop: 30}}>
             Elit nostrum ab nam rem recusandae. Impedit tempora et voluptas quidem perspiciatis? Reiciendis impedit quia ea nostrum accusamus? Adipisci voluptatum accusantium et nemo nostrum In quia dolore eius sequi deleniti
           </div>
