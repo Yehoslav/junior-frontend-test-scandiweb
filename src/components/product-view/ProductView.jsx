@@ -11,21 +11,21 @@ class ProductView extends Component {
       <div className="row-g8 wrap pt-80">
         <div className="col-g8 preview">
           <div className="prd-thumb">
-            <img src={placeholder} alt="Product image" />
+            <img src={placeholder} alt="Placeholder" />
           </div>
 
           <div className="prd-thumb">
-            <img src={placeholder} alt="Product image" />
+            <img src={placeholder} alt="Placeholder" />
           </div>
   
           <div className="prd-thumb">
-            <img src={placeholder} alt="Product image" />
+            <img src={placeholder} alt="Placeholder" />
           </div>
 
         </div>
         <div className="img">
           <div className="prod-img">
-            <img src={placeholder} alt="Product image" />
+            <img src={placeholder} alt="Placeholder" />
           </div>
         </div>
         <div className="col-g4 info">
