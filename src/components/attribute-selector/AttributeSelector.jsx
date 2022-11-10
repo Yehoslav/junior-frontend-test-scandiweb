@@ -8,25 +8,35 @@ class AttributeSelector extends Component {
 
     const titleStyle = (baseStyle = "fs-c f-r") => {
       if (inMiniCart) return "fp f-ty"
-      return baseStyle
+      return `t__caps ${baseStyle}`
     }
 
     const attrs = attributes.map((item) => {
       if (color) {
+        const style = inMiniCart
+          ? {width: 20, height: 20}
+          : {width: 36, height: 36}
+
         return (
           <input 
             type="button"
             key={item}
-            style={{ backgroundColor: item,  width: 20, height:20}}
+            style={{ backgroundColor: item, ...style}}
             className="btn btn__sec"
           />
         );
       }
+
+      const style = inMiniCart
+        ? {width: 24, height: 24}
+        : {width: 60, height: 45}
+
       return (
         <button 
           key={item} 
-          style={{width: 24, height: 24}}
-          className="btn btn__sec fp-sb">
+          style={{...style}}
+          className="btn btn__sec fp-sb"
+        >
           {item}
         </button>
       );
