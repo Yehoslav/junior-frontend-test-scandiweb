@@ -1,4 +1,5 @@
 import { Component } from "react";
+import ReactDOM from "react-dom";
 
 import CartIcon from "./CartIcon";
 import CartItem from "../cart-item";
@@ -17,6 +18,7 @@ class MiniCart extends Component {
 
   render() {
     const content = (
+      <>
       <ul className="col-g24 cart-list f-sm">
         <div>
           <span className="fp-b">My bag</span>, 13 items
@@ -42,6 +44,10 @@ class MiniCart extends Component {
             className="btn__pri t__caps f-ty fp-sb">check out</button>
         </div>
       </ul>
+          <Portal >
+      <div className="overlay"></div>
+      </Portal>
+        </>
     );
 
     return (
@@ -59,6 +65,13 @@ class MiniCart extends Component {
       </div>
     );
   }
+}
+
+const Portal = (props) => {
+  const node = document.createElement('div');
+  document.body.appendChild(node);
+
+  return ReactDOM.createPortal(props.children, node );
 }
 
 export default MiniCart;
