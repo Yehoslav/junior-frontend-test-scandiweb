@@ -9,7 +9,18 @@ import logo from "../../res/img/logo.svg";
 
 class Navbar extends Component {
 
+  state = {
+    activeDropdown: "",
+  };
+
+  toggleDropdown = (prop) => {
+    this.setState(({activeDropdown}) => ({
+      activeDropdown: (activeDropdown === prop)? "" : prop,
+    }));
+  };
+
   render() {
+    const { activeDropdown } = this.state;
 
     return (
       <nav>
@@ -28,8 +39,12 @@ class Navbar extends Component {
           <img className="brand" src={logo} alt="Site logo" />
           <div className="actions">
           {/** FIXME: Make dropdown into a general element that could warp other elements */}
-            <CurrencySelector />
-            <MiniCart />
+            <CurrencySelector 
+              showDropdown={activeDropdown === "Currency"}
+              onToggleDropdown={() => this.toggleDropdown("Currency")}/>
+            <MiniCart 
+              showDropdown={activeDropdown === "MiniCart"}
+              onToggleDropdown={() => this.toggleDropdown("MiniCart")}/>
           </div>
         </div>
       </nav>

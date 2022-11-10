@@ -4,15 +4,10 @@ import "./currency-selector.scss";
 
 class CurrencySelector extends Component {
   state = {
-    showCurrList: false,
     currency: {
       symbol: "$",
       name: "USD",
     },
-  };
-
-  toggleDropdown = (prop) => {
-    this.setState((state) => ({ [prop]: !state[prop] }));
   };
 
   selectCurrency = (currency) => {
@@ -23,7 +18,8 @@ class CurrencySelector extends Component {
   };
 
   render() {
-    const arrowDir = this.state.showCurrList ? "__up" : "__down";
+    const {onToggleDropdown, showDropdown} = this.props
+    const arrowDir = showDropdown ? "__up" : "__down";
     // HACK: This variable is to make the component work before introducing redux
     const currencies = [
       { symbol: "$", name: "USD" },
@@ -35,7 +31,9 @@ class CurrencySelector extends Component {
         {currencies.map((item) => (
           <li key={item.name}>
             <button
-              onClick={() => this.selectCurrency(item)}
+              onClick={() => {
+                onToggleDropdown()
+                this.selectCurrency(item)}}
               className="f-r fp-m currency-btn"
             >
               {item.symbol} {item.name}
@@ -48,14 +46,13 @@ class CurrencySelector extends Component {
     return (
       <div className="dropdown">
         <button
-          onClick={() => this.toggleDropdown("showCurrList")}
-          // onBlur={this.toggleDropdown}
+          onClick={onToggleDropdown}
           className="action f-r"
         >
           {this.state.currency.symbol}{" "}
           <i className={"arrow arrow" + arrowDir} />
         </button>
-        {this.state.showCurrList ? content : null}
+        {showDropdown ? content : null}
       </div>
     );
   }
