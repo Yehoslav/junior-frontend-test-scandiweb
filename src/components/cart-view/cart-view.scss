@@ -1,0 +1,14 @@
+.grid {
+    display: grid;
+    grid-template-columns: min-content min-content;
+    grid-column-gap: 7px;
+}
+
+.ws {
+    width: 100%;
+}
+
+.hug {
+    min-width: 279px;
+    width: fit-content;
+}
