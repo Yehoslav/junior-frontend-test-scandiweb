@@ -76,9 +76,14 @@ class CartItem extends Component {
         </div>
 
         <div className="fp-m col sb t__center">
-          <button className="btn-sm btn__sec">+</button>
+          <button 
+            className="btn__sec f-r"
+            style={{width: 24, height: 24, padding: 0}}
+          >+</button>
           <p>1</p>
-          <button className="btn-sm btn__sec">-</button>
+          <button 
+            style={{width: 24, height: 24, padding: 0}}
+            className="btn__sec f-r">-</button>
         </div>
 
         <div 
@@ -86,9 +91,8 @@ class CartItem extends Component {
           style={imgStyle()}
         >
           <img
-            // width="121px"
             src={placeholder}
-            alt="Product image" />
+            alt="Placeholder" />
         </div>
       </div>
     );
