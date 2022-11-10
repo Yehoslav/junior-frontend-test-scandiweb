@@ -21,21 +21,24 @@ class AttributeSelector extends Component {
           <input 
             type="button"
             key={item}
-            style={{ backgroundColor: item, ...style}}
+            style={{display: "block", height: "100%", width: "100%", backgroundColor: item,}}
             className="btn btn__sec"
           />
         );
       }
 
       const style = inMiniCart
-        ? {width: 24, height: 24}
-        : {width: 60, height: 45}
+        ? {width: 24, height: 24, fontSize: "14px"}
+        : {width: 60, height: 45, fontSize: "16px"}
 
       return (
         <button 
           key={item} 
-          style={{...style}}
-          className="btn btn__sec fp-sb"
+          style={{
+            ...style,
+            fontFamily:"Source Sans Pro"
+          }}
+          className="btn btn__sec"
         >
           {item}
         </button>
