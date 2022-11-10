@@ -28,9 +28,6 @@ class CurrencySelector extends Component {
     const currencies = [
       { symbol: "$", name: "USD" },
       { symbol: "€", name: "EUR" },
-      { symbol: "Y", name: "YEN" },
-      { symbol: "R", name: "RON" },
-      { symbol: "P", name: "RUB" },
     ];
 
     const content = (
@@ -53,7 +50,7 @@ class CurrencySelector extends Component {
         <button
           onClick={() => this.toggleDropdown("showCurrList")}
           // onBlur={this.toggleDropdown}
-          className="currency f-r"
+          className="action f-r"
         >
           {this.state.currency.symbol}{" "}
           <i className={"arrow arrow" + arrowDir} />

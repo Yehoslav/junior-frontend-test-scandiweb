@@ -40,7 +40,7 @@ class MiniCart extends Component {
       <div className="dropdown">
         <button
           onClick={() => this.toggleDropdown("showMiniCart")}
-          className="currency"
+          className="action"
         >
           <div className="f-ty fp-b num">
             9+
