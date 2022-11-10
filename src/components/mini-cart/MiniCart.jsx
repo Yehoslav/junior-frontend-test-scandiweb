@@ -44,9 +44,12 @@ class MiniCart extends Component {
             className="btn__pri t__caps f-ty fp-sb">check out</button>
         </div>
       </ul>
-          <Portal >
-      <div className="overlay"></div>
-      </Portal>
+      <div 
+          onClick={() => {
+            console.log("Click")
+            this.toggleDropdown("showMiniCart")
+          }}
+        className="overlay"></div>
         </>
     );
 
