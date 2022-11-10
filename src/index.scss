@@ -158,6 +158,11 @@ body {
   display: flex;
   flex-direction: column;
 
+  &-g24 {
+    @extend .col;
+    gap: 24px;
+  }
+
   &-g12 {
     @extend .col;
     gap: 12px;
