@@ -37,6 +37,10 @@ body {
   &__right{
     text-align: right;
   }
+
+  &__caps {
+    text-transform: uppercase;
+  }
 }
 
 .f {
