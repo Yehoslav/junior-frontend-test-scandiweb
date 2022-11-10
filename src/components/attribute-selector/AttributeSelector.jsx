@@ -15,7 +15,7 @@ class AttributeSelector extends Component {
       if (color) {
         const style = inMiniCart
           ? {width: 20, height: 20}
-          : {width: 36, height: 36}
+          : {width: 32, height: 32}
 
         return (
           <input 
