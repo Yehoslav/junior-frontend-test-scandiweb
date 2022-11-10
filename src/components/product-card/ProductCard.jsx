@@ -16,8 +16,8 @@ class ProductCard extends Component {
             <CartIcon />
           </button>
         </div>
-        <Link to="/product/example" className="font-l">Appolo something there</Link>
-        <div className="font-m">$500.00</div>
+        <Link to="/product/example" className="fp-l">Appolo something there</Link>
+        <div className="fp-m">$500.00</div>
       </div>
     );
   }
