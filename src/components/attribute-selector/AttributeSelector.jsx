@@ -18,12 +18,19 @@ class AttributeSelector extends Component {
           : {width: 32, height: 32}
 
         return (
-          <input 
-            type="button"
-            key={item}
-            style={{display: "block", height: "100%", width: "100%", backgroundColor: item,}}
-            className="btn btn__sec"
-          />
+          <div className="p1"
+              key={`${item}-wrapper`}
+            style={{
+              ...style,
+              // border: "1px solid var(--primary)"
+            }}>
+            <input 
+              type="button"
+              key={item}
+              style={{display: "block", height: "100%", width: "100%", backgroundColor: item,}}
+              className="btn btn__sec"
+            />
+          </div>
         );
       }
 
