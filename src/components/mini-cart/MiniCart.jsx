@@ -4,6 +4,7 @@ import CartIcon from "./CartIcon";
 import CartItem from "../cart-item";
 
 import "./mini-cart.scss";
+import { Link } from "react-router-dom";
 
 class MiniCart extends Component {
   state = {
@@ -16,20 +17,21 @@ class MiniCart extends Component {
 
   render() {
     const content = (
-      <ul className="cart-list font-sm">
+      <ul className="col-g24 cart-list f-sm">
         <div>
-          <span className="font-b">My bag</span>, 13 items
+          <span className="fp-b">My bag</span>, 13 items
         </div>
         <div className="item-list">
-          <CartItem />
+          <CartItem 
+            inMiniCart={true} />
         </div>
-        <div className="row sb font-sb">
+        <div className="row sb fp-sb">
           <div>Total</div>
           <div> $200.00</div>
         </div>
         <div className="row-g12">
-          <button className="btn-lg btn__sec font-ty">view bag</button>
-          <button className="btn-lg btn__pri font-ty">check out</button>
+          <Link to="/cart" className="btn__sec f-ty">view bag</Link>
+          <button className="btn__pri f-ty">check out</button>
         </div>
       </ul>
     );
@@ -40,7 +42,7 @@ class MiniCart extends Component {
           onClick={() => this.toggleDropdown("showMiniCart")}
           className="currency"
         >
-          <div className="font-ty font-b num">
+          <div className="f-ty fp-b num">
             9+
           </div>
           <CartIcon />
