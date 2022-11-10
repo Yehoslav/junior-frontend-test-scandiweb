@@ -36,24 +36,14 @@ class CartItem extends Component {
       );
     }
 
-    const brandStyle = (baseStyle = "") => {
-      if (inMiniCart) return "fp-l"
-      return `fp-sb f-xl ${baseStyle}`
-    }
-
-    const itemNameStyle = (baseStyle = "") => {
-      if (inMiniCart) return "fp-l"
-      return `fp f-xl ${baseStyle}`
-    }
-
-    const priceStyle = (baseStyle="") => {
-      if (inMiniCart) return "fp-sb"
-      return `fp-b f-lg ${baseStyle}`
-    }
-
     const imgStyle = () => {
       if (inMiniCart) return {minWidth: 121, height: 190}
       return {minWidth: 200, height: 288}
+    }
+
+    const btnStyle = () => {
+      if (inMiniCart) return {width: 24, height: 24, lineHeight: "24px"}
+      return {width: 45, height: 45, lineHeight: "45px"}
     }
 
     return (
@@ -61,9 +51,12 @@ class CartItem extends Component {
         // style={{height: 190}}
         className="row-g4">
         <div className="attributes">
-          <div className={brandStyle()}>Brand name</div>
-          <div className={itemNameStyle()}>Item name</div>
-          <div className={priceStyle()}>$50.00</div>
+          <div className={ inMiniCart ? "fp-l" : "fp-sb f-xl pb10" }>
+            Brand name</div>
+          <div className={ inMiniCart ? "fp-l" : "fp f-xl pb16" }>
+            Item name</div>
+          <div className={ inMiniCart ? "fp-sb" : "fp-b f-lg pb16" }>
+            $50.00</div>
           <AttributeSelector
             title="Size:"
             inMiniCart={inMiniCart}
@@ -75,15 +68,15 @@ class CartItem extends Component {
             attributes={["red", "yellow", "green"]}/>
         </div>
 
-        <div className="fp-m col sb t__center">
+        <div className="fp-m f-lg col sb t__center">
           <button 
-            className="btn__sec f-r"
-            style={{width: 24, height: 24, padding: 0}}
+            className="btn__sec fp-l f-xl p0"
+            style={btnStyle()}
           >+</button>
           <p>1</p>
           <button 
-            style={{width: 24, height: 24, padding: 0}}
-            className="btn__sec f-r">-</button>
+            style={btnStyle()}
+            className="btn__sec fp-l f-xl p0">-</button>
         </div>
 
         <div 
