@@ -11,6 +11,13 @@ ul {
 }
 
 nav {
+  position: sticky;
+  background-color: white;
+  top: 0;
+  z-index: 1;
+}
+
+.navbar {
   position: relative;
   @include flex-element;
   height: 80px;
@@ -112,13 +119,13 @@ nav {
   width: 100vw;
   height: calc(100vh - 80px);
   background-color: #39374883;
-  position: absolute;
+  position: fixed;
   top: 80px;
   left: 0;
 }
 
 @media screen and (max-width: 1000px) {
-  nav {
+  .navbar {
     width: 700px;
   }
 }
