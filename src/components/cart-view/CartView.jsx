@@ -8,13 +8,7 @@ class CartView extends Component {
     return (
       <div className="col-g8">
         <h1>Cart</h1>
-        <hr 
-         style={{
-            color: "red",
-            backgroundColor: "green",
-            height: 5
-          }}
-          />
+        <hr />
         <CartItem />
         <hr />
         <CartItem />
