@@ -27,11 +27,19 @@ class MiniCart extends Component {
         </div>
         <div className="row sb fp-sb">
           <div>Total</div>
-          <div> $200.00</div>
+          <div>$200.00</div>
         </div>
         <div className="row-g12">
-          <Link to="/cart" className="btn__sec f-ty">view bag</Link>
-          <button className="btn__pri f-ty">check out</button>
+          <Link 
+            to="/cart" 
+            style={{width: 140}}
+            className="btn__sec t__caps f-ty fp-sb"
+          >
+            view bag
+          </Link>
+          <button 
+            style={{width: 140, height: 43}}
+            className="btn__pri t__caps f-ty fp-sb">check out</button>
         </div>
       </ul>
     );
