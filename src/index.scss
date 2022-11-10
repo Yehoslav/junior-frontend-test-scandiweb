@@ -39,36 +39,54 @@ body {
   }
 }
 
-.font {
-  font-family: F.$regular;
-  font-size: 18px;
+.f {
+  &p {
+    font-family: F.$regular;
 
-  &-eb {
-    font-family: F.$extrabold;
+    &-eb {
+      font-family: F.$extrabold;
+    }
+
+    &-b {
+      font-family: F.$bold;
+    }
+
+    &-sb {
+      font-family: F.$semibold;
+    }
+
+    &-m {
+      font-family: F.$medium;
+    }
+
+    &-l {
+      font-family: F.$light;
+    }
+
+    &-el {
+      font-family: F.$extralight;
+    }
+
+    &-t {
+      font-family: F.$thin;
+    }
   }
 
-  &-b {
-    font-family: F.$bold;
+  &s {
+    font-family: Roboto;
+
+    &-c {
+      font-family: Roboto\ Condensed;
+    }
+
+    &-c {
+      font-family: Roboto\ Condensed;
+      font-weight: bold;
+    }
   }
 
-  &-sb {
-    font-family: F.$semibold;
-  }
-
-  &-m {
-    font-family: F.$medium;
-  }
-
-  &-l {
-    font-family: F.$light;
-  }
-
-  &-el {
-    font-family: F.$extralight;
-  }
-
-  &-t {
-    font-family: F.$thin;
+  &-r {
+    font-size: 18px;
   }
 
   &-xl {
@@ -88,6 +106,9 @@ body {
   }
 }
 
+
+
+
 .p {
   &b-40 {
     padding-bottom: 40px;
@@ -106,6 +127,7 @@ body {
 .row {
   display: flex;
   flex-direction: row;
+  // height: fit-content;
 
   &-g12 {
     @extend .row;
@@ -162,34 +184,25 @@ body {
 .btn {
   border-radius: 0;
   text-transform: uppercase;
-  font-family: F.$semibold;
+  padding: 0;
+  // font-family: F.$semibold;
 
+  // Primary button 
   &__pri {
     border: none;
     background-color: var(--primary);
     color: white;
   }
 
+  // Secondary button
   &__sec {
     border: 1px solid var(--black);
     background-color: #fff;
 
+    // Selected button
     &.sel {
       background-color: var(--black);
       color: white;
     }
-  }
-
-  &-lg {
-    @extend .btn;
-    width: 140px;
-    height: 43px;
-  }
-
-  &-sm {
-    @extend .btn;
-    width: 24px;
-    height: 24px;
-    padding: 0;
   }
 }
