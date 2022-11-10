@@ -1,9 +1,12 @@
 .image {
   padding-left: 4px;
+  // height: 300px;
+  // width: 200px;
+  overflow: hidden;
   img {
     object-fit: cover;
     display: block;
-    height: 190px;
+    height: 100%;
   }
 }
 
@@ -40,7 +43,7 @@
   &.image {
     padding-left: 4px;
     width: 121px;
-    height: 190px;
+    // height: 190px;
   }
 }
 
