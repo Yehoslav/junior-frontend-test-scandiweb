@@ -7,6 +7,7 @@ import {
 
 import {action as indexAction} from '.';
 import App from "../app/App";
+import CartView from "../cart-view/CartView";
 import ProductView from "../product-view/ProductView";
 import StoreView from "../store-view";
 
@@ -31,6 +32,11 @@ const router = createBrowserRouter ([
         path: "product/:productId",
         // loader: storeLoader,
         element: <ProductView />
+      },
+      {
+        path: "cart",
+        // loader: storeLoader,
+        element: <CartView />
       },
     ],
   }
