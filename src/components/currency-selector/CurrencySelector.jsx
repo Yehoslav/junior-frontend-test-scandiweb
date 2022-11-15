@@ -1,42 +1,50 @@
 import { Component } from "react";
+import { connect } from "react-redux";
 
 import "./currency-selector.scss";
+import {updateCurrency} from "../../lib/currencySlice";
+
+import { 
+  client, 
+  Query 
+} from "@tilework/opus";
+
+client.setEndpoint("http://localhost:4000");
+
+const myQuery = new Query("currencies", true)
+        .addField("symbol")
+        .addField("label")
 
 class CurrencySelector extends Component {
   state = {
-    currency: {
-      symbol: "$",
-      name: "USD",
-    },
-  };
+    currencies: []
+  }
 
-  selectCurrency = (currency) => {
-    this.setState({
-      showCurrList: false,
-      currency,
-    });
-  };
+  componentDidMount = () => {
+    client.post(myQuery)
+      .then(res => this.setState({currencies: res.currencies}))
+  }
 
   render() {
     const {onToggleDropdown, showDropdown} = this.props
     const arrowDir = showDropdown ? "__up" : "__down";
     // HACK: This variable is to make the component work before introducing redux
-    const currencies = [
-      { symbol: "$", name: "USD" },
-      { symbol: "€", name: "EUR" },
-    ];
+    const {currencies} = this.state;
+
+    console.dir(this.props)
+    const {currency: {symbol}, selectCurrency } = this.props
 
     const content = (
       <ul className="currency-list">
         {currencies.map((item) => (
-          <li key={item.name}>
+          <li key={item.label}>
             <button
               onClick={() => {
                 onToggleDropdown()
-                this.selectCurrency(item)}}
+                selectCurrency(item.symbol)}}
               className="f-r fp-m currency-btn"
             >
-              {item.symbol} {item.name}
+              {item.symbol} {item.label}
             </button>
           </li>
         ))}
@@ -49,7 +57,7 @@ class CurrencySelector extends Component {
           onClick={onToggleDropdown}
           className="action f-r"
         >
-          {this.state.currency.symbol}{" "}
+          {symbol}{" "}
           <i className={"arrow arrow" + arrowDir} />
         </button>
         {showDropdown ? content : null}
@@ -58,4 +66,16 @@ class CurrencySelector extends Component {
   }
 }
 
-export default CurrencySelector;
+const mapStateToProps = (state) => {
+  return {
+    currency: state.currency
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    selectCurrency: (curr) => dispatch(updateCurrency(curr)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CurrencySelector);
