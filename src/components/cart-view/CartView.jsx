@@ -7,7 +7,7 @@ class CartView extends Component {
   render() {
     return (
       <div className="col-g8">
-        <h1>Cart</h1>
+        <h1 className='t__caps fp-b f-xxl'>Cart</h1>
         <hr />
         <CartItem />
         <hr />
@@ -24,7 +24,9 @@ class CartView extends Component {
             <div>Total:</div>
             <div className='fp-b'>$100</div>
           </div>
-          <button className='btn__pri btn-lg f-ty ws'>Order</button>
+          <button 
+            style={{height: 43}}
+            className='btn__pri f-ty t__caps ws'>Order</button>
         </div>
       </div>
       
