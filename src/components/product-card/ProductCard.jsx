@@ -10,21 +10,20 @@ import { CartIcon } from "../mini-cart";
 
 class ProductCard extends Component {
   render() {
-    const { currency, id, name, gallery, prices } = this.props;
-    console.log(currency)
-    console.dir(prices);
-
-    const globSymbol = currency.symbol
+    const { globCurrency, id, name, gallery, prices } = this.props;
 
     const {
       currency: { symbol },
       amount,
-    } = prices.filter((item) => item.currency.symbol === globSymbol)[0];
+    } = prices.filter(
+      (item) => item.currency.symbol === globCurrency.symbol
+    )[0];
 
     return (
-      <div 
+      <div
         // style={{backgroundColor: "red"}}
-        className="card">
+        className="card"
+      >
         <div className="image">
           <img src={gallery[0]} alt="Placeholder" />
         </div>
@@ -45,9 +44,9 @@ class ProductCard extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    currency: state.currency
-  }
-}
+    globCurrency: state.currency,
+  };
+};
 
 ProductCard.propTypes = {
   id: PropTypes.string.isRequired,
