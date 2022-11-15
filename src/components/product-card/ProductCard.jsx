@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 import "./product-card.scss";
 // import placeholder from "../../res/img/placeholder.png";
@@ -9,16 +10,21 @@ import { CartIcon } from "../mini-cart";
 
 class ProductCard extends Component {
   render() {
-    const { id, name, gallery, prices } = this.props;
+    const { currency, id, name, gallery, prices } = this.props;
+    console.log(currency)
     console.dir(prices);
+
+    const globSymbol = currency.symbol
 
     const {
       currency: { symbol },
       amount,
-    } = prices.filter((item) => item.currency.symbol === "$")[0];
+    } = prices.filter((item) => item.currency.symbol === globSymbol)[0];
 
     return (
-      <div className="card">
+      <div 
+        // style={{backgroundColor: "red"}}
+        className="card">
         <div className="image">
           <img src={gallery[0]} alt="Placeholder" />
         </div>
@@ -37,6 +43,12 @@ class ProductCard extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    currency: state.currency
+  }
+}
+
 ProductCard.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
@@ -51,4 +63,4 @@ ProductCard.propTypes = {
   ),
 };
 
-export default ProductCard;
+export default connect(mapStateToProps)(ProductCard);
