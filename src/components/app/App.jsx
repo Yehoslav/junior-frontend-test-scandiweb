@@ -1,17 +1,21 @@
 import { Outlet } from "react-router-dom";
-import Navbar from "../navbar";
+import {Provider} from 'react-redux';
+
 import "./App.css";
+import {store} from '../../lib/store';
+
+import Navbar from "../navbar";
+
 
 function App() {
   return (
-    <div>
+    <Provider store={store}>
       <Navbar />
 
-      {/* <div className="overlay"></div> */}
       <div className="App">
         <Outlet />
       </div>
-    </div>
+    </Provider>
   );
 }
 
