@@ -1,7 +1,7 @@
 import { Component } from "react";
 
 import "./store-view.scss";
-import withRouter from "../../lib/withRouter";
+import withRouter from "../../utils/withRouter";
 
 import ProductCard from "../product-card";
 
