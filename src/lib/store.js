@@ -5,6 +5,6 @@ import cartSlice from "./cartSlice";
 export const store = configureStore({
   reducer: {
     currency: currencySlice,
-    miniCart: cartSlice,
+    cart: cartSlice,
   }
 })

@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 
 class MiniCart extends Component {
   render() {
-    const { currency, products, onToggleDropdown } = this.props;
+    const { currency, products, status, onToggleDropdown } = this.props;
     const { increaseAmount, decreaseAmount } = this.props;
 
     const totalPrice = () => {
@@ -47,6 +47,7 @@ class MiniCart extends Component {
                     (price) => price.currency.symbol === currency.symbol
                   )}
                   brand={item.brand}
+                  loading={status === "loading"}
                   amount={item.amount}
                   onIncrease={() => increaseAmount(item.id)}
                   onDecrease={() => decreaseAmount(item.id)}
@@ -107,7 +108,8 @@ class MiniCart extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    products: state.miniCart.products,
+    products: state.cart.products,
+    status: state.cart.status,
     currency: state.currency,
   };
 };
