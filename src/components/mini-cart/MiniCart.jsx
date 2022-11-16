@@ -12,27 +12,43 @@ import CartItem from "../cart-item";
 import "./mini-cart.scss";
 import { Link } from "react-router-dom";
 
+const totalPrice = (products, currency) => {
+  if (products) {
+    const totPrice = products.reduce((previous, current) => {
+      return (
+        previous +
+        current.prices.find(
+          (item) => item.currency.symbol === currency.symbol
+        ).amount *
+          current.amount
+      );
+    }, 0);
+    return round(totPrice, 2)
+  }
+  return 0;
+};
+
 class MiniCart extends Component {
   render() {
     const { currency, products, status, onToggleDropdown } = this.props;
     const { increaseAmount, decreaseAmount } = this.props;
 
-    const totalPrice = () => {
-      if (products) {
-        const totPrice = products.reduce((previous, current) => {
-          return (
-            previous +
-            current.prices.find(
-              (item) => item.currency.symbol === currency.symbol
-            ).amount *
-              current.amount
-          );
-        }, 0);
-        console.log(totPrice)
-        return round(totPrice, 2)
-      }
-      return 0;
-    };
+    const items = products ? products.map((item) => (
+      <CartItem
+        key={item.id}
+        name={item.name}
+        price={item.prices.find(
+          (price) => price.currency.symbol === currency.symbol
+        )}
+        brand={item.brand}
+        amount={item.amount}
+        onIncrease={() => increaseAmount(item.id)}
+        onDecrease={() => decreaseAmount(item.id)}
+        productImg={item.gallery[0]}
+        attributes={item.attributes}
+        inMiniCart={true}
+      />
+    )) : ( <h3>No items</h3> )
 
     const content = (
       <>
@@ -41,33 +57,13 @@ class MiniCart extends Component {
             <span className="fp-b">My bag</span>, {products.length} items
           </div>
           <div className="item-list">
-            {products ? (
-              products.map((item) => (
-                <CartItem
-                  key={item.id}
-                  name={item.name}
-                  price={item.prices.find(
-                    (price) => price.currency.symbol === currency.symbol
-                  )}
-                  brand={item.brand}
-                  loading={status === "loading"}
-                  amount={item.amount}
-                  onIncrease={() => increaseAmount(item.id)}
-                  onDecrease={() => decreaseAmount(item.id)}
-                  productImg={item.gallery[0]}
-                  attributes={item.attributes}
-                  inMiniCart={true}
-                />
-              ))
-            ) : (
-              <h3>No items</h3>
-            )}
+            {items}
           </div>
           <div className="row sb fp-sb">
             <div>Total</div>
             <div>
               {currency.symbol}
-              {totalPrice()}
+              {totalPrice(products, currency)}
             </div>
           </div>
           <div className="row-g12">
