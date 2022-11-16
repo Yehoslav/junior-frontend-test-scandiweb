@@ -11,7 +11,8 @@ class CartItem extends Component {
   };
 
   render() {
-    const { inMiniCart } = this.props;
+    const { inMiniCart, onIncrease, onDecrease } = this.props;
+    const { price, name, brand,amount, attributes, productImg } = this.props;
 
     if (this.state.loading) {
       return (
@@ -36,6 +37,21 @@ class CartItem extends Component {
       );
     }
 
+
+    const attrItems = attributes.map((attr) => {
+      console.log(attr);
+
+      return (<AttributeSelector
+        key={attr.name}
+        title={attr.name}
+        inMiniCart={inMiniCart}
+        color={attr.type === "swatch"}
+        attributes={attr.items.map((attr) => attr.value)}
+      />)
+    }
+    );
+    console.dir(attrItems)
+
     const imgStyle = () => {
       if (inMiniCart) return { minWidth: 121, height: 190 };
       return { minWidth: 200, height: 288 };
@@ -46,6 +62,7 @@ class CartItem extends Component {
       return { width: 45, height: 45, lineHeight: "45px" };
     };
 
+
     return (
       <div
         // style={{height: 190}}
@@ -53,35 +70,34 @@ class CartItem extends Component {
       >
         <div className="attributes">
           <div className={inMiniCart ? "fp-l" : "fp-sb f-xl pb10"}>
-            Brand name
+            {brand}
           </div>
-          <div className={inMiniCart ? "fp-l" : "fp f-xl pb16"}>Item name</div>
-          <div className={inMiniCart ? "fp-sb" : "fp-b f-lg pb16"}>$50.00</div>
-          <AttributeSelector
-            title="Size:"
-            inMiniCart={inMiniCart}
-            attributes={["XL", "L", "M", "S"]}
-          />
-          <AttributeSelector
-            title="Color:"
-            inMiniCart={inMiniCart}
-            color={true}
-            attributes={["red", "yellow", "green"]}
-          />
+          <div className={inMiniCart ? "fp-l" : "fp f-xl pb16"}>{name}</div>
+          <div className={inMiniCart ? "fp-sb" : "fp-b f-lg pb16"}>
+            {price.currency.symbol}
+            {price.amount}
+          </div>
+          {attrItems}
         </div>
 
         <div className="fp-m f-lg col sb t__center">
-          <button className="btn__sec fp-l f-xl p0" style={btnStyle()}>
+          <button 
+            onClick={onIncrease}
+            className="btn__sec fp-l f-xl p0" 
+            style={btnStyle()}>
             +
           </button>
-          <p>1</p>
-          <button style={btnStyle()} className="btn__sec fp-l f-xl p0">
+          <p>{amount}</p>
+          <button 
+            onClick={onDecrease}
+            style={btnStyle()} 
+            className="btn__sec fp-l f-xl p0">
             -
           </button>
         </div>
 
         <div className="image" style={imgStyle()}>
-          <img src={placeholder} alt="Placeholder" />
+          <img src={productImg} alt="Placeholder" />
         </div>
       </div>
     );
