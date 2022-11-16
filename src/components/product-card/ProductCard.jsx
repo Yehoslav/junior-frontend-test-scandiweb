@@ -4,13 +4,14 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import "./product-card.scss";
+import { fetchProduct } from "../../lib/cartSlice";
 // import placeholder from "../../res/img/placeholder.png";
 
 import { CartIcon } from "../mini-cart";
 
 class ProductCard extends Component {
   render() {
-    const { globCurrency, id, name, gallery, prices } = this.props;
+    const { globCurrency, id, name, gallery, prices, addProduct} = this.props;
 
     const {
       currency: { symbol },
@@ -20,14 +21,13 @@ class ProductCard extends Component {
     )[0];
 
     return (
-      <div
-        // style={{backgroundColor: "red"}}
-        className="card"
-      >
+      <div className="card">
         <div className="image">
           <img src={gallery[0]} alt="Placeholder" />
         </div>
-        <button className="add-btn">
+        <button 
+          onClick={() => addProduct(id)}
+          className="add-btn">
           <CartIcon />
         </button>
         <Link to={`/product/${id}`} className="fp-l">
@@ -48,6 +48,12 @@ const mapStateToProps = (state) => {
   };
 };
 
+const mapDispatchToProsp = (dispatch) => {
+  return {
+    addProduct: (productId) => dispatch(fetchProduct(productId))
+  }
+}
+
 ProductCard.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
@@ -62,4 +68,4 @@ ProductCard.propTypes = {
   ),
 };
 
-export default connect(mapStateToProps)(ProductCard);
+export default connect(mapStateToProps, mapDispatchToProsp)(ProductCard);
