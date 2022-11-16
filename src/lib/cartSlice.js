@@ -29,22 +29,6 @@ const cartSlice = createSlice({
   name: "currency",
   initialState,
   reducers: {
-    addProduct(state, action) {
-      const product = {
-        ...action.payload,
-        amount: 1,
-        selectedAttr: action.payload.attributes[0].id,
-        attributes: product.attributes.map((att) => ({
-          ...att.items,
-          selectedAttr: att.items[0].id,
-        })),
-      };
-
-      return {
-        ...state,
-        products: [...state.products, product],
-      };
-    },
     increaseProductAmmount: (state, action) => {
       const { payload: productId } = action;
       state.products.find((item) => item.id == productId).amount += 1;
@@ -79,7 +63,7 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addProduct, increaseProductAmmount, decreaseProductAmmount } =
+export const { increaseProductAmmount, decreaseProductAmmount } =
   cartSlice.actions;
 
 export default cartSlice.reducer;
