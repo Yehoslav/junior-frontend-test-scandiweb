@@ -4,6 +4,7 @@ import {
   increaseProductAmmount,
   decreaseProductAmmount,
 } from "../../lib/cartSlice";
+import { round } from "../../utils/funcs.js";
 
 import CartIcon from "./CartIcon";
 import CartItem from "../cart-item";
@@ -18,7 +19,7 @@ class MiniCart extends Component {
 
     const totalPrice = () => {
       if (products) {
-        return products.reduce((previous, current) => {
+        const totPrice = products.reduce((previous, current) => {
           return (
             previous +
             current.prices.find(
@@ -27,6 +28,8 @@ class MiniCart extends Component {
               current.amount
           );
         }, 0);
+        console.log(totPrice)
+        return round(totPrice, 2)
       }
       return 0;
     };
