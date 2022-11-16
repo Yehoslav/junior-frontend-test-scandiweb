@@ -11,7 +11,8 @@ import { CartIcon } from "../mini-cart";
 
 class ProductCard extends Component {
   render() {
-    const { globCurrency, id, name, gallery, prices, addProduct, products} = this.props;
+    const { globCurrency, id, name, gallery, prices, addProduct, products } =
+      this.props;
 
     const {
       currency: { symbol },
@@ -25,15 +26,14 @@ class ProductCard extends Component {
         <div className="image">
           <img src={gallery[0]} alt="Placeholder" />
         </div>
-        <button 
+        <button
           onClick={() => {
-            console.log("Check if the item is in the cart.")
-            const itemIndex = products.find(item => item.id === id)
-            console.log(itemIndex)
-            if (!itemIndex) return addProduct(id)
-            return () => console.log(`${id} already in cart`)
+            const item = products.find((item) => item.id === id);
+            if (!item) return addProduct(id);
+            return () => console.log(`${id} already in cart`);
           }}
-          className="add-btn">
+          className="add-btn"
+        >
           <CartIcon />
         </button>
         <Link to={`/product/${id}`} className="fp-l">
@@ -51,15 +51,15 @@ class ProductCard extends Component {
 const mapStateToProps = (state) => {
   return {
     globCurrency: state.currency,
-    products: state.cart.products
+    products: state.cart.products,
   };
 };
 
 const mapDispatchToProsp = (dispatch) => {
   return {
-    addProduct: (productId) => dispatch(fetchProduct(productId))
-  }
-}
+    addProduct: (productId) => dispatch(fetchProduct(productId)),
+  };
+};
 
 ProductCard.propTypes = {
   id: PropTypes.string.isRequired,
