@@ -8,7 +8,24 @@ import {
 
 client.setEndpoint("http://localhost:4000");
 
-const getProduct = async (productId) => {
+export const getProductList = async (category) => {
+  const productFields = ["id", "name", "gallery"];
+  const productsQuery = new Query("category", false)
+    .addArgument("input", "CategoryInput", { title: category })
+    .addField(
+      new Field("products", true)
+        .addFieldList(productFields)
+        .addField(
+          new Field("prices", true)
+            .addField(new Field("currency").addField("symbol"))
+            .addField("amount")
+        )
+    );
+
+  return await client.post(productsQuery)
+};
+
+export const getProduct = async (productId) => {
   const productFields = ["id", "name", "brand", "inStock", "gallery"];
 
   const productQuery = new Query("product", false)
@@ -31,4 +48,3 @@ const getProduct = async (productId) => {
   return await client.post(productQuery)
 };
 
-export { getProduct };
