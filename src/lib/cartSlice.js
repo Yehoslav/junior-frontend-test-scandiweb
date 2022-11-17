@@ -13,8 +13,6 @@ const initialState = {
  */
 export const fetchProduct = createAsyncThunk("cart/addItem", async (itemId) => {
   const { product: product } = await getProduct(itemId);
-  console.log("fetchProduct:");
-  console.log(product);
   return {
     ...product,
     amount: 1,
@@ -26,7 +24,7 @@ export const fetchProduct = createAsyncThunk("cart/addItem", async (itemId) => {
 });
 
 const cartSlice = createSlice({
-  name: "currency",
+  name: "cart",
   initialState,
   reducers: {
     increaseProductAmmount: (state, action) => {
