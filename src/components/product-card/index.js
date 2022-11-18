@@ -1,3 +1,5 @@
-import ProductCard from './ProductCard';
+import ProductCard, { ProductCardLoading } from './ProductCard';
+
+export { ProductCardLoading };
   
 export default ProductCard;

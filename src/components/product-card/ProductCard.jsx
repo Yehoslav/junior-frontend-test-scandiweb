@@ -26,6 +26,7 @@ class ProductCard extends Component {
         <div className="image">
           <img src={gallery[0]} alt="Placeholder" />
         </div>
+        {/* TODO: add animation when the add button is clicked */}
         <button
           onClick={() => {
             const item = products.find((item) => item.id === id);
@@ -45,6 +46,18 @@ class ProductCard extends Component {
         </div>
       </div>
     );
+  }
+}
+
+export class ProductCardLoading extends Component {
+  render() {
+    return (
+      <div className="card">
+        <div className="image loading"> </div>
+        <div className="p16 mb5 ml5 mr30 loading"></div>
+        <div className="p16 mb5 ml5 mr30 loading"> </div>
+      </div>
+    )
   }
 }
 
