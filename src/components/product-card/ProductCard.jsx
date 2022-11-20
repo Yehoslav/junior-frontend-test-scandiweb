@@ -28,11 +28,7 @@ class ProductCard extends Component {
         </div>
         {/* TODO: add animation when the add button is clicked */}
         <button
-          onClick={() => {
-            const item = products.find((item) => item.id === id);
-            if (!item) return addProduct(id);
-            return () => console.log(`${id} already in cart`);
-          }}
+          onClick={() => addProduct(id) }
           className="add-btn"
         >
           <CartIcon />
