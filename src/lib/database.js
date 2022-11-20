@@ -1,12 +1,19 @@
-
-import { 
-  client, 
-  // CombinedField, 
-  Field, 
-  Query 
+import {
+  client,
+  // CombinedField,
+  Field,
+  Query,
 } from "@tilework/opus";
 
 client.setEndpoint("http://localhost:4000");
+
+export const getCurrencies = async () => {
+  const myQuery = new Query("currencies", true)
+    .addField("symbol")
+    .addField("label");
+
+  return await client.post(myQuery)
+};
 
 export const getProductList = async (category) => {
   const productFields = ["id", "name", "gallery"];
@@ -22,7 +29,7 @@ export const getProductList = async (category) => {
         )
     );
 
-  return await client.post(productsQuery)
+  return await client.post(productsQuery);
 };
 
 export const getProduct = async (productId) => {
@@ -38,13 +45,11 @@ export const getProduct = async (productId) => {
     )
     .addField(
       new Field("attributes", true)
-      .addFieldList(["id", "name", "type"])
-      .addField(
-          new Field("items", true)
-          .addFieldList(["id", "value", "displayValue"])
+        .addFieldList(["id", "name", "type"])
+        .addField(
+          new Field("items", true).addFieldList(["id", "value", "displayValue"])
         )
-    )
+    );
 
-  return await client.post(productQuery)
+  return await client.post(productQuery);
 };
-
