@@ -1,6 +1,5 @@
 import StoreView from "./StoreView";
 import { withRouter } from "storybook-addon-react-router-v6";
-import placeholder from "../../res/img/placeholder.png";
 import { store } from "../../lib/store";
 
 import * as ProductStories from "../product-card/ProductCard.stories";

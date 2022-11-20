@@ -33,7 +33,7 @@ class MiniCart extends Component {
     const { currency, products, status, onToggleDropdown } = this.props;
     const { increaseAmount, decreaseAmount } = this.props;
 
-    const items = products ? products.map((item) => (
+    const items = products.length > 0 ? products.map((item) => (
       <CartItem
         key={item.id}
         name={item.name}
@@ -52,7 +52,7 @@ class MiniCart extends Component {
 
     const content = (
       <>
-        <ul className="col-g24 cart-list f-sm">
+        <ul className="col-g24 cart-list f-16">
           <div>
             <span className="fp-b">My bag</span>, {products.length} items
           </div>
@@ -71,14 +71,14 @@ class MiniCart extends Component {
               to="/cart"
               onClick={() => onToggleDropdown("showMiniCart")}
               style={{ width: 140 }}
-              className="btn__sec t__caps f-ty fp-sb"
+              className="btn__sec t__upper f-14 fp-sb"
             >
               view bag
             </Link>
             <button
               onClick={() => onToggleDropdown("showMiniCart")}
               style={{ width: 140, height: 43 }}
-              className="btn__pri t__caps f-ty fp-sb"
+              className="btn__pri t__upper f-14 fp-sb"
             >
               check out
             </button>
@@ -94,7 +94,7 @@ class MiniCart extends Component {
     return (
       <div className="dropdown">
         <button onClick={onToggleDropdown} className="action">
-          <div className="f-ty fp-b num">
+          <div className="f-14 fp-b num">
             {products.length > 9 ? "9+" : products.length}
           </div>
           <CartIcon />

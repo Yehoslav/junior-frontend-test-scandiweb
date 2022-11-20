@@ -41,29 +41,29 @@ class CartItem extends Component {
         className="row-g4"
       >
         <div className="attributes">
-          <div className={inMiniCart ? "fp-l" : "fp-sb f-xl pb10"}>
+          <div className={inMiniCart ? "fp-l" : "fp-sb f-30 pb10"}>
             {brand}
           </div>
-          <div className={inMiniCart ? "fp-l" : "fp f-xl pb16"}>{name}</div>
-          <div className={inMiniCart ? "fp-sb" : "fp-b f-lg pb16"}>
+          <div className={inMiniCart ? "fp-l" : "fp f-30 pb16"}>{name}</div>
+          <div className={inMiniCart ? "fp-sb" : "fp-b f-24 pb16"}>
             {price.currency.symbol}
             {price.amount}
           </div>
           {attrItems}
         </div>
 
-        <div className="fp-m f-lg col sb t__center">
+        <div className="fp-m f-24 col sb t__center">
           <button 
             onClick={onIncrease}
-            className="btn__sec fp-l f-xl p0" 
+            className="btn__sec fp-l f-30 p0" 
             style={btnStyle()}>
             +
           </button>
-          <p>{amount}</p>
+          <p className={inMiniCart? "f-16" : "f24"}>{amount}</p>
           <button 
             onClick={onDecrease}
             style={btnStyle()} 
-            className="btn__sec fp-l f-xl p0">
+            className="btn__sec fp-l f-30 p0">
             -
           </button>
         </div>

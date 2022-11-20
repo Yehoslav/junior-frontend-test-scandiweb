@@ -30,8 +30,8 @@ class ProductView extends Component {
           </div>
         </div>
         <div className="col-g4 info">
-          <div className="fp-b f-xl pb5">Apollo</div>
-          <div className="fp f-xl pb10">Something more</div>
+          <div className="fp-b f-30 pb5">Apollo</div>
+          <div className="fp f-30 pb10">Something more</div>
           <AttributeSelector
             title="title:"
             attributes={["XL", "L", "M", "S"]}
@@ -44,11 +44,11 @@ class ProductView extends Component {
           <div className="fp-b mt20" >
             PRICE:
           </div>
-          <div className="fp-b f-lg">$50.00</div>
-          <button className="btn__pri f-sm p16 mt25" style={{ height: 50 }}>
+          <div className="fp-b f-24">$50.00</div>
+          <button className="btn__pri f-16 p16 mt25" style={{ height: 50 }}>
             ADD TO CART
           </button>
-          <div className="f-sm mt30">
+          <div className="f-16 mt30">
             Elit nostrum ab nam rem recusandae. Impedit tempora et voluptas
             quidem perspiciatis? Reiciendis impedit quia ea nostrum accusamus?
             Adipisci voluptatum accusantium et nemo nostrum In quia dolore eius

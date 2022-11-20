@@ -6,9 +6,9 @@ class AttributeSelector extends Component {
   render() {
     const { title, color, attributes, inMiniCart } = this.props;
 
-    const titleStyle = (baseStyle = "fs-c f-r") => {
-      if (inMiniCart) return "fp f-ty"
-      return `t__caps ${baseStyle}`
+    const titleStyle = (baseStyle = "fs-c f-18") => {
+      if (inMiniCart) return "fp f-14"
+      return `t__upper ${baseStyle}`
     }
 
     const attrs = attributes.map((item) => {
