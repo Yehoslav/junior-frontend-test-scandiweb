@@ -14,7 +14,9 @@ const initialState = {
 export const fetchProduct = createAsyncThunk(
   "cart/addItem",
   async (itemId, thunkAPI) => {
-    if (thunkAPI.getState().cart.products.find((item) => item.id === itemId))
+    const inCart = thunkAPI.getState().cart.products.find((item) => item.id === itemId)
+
+    if (inCart)
       return thunkAPI.rejectWithValue("Product already in cart");
 
     const { product: product } = await getProduct(itemId);
