@@ -8,7 +8,7 @@ class CartItem extends Component {
 
   render() {
     const { inMiniCart, onIncrease, onDecrease } = this.props;
-    const { price, name, brand,amount, attributes, productImg } = this.props;
+    const { price, name, brand,amount, attributes, gallery } = this.props;
 
     const attrItems = attributes.map((attr) => {
       console.log(attr);
@@ -69,7 +69,7 @@ class CartItem extends Component {
         </div>
 
         <div className="image" style={imgStyle()}>
-          <img src={productImg} alt="Placeholder" />
+          <img src={gallery[0]} alt="Placeholder" />
         </div>
       </div>
     );
