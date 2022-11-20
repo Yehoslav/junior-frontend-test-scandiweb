@@ -17,38 +17,43 @@ const totalPrice = (products, currency) => {
     const totPrice = products.reduce((previous, current) => {
       return (
         previous +
-        current.prices.find(
-          (item) => item.currency.symbol === currency.symbol
-        ).amount *
+        current.prices.find((item) => item.currency.symbol === currency)
+          .amount *
           current.amount
       );
     }, 0);
-    return round(totPrice, 2)
+    return round(totPrice, 2);
   }
   return 0;
 };
 
 class MiniCart extends Component {
   render() {
-    const { currency, products, status, onToggleDropdown } = this.props;
+    const {
+      symbol,
+      products,
+      onToggleDropdown,
+    } = this.props;
+
     const { increaseAmount, decreaseAmount } = this.props;
 
-    const items = products.length > 0 ? products.map((item) => (
-      <CartItem
-        key={item.id}
-        name={item.name}
-        price={item.prices.find(
-          (price) => price.currency.symbol === currency.symbol
-        )}
-        brand={item.brand}
-        amount={item.amount}
-        onIncrease={() => increaseAmount(item.id)}
-        onDecrease={() => decreaseAmount(item.id)}
-        productImg={item.gallery[0]}
-        attributes={item.attributes}
-        inMiniCart={true}
-      />
-    )) : ( <h3>No items</h3> )
+    const items =
+      products.length > 0 ? (
+        products.map((item) => (
+          <CartItem
+            key={item.id}
+            { ...item}
+            price={item.prices.find(
+              (price) => price.currency.symbol === symbol
+            )}
+            onIncrease={() => increaseAmount(item.id)}
+            onDecrease={() => decreaseAmount(item.id)}
+            inMiniCart={true}
+          />
+        ))
+      ) : (
+        <h3>No items</h3>
+      );
 
     const content = (
       <>
@@ -56,14 +61,12 @@ class MiniCart extends Component {
           <div>
             <span className="fp-b">My bag</span>, {products.length} items
           </div>
-          <div className="item-list">
-            {items}
-          </div>
+          <div className="item-list">{items}</div>
           <div className="row sb fp-sb">
             <div>Total</div>
             <div>
-              {currency.symbol}
-              {totalPrice(products, currency)}
+              {symbol}
+              {totalPrice(products, symbol)}
             </div>
           </div>
           <div className="row-g12">
@@ -109,7 +112,7 @@ const mapStateToProps = (state) => {
   return {
     products: state.cart.products,
     status: state.cart.status,
-    currency: state.currency,
+    symbol: state.currency.globalCurrency.symbol,
   };
 };
 
