@@ -42,7 +42,7 @@ class CurrencySelector extends Component {
               onClick={() => {
                 onToggleDropdown()
                 selectCurrency(item.symbol)}}
-              className="f-r fp-m currency-btn"
+              className="f-18 fp-m currency-btn"
             >
               {item.symbol} {item.label}
             </button>
@@ -55,7 +55,7 @@ class CurrencySelector extends Component {
       <div className="dropdown">
         <button
           onClick={onToggleDropdown}
-          className="action f-r"
+          className="action f-18"
         >
           {symbol}{" "}
           <i className={"arrow arrow" + arrowDir} />
