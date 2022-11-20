@@ -2,46 +2,33 @@ import { Component } from "react";
 import { connect } from "react-redux";
 
 import "./currency-selector.scss";
-import {updateCurrency} from "../../lib/currencySlice";
-
-import { 
-  client, 
-  Query 
-} from "@tilework/opus";
-
-client.setEndpoint("http://localhost:4000");
-
-const myQuery = new Query("currencies", true)
-        .addField("symbol")
-        .addField("label")
+import { fetchCurrencies, updateCurrency } from "../../lib/currencySlice";
 
 class CurrencySelector extends Component {
-  state = {
-    currencies: []
-  }
-
   componentDidMount = () => {
-    client.post(myQuery)
-      .then(res => this.setState({currencies: res.currencies}))
-  }
+    this.props.getCurrencies();
+  };
 
   render() {
-    const {onToggleDropdown, showDropdown} = this.props
+    const { onToggleDropdown, showDropdown } = this.props;
     const arrowDir = showDropdown ? "__up" : "__down";
     // HACK: This variable is to make the component work before introducing redux
-    const {currencies} = this.state;
 
-    console.dir(this.props)
-    const {currency: {symbol}, selectCurrency } = this.props
+    const {
+      selectedCurrency: { symbol },
+      currencies,
+      selectCurrency,
+    } = this.props;
 
-    const content = (
+    const content = currencies ? (
       <ul className="currency-list">
         {currencies.map((item) => (
           <li key={item.label}>
             <button
               onClick={() => {
-                onToggleDropdown()
-                selectCurrency(item.symbol)}}
+                onToggleDropdown();
+                selectCurrency(item);
+              }}
               className="f-18 fp-m currency-btn"
             >
               {item.symbol} {item.label}
@@ -49,16 +36,14 @@ class CurrencySelector extends Component {
           </li>
         ))}
       </ul>
+    ) : (
+      <div>NoCurrencies</div>
     );
 
     return (
       <div className="dropdown">
-        <button
-          onClick={onToggleDropdown}
-          className="action f-18"
-        >
-          {symbol}{" "}
-          <i className={"arrow arrow" + arrowDir} />
+        <button onClick={onToggleDropdown} className="action f-18">
+          {symbol} <i className={"arrow arrow" + arrowDir} />
         </button>
         {showDropdown ? content : null}
       </div>
@@ -68,14 +53,16 @@ class CurrencySelector extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    currency: state.currency
-  }
-}
+    selectedCurrency: state.currency.globalCurrency,
+    currencies: state.currency.currencies,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
     selectCurrency: (curr) => dispatch(updateCurrency(curr)),
-  }
-}
+    getCurrencies: () => dispatch(fetchCurrencies()),
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(CurrencySelector);
