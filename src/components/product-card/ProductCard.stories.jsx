@@ -3,7 +3,7 @@ import placeholder from "../../res/img/placeholder.png";
 
 export default {
   component: ProductCard,
-  title: 'ProductCart',
+  title: 'ProductCard',
 }
 
 const Template = args => <ProductCard {...args} />
