@@ -11,17 +11,23 @@ const initialState = {
  * You can read more about Redux Toolkit's thunks in the docs:
  * https://redux-toolkit.js.org/api/createAsyncThunk
  */
-export const fetchProduct = createAsyncThunk("cart/addItem", async (itemId) => {
-  const { product: product } = await getProduct(itemId);
-  return {
-    ...product,
-    amount: 1,
-    attributes: product.attributes.map((att) => ({
-      ...att,
-      selectedAttr: att.items[0].id,
-    })),
-  };
-});
+export const fetchProduct = createAsyncThunk(
+  "cart/addItem",
+  async (itemId, thunkAPI) => {
+    if (thunkAPI.getState().cart.products.find((item) => item.id === itemId))
+      return thunkAPI.rejectWithValue("Product already in cart");
+
+    const { product: product } = await getProduct(itemId);
+    return {
+      ...product,
+      amount: 1,
+      attributes: product.attributes.map((att) => ({
+        ...att,
+        selectedAttr: att.items[0].id,
+      })),
+    };
+  }
+);
 
 const cartSlice = createSlice({
   name: "cart",
