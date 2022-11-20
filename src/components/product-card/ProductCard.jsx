@@ -11,7 +11,7 @@ import { CartIcon } from "../mini-cart";
 
 class ProductCard extends Component {
   render() {
-    const { globCurrency, id, name, gallery, prices, addProduct, products } =
+    const { globCurrency, id, name, gallery, prices, addProduct, } =
       this.props;
 
     const {
@@ -59,7 +59,7 @@ export class ProductCardLoading extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    globCurrency: state.currency,
+    globCurrency: state.currency.globalCurrency,
     products: state.cart.products,
   };
 };
