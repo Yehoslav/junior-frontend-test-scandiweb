@@ -4,7 +4,7 @@ import "./attribute-selector.scss";
 
 class AttributeSelector extends Component {
   render() {
-    const { title, color, attributes, inMiniCart } = this.props;
+    const { selected, title, color, attributes, inMiniCart, onAttributeSelect} = this.props;
 
     const titleStyle = (baseStyle = "fs-c f-18") => {
       if (inMiniCart) return "fp f-14"
@@ -12,13 +12,14 @@ class AttributeSelector extends Component {
     }
 
     const attrs = attributes.map((item) => {
+      const baseClass = (item === selected) ? "sel" : "";
       if (color) {
         const style = inMiniCart
           ? {width: 20, height: 20}
           : {width: 32, height: 32}
 
         return (
-          <div className="p1"
+          <div className={`p1 w ${baseClass}`}
               key={`${item}-wrapper`}
             style={{
               ...style,
@@ -27,6 +28,7 @@ class AttributeSelector extends Component {
             <input 
               type="button"
               key={item}
+              onClick={() => onAttributeSelect(item)}
               style={{display: "block", height: "100%", width: "100%", backgroundColor: item,}}
               className="btn btn__sec"
             />
@@ -45,7 +47,8 @@ class AttributeSelector extends Component {
             ...style,
             fontFamily:"Source Sans Pro"
           }}
-          className="btn btn__sec"
+          className={`btn btn__sec ${baseClass}`}
+          onClick={() => onAttributeSelect(item)}
         >
           {item}
         </button>
