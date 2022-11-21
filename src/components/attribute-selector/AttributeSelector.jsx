@@ -20,11 +20,11 @@ class AttributeSelector extends Component {
 
         return (
           <div className={`p1 w ${baseClass}`}
-              key={`${item}-wrapper`}
+            key={`${item}-wrapper`}
             style={{
               ...style,
               // border: "1px solid var(--primary)"
-            }}>
+          }}>
             <input 
               type="button"
               key={item}
@@ -41,17 +41,25 @@ class AttributeSelector extends Component {
         : {width: 60, height: 45, fontSize: "16px"}
 
       return (
-        <button 
-          key={item} 
-          style={{
-            ...style,
-            fontFamily:"Source Sans Pro"
-          }}
-          className={`btn btn__sec ${baseClass}`}
-          onClick={() => onAttributeSelect(item)}
-        >
-          {item}
-        </button>
+        <>
+          <input 
+            type="radio"
+            key={item} 
+            name={`${title}-radio`}
+            // className={`btn btn__sec ${baseClass}`}
+            id={item}
+            onClick={() => onAttributeSelect(item)}
+          />
+          <label 
+            key={`${item}-lbl`} 
+            style={{
+              ...style,
+              fontFamily:"Source Sans Pro"
+            }}
+            htmlFor={item}>
+            {item}
+          </label>
+        </>
       );
     });
 
