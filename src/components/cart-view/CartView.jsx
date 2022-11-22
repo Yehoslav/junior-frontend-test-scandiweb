@@ -29,9 +29,9 @@ class CartView extends Component {
               )}
               onIncrease={() => increaseAmount(item.id)}
               onDecrease={() => decreaseAmount(item.id)}
-              />
+            />
             <hr />
-            </>
+          </>
         ))
       ) : (
         <h3>No items</h3>
