@@ -14,7 +14,7 @@ nav {
   position: sticky;
   background-color: white;
   top: 0;
-  z-index: 1;
+  z-index: 100;
 }
 
 .navbar {
@@ -46,7 +46,6 @@ nav {
     }
 
     &:hover {
-      // FIXME: The transition from regular to semibold is wanky font makes
       border-bottom: 4px solid var(--primary);
       color: var(--primary);
     }
@@ -129,3 +128,10 @@ nav {
     width: 700px;
   }
 }
+
+@media screen and (max-width: 1300px) {
+  .navbar {
+    width: 950px;
+  }
+}
+
