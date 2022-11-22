@@ -55,7 +55,7 @@ class CartItem extends Component {
         <div className="fp-m f-24 col sb t__center">
           <button 
             onClick={onIncrease}
-            className="btn__sec fp-l f-30 p0" 
+            className="btn btn__sec fp-l f-30 p0" 
             style={btnStyle()}>
             +
           </button>
@@ -63,7 +63,7 @@ class CartItem extends Component {
           <button 
             onClick={onDecrease}
             style={btnStyle()} 
-            className="btn__sec fp-l f-30 p0">
+            className="btn btn__sec fp-l f-30 p0">
             -
           </button>
         </div>
