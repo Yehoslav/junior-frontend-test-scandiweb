@@ -4,28 +4,13 @@ import {
   increaseProductAmmount,
   decreaseProductAmmount,
 } from "../../lib/cartSlice";
-import { round } from "../../utils/funcs.js";
+import { totalPrice } from "../../utils/funcs.js";
 
 import CartIcon from "./CartIcon";
 import CartItem from "../cart-item";
 
 import "./mini-cart.scss";
 import { Link } from "react-router-dom";
-
-const totalPrice = (products, currency) => {
-  if (products) {
-    const totPrice = products.reduce((previous, current) => {
-      return (
-        previous +
-        current.prices.find((item) => item.currency.symbol === currency)
-          .amount *
-          current.amount
-      );
-    }, 0);
-    return round(totPrice, 2);
-  }
-  return 0;
-};
 
 class MiniCart extends Component {
   render() {
@@ -74,14 +59,14 @@ class MiniCart extends Component {
               to="/cart"
               onClick={() => onToggleDropdown("showMiniCart")}
               style={{ width: 140 }}
-              className="btn__sec t__upper f-14 fp-sb"
+              className="btn btn__sec t__upper f-14 fp-sb"
             >
               view bag
             </Link>
             <button
               onClick={() => onToggleDropdown("showMiniCart")}
               style={{ width: 140, height: 43 }}
-              className="btn__pri t__upper f-14 fp-sb"
+              className="btn btn__pri t__upper f-14 fp-sb"
             >
               check out
             </button>
