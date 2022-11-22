@@ -39,7 +39,6 @@ class AttributeSelector extends Component {
       const style = inMiniCart
         ? {width: 24, height: 24, fontSize: "14px"}
         : {width: 60, height: 45, fontSize: "16px"}
-      console.log(title.split(" ").join("-"))
       return (
         <>
           <input 
@@ -53,6 +52,7 @@ class AttributeSelector extends Component {
           />
           <label 
             key={`${item}-lbl`} 
+            tabIndex={0}
             style={{
               ...style,
               fontFamily:"Source Sans Pro"
