@@ -54,6 +54,7 @@ a.btn__sec {
     display: flex;
     flex-direction: column;
     gap: 40px;
+    min-height: 200px;
     max-height: 400px;
     overflow-y: scroll;
   }
