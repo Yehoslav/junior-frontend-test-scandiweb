@@ -6,7 +6,7 @@ import placeholder from "../../res/img/placeholder.png";
 import AttributeSelector from "../attribute-selector/AttributeSelector";
 import  withRouter  from "../../utils/withRouter";
 import { fetchProduct, selectAttribute } from "../../lib/productSlice";
-import { fetchProduct as fetchAndAddToCart } from "../../lib/cartSlice";
+import { fetchProduct as fetchAndAddToCart, removeFromCart } from "../../lib/cartSlice";
 import { connect } from "react-redux";
 
 class ProductView extends Component {
@@ -23,7 +23,7 @@ class ProductView extends Component {
     getProductData(productId)
   }
 
-  buildContent = ({ gallery, id, brand, name, description, attributes, prices, }, onAddToCart, currency, selectAttr) => {
+  buildContent = ({ gallery, id, brand, name, description, attributes, prices, }, removeProduct, onAddToCart, currency, selectAttr, inCart) => {
     let { focusImg } = this.state;
 
     // HACK: There should be a better method to set a default focused image
@@ -80,10 +80,10 @@ class ProductView extends Component {
             {prices.find((item) => item.currency.symbol === currency.symbol).amount}
           </div>
           <button 
-            onClick={() => onAddToCart(id)}
-            className="btn btn__pri f-16 p16 mt25" 
+            onClick={inCart? () => removeProduct(id) : () => onAddToCart(id)}
+            className={`btn ${inCart? "btn__sec":"btn__pri"} f-16 p16 mt25`} 
             style={{ height: 50 }}>
-            ADD TO CART
+            {inCart? "remove from cart" : "add to cart"}
           </button>
           <div className="f-16 mt30" dangerouslySetInnerHTML={{__html: description}}></div>
         </div>
@@ -95,9 +95,10 @@ class ProductView extends Component {
     console.log("ProductView")
     console.dir(this.props)
     
-    const {product, status, addToCart, currency, selectAttr} = this.props
+    const {product, status, addToCart, currency, removeProduct, selectAttr, products} = this.props
+    const inCart = (product !== undefined) && products.find((item) => item.id === product.id) !== undefined;
 
-    return (status === "succeeded") ? this.buildContent(product, addToCart, currency, selectAttr) : <h1>loading</h1>;
+    return (status === "succeeded") ? this.buildContent(product, removeProduct, addToCart, currency, selectAttr, inCart) : <h1>loading</h1>;
   }
 }
 
@@ -106,6 +107,8 @@ const mapStateToProps = (state) => {
     product: state.product.productData,
     status: state.product.status,
     currency: state.currency.globalCurrency,
+    // HACK: Maybe create a function inside the slice to check for presence in cart?
+    products: state.cart.products,
   }
 }
 
@@ -114,6 +117,7 @@ const mapDispatchToProps = (dispatch) => {
     selectAttr: (attrId, value) => dispatch(selectAttribute(attrId, value)),
     getProductData: (productId) => dispatch(fetchProduct(productId)),
     addToCart: (productId) => dispatch(fetchAndAddToCart(productId)),
+    removeProduct: (productId) => dispatch(removeFromCart({id: productId})),
   }
 }
 
