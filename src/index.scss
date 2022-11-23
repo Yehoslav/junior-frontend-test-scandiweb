@@ -225,19 +225,13 @@ $color-light: #fff;
 $bg-size-end: 5;
 $dur: .15s;
 
-input[type=radio] {
-  position: fixed;
-  opacity: 0;
-  pointer-events: none;
-
-  &:checked + label {
+.bbtn {
+  &.sel {
     &:after {
       transform: scale($bg-size-end);
     } 
   }
-}
 
-label {
   outline: none;
   user-select: none;
   color: $color-dark;

@@ -37,30 +37,16 @@ class AttributeSelector extends Component {
       }
 
       const style = inMiniCart
-        ? {width: 24, height: 24, fontSize: "14px"}
-        : {width: 60, height: 45, fontSize: "16px"}
+        ? {minWidth: 24, padding: "0 4px", height: 24, fontSize: "14px"}
+        : {minWidth: 60, padding: "0 4px", height: 45, fontSize: "16px"}
+
       return (
-        <>
-          <input 
-            type="radio"
-            key={item} 
-            defaultChecked={item === selected}
-            name={`${title.split(" ").join("-")}-radio`}
-            // className={`btn btn__sec ${baseClass}`}
-            id={`${item}-${title.split(" ").join("-")}-radio`}
-            onClick={() => onAttributeSelect(item)}
-          />
-          <label 
-            key={`${item}-lbl`} 
-            tabIndex={0}
-            style={{
-              ...style,
-              fontFamily:"Source Sans Pro"
-            }}
-            htmlFor={`${item}-${title.split(" ").join("-")}-radio`}>
-            {item}
-          </label>
-        </>
+        <button 
+          onClick={() => onAttributeSelect(item)}
+          style={style}
+          className={`bbtn ${baseClass}`}>
+          {item}
+        </button>
       );
     });
 
