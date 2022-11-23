@@ -15,11 +15,10 @@ export const fetchProduct = createAsyncThunk(
   "cart/addItem",
   async (itemId, thunkAPI) => {
     const inCart = thunkAPI.getState().cart.products.find((item) => item.id === itemId)
-
     if (inCart)
       return thunkAPI.rejectWithValue("Product already in cart");
 
-    const { product: product } = await getProduct(itemId);
+    const { product } = await getProduct(itemId);
     return {
       ...product,
       amount: 1,
@@ -37,17 +36,22 @@ const cartSlice = createSlice({
   reducers: {
     increaseProductAmmount: (state, action) => {
       const { payload: productId } = action;
-      state.products.find((item) => item.id == productId).amount += 1;
+      state.products.find((item) => item.id === productId).amount += 1;
     },
     decreaseProductAmmount: (state, action) => {
       const { payload: productId } = action;
-      const product = state.products.find((item) => item.id == productId);
+      const product = state.products.find((item) => item.id === productId);
       if (product.amount > 1) {
         product.amount -= 1;
       } else {
         return state;
       }
     },
+    removeFromCart: (state, action) => {
+      return { 
+        ...state,
+        products: state.products.filter((item) => item.id !== action.payload.id) }
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -69,7 +73,7 @@ const cartSlice = createSlice({
   },
 });
 
-export const { increaseProductAmmount, decreaseProductAmmount } =
+export const { increaseProductAmmount, decreaseProductAmmount, removeFromCart } =
   cartSlice.actions;
 
 export default cartSlice.reducer;
