@@ -4,14 +4,15 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import "./product-card.scss";
-import { fetchProduct } from "../../lib/cartSlice";
+import { fetchProduct, removeFromCart } from "../../lib/cartSlice";
+
 // import placeholder from "../../res/img/placeholder.png";
 
 import { CartIcon } from "../mini-cart";
 
 class ProductCard extends Component {
   render() {
-    const { globCurrency, id, name, gallery, prices, addProduct, } =
+    const { products, globCurrency, id, name, gallery, prices, removeProduct, addProduct, } =
       this.props;
 
     const {
@@ -21,6 +22,8 @@ class ProductCard extends Component {
       (item) => item.currency.symbol === globCurrency.symbol
     )[0];
 
+    const inMinicart = products.find((item) => item.id === id) !== undefined;
+
     return (
       <div className="card">
         <div className="image">
@@ -28,8 +31,9 @@ class ProductCard extends Component {
         </div>
         {/* TODO: add animation when the add button is clicked */}
         <button
-          onClick={() => addProduct(id) }
-          className="add-btn"
+          onClick={inMinicart? () => removeProduct(id) : () => addProduct(id) }
+
+          className={inMinicart? "prd-btn rm" : "prd-btn add" }
         >
           <CartIcon />
         </button>
@@ -67,6 +71,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProsp = (dispatch) => {
   return {
     addProduct: (productId) => dispatch(fetchProduct(productId)),
+    removeProduct: (productId) => dispatch(removeFromCart({id: productId}))
   };
 };
 
