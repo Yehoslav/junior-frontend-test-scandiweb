@@ -3,12 +3,16 @@ import { Component } from "react";
 import "./cart-item.scss";
 // import placeholder from "../../res/img/placeholder.png";
 import AttributeSelector from "../attribute-selector/AttributeSelector";
+import { connect } from "react-redux";
+
+import { selectAttribute } from "../../lib/cartSlice";
 
 class CartItem extends Component {
 
   render() {
     const { inMiniCart, onIncrease, onDecrease } = this.props;
-    const { price, name, brand,amount, attributes, gallery } = this.props;
+    const { price, name, brand, amount, attributes, gallery, id} = this.props;
+    const { selectAttr } = this.props 
 
     const attrItems = attributes.map((attr) => {
       console.log(attr);
@@ -16,7 +20,9 @@ class CartItem extends Component {
       return (<AttributeSelector
         key={attr.name}
         title={attr.name}
+        selected={attr.selectedAttr}
         inMiniCart={inMiniCart}
+        onAttributeSelect={(value) => selectAttr({productId: id, attrId: attr.name, value})}
         color={attr.type === "swatch"}
         attributes={attr.items.map((attr) => attr.value)}
       />)
@@ -103,4 +109,12 @@ class LoadingCartItem extends Component {
 
 export { LoadingCartItem };
 
-export default CartItem;
+const mapStateToProps = (state) => ({ })
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    selectAttr: (payload) => dispatch(selectAttribute(payload))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CartItem);
