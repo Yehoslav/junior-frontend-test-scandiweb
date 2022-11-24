@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import "./product-card.scss";
-import { fetchProduct, removeFromCart } from "../../lib/cartSlice";
+import { fetchAndAddToCart, removeFromCart } from "../../lib/cartSlice";
 
 // import placeholder from "../../res/img/placeholder.png";
 
@@ -29,7 +29,6 @@ class ProductCard extends Component {
         <div className="image">
           <img src={gallery[0]} alt="Placeholder" />
         </div>
-        {/* TODO: add animation when the add button is clicked */}
         <button
           onClick={inMinicart? () => removeProduct(id) : () => addProduct(id) }
 
@@ -70,7 +69,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProsp = (dispatch) => {
   return {
-    addProduct: (productId) => dispatch(fetchProduct(productId)),
+    addProduct: (productId) => dispatch(fetchAndAddToCart(productId)),
     removeProduct: (productId) => dispatch(removeFromCart({id: productId}))
   };
 };

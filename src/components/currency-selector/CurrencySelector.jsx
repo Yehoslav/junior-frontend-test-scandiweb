@@ -12,7 +12,6 @@ class CurrencySelector extends Component {
   render() {
     const { onToggleDropdown, showDropdown } = this.props;
     const arrowDir = showDropdown ? "__up" : "__down";
-    // HACK: This variable is to make the component work before introducing redux
 
     const {
       selectedCurrency: { symbol },

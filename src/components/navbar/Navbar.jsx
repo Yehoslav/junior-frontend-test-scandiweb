@@ -38,7 +38,6 @@ class Navbar extends Component {
           </div>
           <img className="brand" src={logo} alt="Site logo" />
           <div className="actions">
-          {/** FIXME: Make dropdown into a general element that could warp other elements */}
             <CurrencySelector 
               showDropdown={activeDropdown === "Currency"}
               onToggleDropdown={() => this.toggleDropdown("Currency")}/>
