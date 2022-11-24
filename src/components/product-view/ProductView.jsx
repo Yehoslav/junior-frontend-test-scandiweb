@@ -5,8 +5,8 @@ import placeholder from "../../res/img/placeholder.png";
 
 import AttributeSelector from "../attribute-selector/AttributeSelector";
 import  withRouter  from "../../utils/withRouter";
-import { fetchProduct, selectAttribute } from "../../lib/productSlice";
-import { fetchProduct as fetchAndAddToCart, removeFromCart } from "../../lib/cartSlice";
+// import { fetchProduct, selectAttribute } from "../../lib/productSlice";
+import { fetchAndAddToCart, selectAttribute, removeFromCart, getProductData as getPD } from "../../lib/cartSlice";
 import { connect } from "react-redux";
 
 class ProductView extends Component {
@@ -64,9 +64,7 @@ class ProductView extends Component {
             selected={attr.selectedAttr}
             color={attr.type === "swatch"}
             onAttributeSelect={(value) => {
-                const payload = {attrId: attr.name,  value}
-                console.log("Select attribute payload")
-                console.dir(payload)
+                const payload = {productId: id, attrId: attr.name,  value}
                 selectAttr(payload)
               }}
             attributes={attr.items.map((item) => item.value)}
@@ -92,20 +90,31 @@ class ProductView extends Component {
   }
 
   render() {
-    console.log("ProductView")
-    console.dir(this.props)
-    
     const {product, status, addToCart, currency, removeProduct, selectAttr, products} = this.props
     const inCart = (product !== undefined) && products.find((item) => item.id === product.id) !== undefined;
 
-    return (status === "succeeded") ? this.buildContent(product, removeProduct, addToCart, currency, selectAttr, inCart) : <h1>loading</h1>;
+    switch (product.status) {
+      case "succeeded":
+        // TODO: Create a more comprehensive component
+        const productData = product.inCart? products.find((item) => item.id === product.id) : product
+        return this.buildContent(productData, removeProduct, addToCart, currency, selectAttr, inCart) 
+
+      case "loading":
+        return <h1>loading</h1>
+
+      case "error":
+        return <h1>An error occured.</h1>
+
+      default:
+        break;
+    }
+
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    product: state.product.productData,
-    status: state.product.status,
+    product: state.cart.productViewData,
     currency: state.currency.globalCurrency,
     // HACK: Maybe create a function inside the slice to check for presence in cart?
     products: state.cart.products,
@@ -115,7 +124,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     selectAttr: (attrId, value) => dispatch(selectAttribute(attrId, value)),
-    getProductData: (productId) => dispatch(fetchProduct(productId)),
+    getProductData: (productId) => dispatch(getPD(productId)),
     addToCart: (productId) => dispatch(fetchAndAddToCart(productId)),
     removeProduct: (productId) => dispatch(removeFromCart({id: productId})),
   }
