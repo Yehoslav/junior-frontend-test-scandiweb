@@ -6,7 +6,7 @@ import placeholder from "../../res/img/placeholder.png";
 import AttributeSelector from "../attribute-selector/AttributeSelector";
 import  withRouter  from "../../utils/withRouter";
 // import { fetchProduct, selectAttribute } from "../../lib/productSlice";
-import { fetchAndAddToCart, selectAttribute, removeFromCart, getProductData as getPD } from "../../lib/cartSlice";
+import { selectAttribute, removeFromCart, getProductData as getPD, addToCart as addTC } from "../../lib/cartSlice";
 import { connect } from "react-redux";
 
 class ProductView extends Component {
@@ -78,7 +78,7 @@ class ProductView extends Component {
             {prices.find((item) => item.currency.symbol === currency.symbol).amount}
           </div>
           <button 
-            onClick={inCart? () => removeProduct(id) : () => onAddToCart(id)}
+            onClick={inCart? () => removeProduct(id) : () => onAddToCart()}
             className={`btn ${inCart? "btn__sec":"btn__pri"} f-16 p16 mt25`} 
             style={{ height: 50 }}>
             {inCart? "remove from cart" : "add to cart"}
@@ -125,7 +125,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     selectAttr: (attrId, value) => dispatch(selectAttribute(attrId, value)),
     getProductData: (productId) => dispatch(getPD(productId)),
-    addToCart: (productId) => dispatch(fetchAndAddToCart(productId)),
+    addToCart: () => dispatch(addTC()),
     removeProduct: (productId) => dispatch(removeFromCart({id: productId})),
   }
 }

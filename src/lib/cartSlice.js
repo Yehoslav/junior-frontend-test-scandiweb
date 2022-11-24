@@ -66,6 +66,13 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
+    addToCart: (state) => {
+      const {id, name, brand, gallery, prices, attributes } = state.productViewData;
+      return {
+        ...state,
+        products: [...state.products, {id, name, brand, gallery, prices, attributes, amount: 1 } ]
+      }
+    },
     selectAttribute: (state, action) => {
       const product = state.productViewData;
       const {productId, attrId, value} = action.payload;
@@ -167,7 +174,7 @@ const cartSlice = createSlice({
   },
 });
 
-export const { increaseProductAmmount, selectAttribute, decreaseProductAmmount, removeFromCart } =
+export const { increaseProductAmmount, addToCart, selectAttribute, decreaseProductAmmount, removeFromCart } =
   cartSlice.actions;
 
 export default cartSlice.reducer;
