@@ -3,6 +3,7 @@
 :root {
   --primary: #5ece7b;
   --black: #1d1f22;
+  --white: #ffffff;
 }
 
 * {
@@ -193,7 +194,7 @@ $sides: (
   // Secondary button
   &__sec {
     border: 1px solid var(--black);
-    background-color: #fff;
+    background-color: var(--white);
 
     &:hover, &.sel {
       color: white;
@@ -220,8 +221,6 @@ $sides: (
 
 }
 
-$color-dark: #000;
-$color-light: #fff;
 $bg-size-end: 5;
 $dur: .15s;
 
@@ -234,11 +233,10 @@ $dur: .15s;
 
   outline: none;
   user-select: none;
-  color: $color-dark;
-  font-family: 'Lato', sans-serif;
+  color: var(--black);
   cursor: pointer;
-  border: 1px solid $color-dark;
-  background: $color-light;
+  border: 1px solid var(--black);
+  background: var(--white);
   position: relative;
   overflow: hidden;
   display: flex;
@@ -258,9 +256,9 @@ $dur: .15s;
     //Gradient start values are somewhat arbitrary. But this seemed a good fit to avoid overly-blurry circle edge.
     background: radial-gradient(
       circle at center, 
-      $color-light 24%, 
-      $color-dark 25%, 
-      $color-dark 100%);
+      var(--white) 24%, 
+      var(--black) 25%, 
+      var(--black) 100%);
   }  
 
   &:active {
