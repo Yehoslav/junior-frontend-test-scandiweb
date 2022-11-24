@@ -31,7 +31,8 @@
 
 .loading {
   position: relative;
-  background-color: #e2e2e2;
+  background-color: #f4f2f2;
+  border-radius: 6px;
 
   &.text {
     height: 1.3rem;
@@ -48,6 +49,7 @@
 }
 
 /* The moving element */
+// TODO: Move the loading class into a separate file
 .loading::after {
   display: block;
   content: "";
