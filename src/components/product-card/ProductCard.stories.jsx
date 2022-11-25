@@ -1,22 +1,33 @@
-import ProductCard from "./ProductCard";
+import { withRouter } from "storybook-addon-react-router-v6";
+
 import placeholder from "../../res/img/placeholder.png";
+import ProductCard from "./ProductCard";
 
 export default {
   component: ProductCard,
-  title: 'ProductCard',
-}
+  title: "ProductCard",
+  decorators: [ withRouter, ],
+};
 
-const Template = args => <ProductCard {...args} />
+const Template = (args) => <ProductCard {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  id: 'apollo-something-there',
-  name: 'Apollo Something THere',
+  id: "apollo-something-there",
+  brand: "Apollo",
+  name: "Something There",
   gallery: [placeholder],
-  prices: [{
-    amount: 500,
+  price: {
+    amount: 600,
     currency: {
-      symbol: "$"
-    }
-  }]
-}
+      symbol: "€",
+    },
+  },
+  btnAction: "ADD",
+};
+
+export const Remove = Template.bind({});
+Remove.args = {
+  ...Default.args,
+  btnAction: "REMOVE",
+};
