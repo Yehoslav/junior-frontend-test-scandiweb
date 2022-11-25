@@ -82,7 +82,7 @@ ProductCard.propTypes = {
       symbol: PropTypes.string.isRequired,
     }),
   }),
-  btnAction: PropTypes.string.isRequired,
+  btnAction: PropTypes.oneOf(["ADD", "REMOVE"]),
   onCartClick: PropTypes.func.isRequired,
 };
 

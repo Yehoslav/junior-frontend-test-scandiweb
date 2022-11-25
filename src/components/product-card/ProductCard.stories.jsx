@@ -25,9 +25,3 @@ Default.args = {
   },
   btnAction: "ADD",
 };
-
-export const Remove = Template.bind({});
-Remove.args = {
-  ...Default.args,
-  btnAction: "REMOVE",
-};
