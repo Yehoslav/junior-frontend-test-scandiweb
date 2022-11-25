@@ -1,10 +1,8 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 
 import "./product-card.scss";
-import { fetchAndAddToCart, removeFromCart } from "../../lib/cartSlice";
 
 // import placeholder from "../../res/img/placeholder.png";
 
@@ -12,33 +10,46 @@ import { CartIcon } from "../mini-cart";
 
 class ProductCard extends Component {
   render() {
-    const { products, globCurrency, id, name, gallery, prices, removeProduct, addProduct, } =
-      this.props;
-
     const {
-      currency: { symbol },
-      amount,
-    } = prices.filter(
-      (item) => item.currency.symbol === globCurrency.symbol
-    )[0];
+      id,
+      brand,
+      name,
+      gallery,
+      price: {
+        currency: { symbol },
+        amount,
+      },
+      btnAction,
+      onCartClick,
+    } = this.props;
 
-    const inMinicart = products.find((item) => item.id === id) !== undefined;
+    const btnClass = (action) => {
+      switch (action) {
+        case "REMOVE":
+          return "prd-btn rm";
+
+        case "ADD":
+          return "prd-btn add";
+
+        default:
+          return "";
+      }
+    };
 
     return (
       <div className="card">
         <div className="image">
-          <img src={gallery[0]} alt="Placeholder" />
+          <img src={gallery[0]} alt="Product image" />
         </div>
-        <button
-          onClick={inMinicart? () => removeProduct(id) : () => addProduct(id) }
 
-          className={inMinicart? "prd-btn rm" : "prd-btn add" }
-        >
+        <button onClick={onCartClick} className={btnClass(btnAction)}>
           <CartIcon />
         </button>
+
         <Link to={`/product/${id}`} className="fp-l">
-          {name}
+          {brand} {name}
         </Link>
+
         <div className="fp-m">
           {symbol}
           {amount}
@@ -56,36 +67,23 @@ export class ProductCardLoading extends Component {
         <div className="p16 mb5 ml5 mr30 loading"></div>
         <div className="p16 mb5 ml5 mr30 loading"> </div>
       </div>
-    )
+    );
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    globCurrency: state.currency.globalCurrency,
-    products: state.cart.products,
-  };
-};
-
-const mapDispatchToProsp = (dispatch) => {
-  return {
-    addProduct: (productId) => dispatch(fetchAndAddToCart(productId)),
-    removeProduct: (productId) => dispatch(removeFromCart({id: productId}))
-  };
-};
-
 ProductCard.propTypes = {
   id: PropTypes.string.isRequired,
+  brand: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   gallery: PropTypes.arrayOf(PropTypes.string),
-  prices: PropTypes.arrayOf(
-    PropTypes.shape({
-      amount: PropTypes.number.isRequired,
-      currency: PropTypes.shape({
-        symbol: PropTypes.string.isRequired,
-      }),
-    })
-  ),
+  price: PropTypes.shape({
+    amount: PropTypes.number.isRequired,
+    currency: PropTypes.shape({
+      symbol: PropTypes.string.isRequired,
+    }),
+  }),
+  btnAction: PropTypes.string.isRequired,
+  onCartClick: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProsp)(ProductCard);
+export default ProductCard;
