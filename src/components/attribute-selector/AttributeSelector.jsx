@@ -1,10 +1,18 @@
 import { Component } from "react";
+import PropTypes from "prop-types";
 
 import "./attribute-selector.scss";
 
 class AttributeSelector extends Component {
   render() {
-    const { selected, title, color, attributes, inMiniCart, onAttributeSelect} = this.props;
+    const { 
+      selected, 
+      title, 
+      color, 
+      attributes, 
+      inMiniCart, 
+      onAttributeSelect
+    } = this.props;
 
     const titleStyle = (baseStyle = "fs-c f-18") => {
       if (inMiniCart) return "fp f-14"
@@ -57,6 +65,17 @@ class AttributeSelector extends Component {
       </div>
     );
   }
+}
+
+AttributeSelector.propTypes = {
+  title: PropTypes.string.isRequired, 
+  color: PropTypes.bool.isRequired, 
+  inMiniCart: PropTypes.bool, 
+  selected: PropTypes.string, 
+  attributes: PropTypes.arrayOf(
+      PropTypes.string
+    ).isRequired, 
+  onAttributeSelect: PropTypes.func.isRequired,
 }
 
 export default AttributeSelector;
