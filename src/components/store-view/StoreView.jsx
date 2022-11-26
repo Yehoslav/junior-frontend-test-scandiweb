@@ -34,7 +34,7 @@ class StoreView extends Component {
     if (category !== prevCategory) getProducts(category);
   }
 
-  buildProductList = (products, status, error) => {
+  buildProductList = (products, globalCurrency, status, error) => {
     const {inCart, removeFromCart, addToCart} = this.props
 
     const getAction = (productId) => {
@@ -66,10 +66,10 @@ class StoreView extends Component {
           return (<ProductCard 
               key={id} 
               name={name}
-              linkPath={`product/${id}`}
+              linkPath={`/product/${id}`}
               brand={brand}
               gallery={gallery}
-              price={prices[0]}
+            price={prices.find((item) => item.currency.symbol === globalCurrency.symbol)}
               {...getAction(id)}
             />)
         });
@@ -89,9 +89,10 @@ class StoreView extends Component {
       status,
       error,
       products,
+      globalCurrency,
     } = this.props;
 
-    const productCards = this.buildProductList(products, status, error);
+    const productCards = this.buildProductList(products, globalCurrency, status, error);
 
     return (
       <div>
@@ -103,10 +104,11 @@ class StoreView extends Component {
   }
 }
 
-const mapStateToProps = ({ store: { products, status, error }, cart }) => ({
+const mapStateToProps = ({ store: { products, status, error }, cart, currency: {globalCurrency} }) => ({
   products,
   status,
   error,
+  globalCurrency,
   inCart: (productId) => checkProductSelector(cart, productId),
 });
 
