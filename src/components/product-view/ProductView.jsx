@@ -6,7 +6,7 @@ import placeholder from "../../res/img/placeholder.png";
 import AttributeSelector from "../attribute-selector/AttributeSelector";
 import  withRouter  from "../../utils/withRouter";
 // import { fetchProduct, selectAttribute } from "../../lib/productSlice";
-import { selectAttribute, removeFromCart, getProductData as getPD, addToCart as addTC } from "../../lib/cartSlice";
+import { selectAttribute, removeFromCart,checkProductSelector, getProductData as getPD, addToCart as addTC } from "../../lib/cartSlice";
 import { connect } from "react-redux";
 
 class ProductView extends Component {
@@ -90,14 +90,18 @@ class ProductView extends Component {
   }
 
   render() {
-    const {product, status, addToCart, currency, removeProduct, selectAttr, products} = this.props
-    const inCart = (product !== undefined) && products.find((item) => item.id === product.id) !== undefined;
+    const {product, inCart, addToCart, currency, removeProduct, selectAttr, products} = this.props
 
     switch (product.status) {
       case "succeeded":
         // TODO: Create a more comprehensive component
-        const productData = product.inCart? products.find((item) => item.id === product.id) : product
-        return this.buildContent(productData, removeProduct, addToCart, currency, selectAttr, inCart) 
+        const productData = inCart(product.id)
+          ? products.find((item) => item.id === product.id) 
+          : product
+
+        return this.buildContent(
+          {...productData, description: product.description}, 
+          removeProduct, addToCart, currency, selectAttr, inCart(product.id)) 
 
       case "loading":
         return <h1>loading</h1>
@@ -112,12 +116,13 @@ class ProductView extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({cart, currency}) => {
   return {
-    product: state.cart.productViewData,
-    currency: state.currency.globalCurrency,
+    product: cart.productViewData,
+    currency: currency.globalCurrency,
     // HACK: Maybe create a function inside the slice to check for presence in cart?
-    products: state.cart.products,
+    products: cart.products,
+    inCart: (productId) => checkProductSelector(cart, productId),
   }
 }
 
