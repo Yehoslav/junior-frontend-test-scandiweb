@@ -6,10 +6,12 @@ import * as ProductStories from "../product-card/ProductCard.stories";
 import { Provider } from "react-redux";
 // import { configureStore, createSlice } from "@reduxjs/toolkit";
 import { graphql } from "msw";
+import ProductCard from "../product-card";
 
 export default {
   component: StoreView,
   title: "StoreView",
+  subcomponents: [ProductCard],
   decorators: [
     (story) => <Provider store={store}>{story()}</Provider>,
     withRouter,
@@ -17,7 +19,7 @@ export default {
   parameters: {
     reactRouter: {
       routePath: "/store/:category",
-      routeParams: { category: "tech" },
+      routeParams: { category: "test" },
     },
   },
 };
@@ -35,10 +37,10 @@ Default.parameters = {
           ctx.data({
             category: {
               products: [
-                { ...ProductStories.Default.args, id: "appolo1", name: "appolo1", },
-                { ...ProductStories.Default.args, id: "appolo2", name: "appolo2", },
-                { ...ProductStories.Default.args, id: "appolo3", name: "appolo3", },
-                { ...ProductStories.Default.args, id: "appolo6", name: "appolo6", },
+                { ...ProductStories.Default.args, prices: [ProductStories.Default.args.price], id: "appolo1", name: "appolo1", },
+                { ...ProductStories.Default.args, prices: [ProductStories.Default.args.price], id: "appolo2", name: "appolo2", },
+                { ...ProductStories.Default.args, prices: [ProductStories.Default.args.price], id: "appolo3", name: "appolo3", },
+                { ...ProductStories.Default.args, prices: [ProductStories.Default.args.price], id: "appolo6", name: "appolo6", },
               ],
             },
           })

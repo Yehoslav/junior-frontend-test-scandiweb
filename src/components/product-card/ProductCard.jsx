@@ -11,10 +11,10 @@ import { CartIcon } from "../mini-cart";
 class ProductCard extends Component {
   render() {
     const {
-      id,
-      brand,
       name,
+      brand,
       gallery,
+      linkPath,
       price: {
         currency: { symbol },
         amount,
@@ -46,7 +46,7 @@ class ProductCard extends Component {
           <CartIcon />
         </button>
 
-        <Link to={`/product/${id}`} className="fp-l">
+        <Link to={linkPath} className="fp-l">
           {brand} {name}
         </Link>
 
@@ -72,8 +72,8 @@ export class ProductCardLoading extends Component {
 }
 
 ProductCard.propTypes = {
-  id: PropTypes.string.isRequired,
   brand: PropTypes.string.isRequired,
+  linkPath: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   gallery: PropTypes.arrayOf(PropTypes.string),
   price: PropTypes.shape({
@@ -82,7 +82,7 @@ ProductCard.propTypes = {
       symbol: PropTypes.string.isRequired,
     }),
   }),
-  btnAction: PropTypes.oneOf(["ADD", "REMOVE"]),
+  btnAction: PropTypes.oneOf(["ADD", "REMOVE"]).isRequired,
   onCartClick: PropTypes.func.isRequired,
 };
 

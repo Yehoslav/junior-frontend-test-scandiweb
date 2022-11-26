@@ -4,6 +4,11 @@ import { connect } from "react-redux";
 import "./store-view.scss";
 import withRouter from "../../utils/withRouter";
 import { fetchProducts } from "../../lib/storeSlice";
+import { 
+  fetchAndAddToCart, 
+  removeFromCart, 
+  checkProductSelector 
+} from "../../lib/cartSlice";
 
 import ProductCard, { ProductCardLoading } from "../product-card";
 
@@ -30,8 +35,23 @@ class StoreView extends Component {
   }
 
   buildProductList = (products, status, error) => {
+    const {inCart, removeFromCart, addToCart} = this.props
+
+    const getAction = (productId) => {
+      console.log(`(inCart ${productId})? ${inCart(productId)}`)
+      if (inCart(productId)) return {
+        onCartClick: () => removeFromCart(productId),
+        btnAction: "REMOVE",
+      }
+      return {
+        onCartClick: () => addToCart(productId),
+        btnAction: "ADD",
+      }
+    }
+
     console.log(`Product list status: ${status}`);
     switch (status) {
+
       case "loading":
         return (
           <>
@@ -40,22 +60,32 @@ class StoreView extends Component {
             <ProductCardLoading />
           </>
         );
+
       case "succeeded":
-        return products.map((product) => (
-          <ProductCard key={product.id} {...product} />
-        ));
+        return products.map(({id, prices, name, brand, gallery}) => { 
+          return (<ProductCard 
+              key={id} 
+              name={name}
+              linkPath={`product/${id}`}
+              brand={brand}
+              gallery={gallery}
+              price={prices[0]}
+              {...getAction(id)}
+            />)
+        });
+
       case "failed":
         return <h3>{error}</h3>;
+
       default:
         return <h3>{status}</h3>;
+
     }
   };
 
   render() {
     const {
-      router: {
-        params: { category },
-      },
+      router: { params: { category }, },
       status,
       error,
       products,
@@ -73,15 +103,18 @@ class StoreView extends Component {
   }
 }
 
-const mapStateToProps = ({ store: { products, status, error } }) => ({
+const mapStateToProps = ({ store: { products, status, error }, cart }) => ({
   products,
   status,
   error,
+  inCart: (productId) => checkProductSelector(cart, productId),
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getProducts: (category) => dispatch(fetchProducts(category)),
+    addToCart: (productId) => dispatch(fetchAndAddToCart({ productId })),
+    removeFromCart: (productId) => dispatch(removeFromCart({ productId })),
   };
 };
 
