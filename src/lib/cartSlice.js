@@ -4,19 +4,14 @@ import { getProduct } from "./database";
 const initialState = {
   products: [],
   productViewData: { 
-          inCart: false, 
-          id: null,
-          status: "loading",
-          error: null,
-        },
+    id: null,
+    status: "loading",
+    error: null,
+  },
   status: "idle",
   error: null,
 };
 
-/* Creates an asyncThunk to fetch tasks from a remote endpoint.
- * You can read more about Redux Toolkit's thunks in the docs:
- * https://redux-toolkit.js.org/api/createAsyncThunk
- */
 export const fetchAndAddToCart = createAsyncThunk(
   "cart/addItem",
   async ({ productId }, thunkAPI) => {
@@ -37,10 +32,6 @@ export const fetchAndAddToCart = createAsyncThunk(
   }
 );
 
-/* Creates an asyncThunk to fetch tasks from a remote endpoint.
- * You can read more about Redux Toolkit's thunks in the docs:
- * https://redux-toolkit.js.org/api/createAsyncThunk
- */
 export const getProductData = createAsyncThunk(
   "store/getProduct",
   async (productId, thunkAPI) => {
@@ -72,20 +63,11 @@ const cartSlice = createSlice({
       return {
         ...state,
         products: [...state.products, {id, name, brand, gallery, prices, attributes, amount: 1 } ],
-        productViewData: {
-        ...state.productViewData,
-          inCart: false
-      },
       }
     },
     selectAttribute: (state, action) => {
       const product = state.productViewData;
       const {productId, attrId, value} = action.payload;
-
-      console.log('payload: ');
-      console.dir(action.payload)
-      console.dir(current(state))
-      console.dir(current(product))
 
       // HACK: This return statement is too ugly
       return {
@@ -108,7 +90,7 @@ const cartSlice = createSlice({
             if (attrId === att.id) return { ...att, selectedAttr: value }
             return att;
         }),
-        } : product.attributes,
+        } : product,
       };
     },
     increaseProductAmmount: (state, action) => {
