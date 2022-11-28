@@ -6,7 +6,13 @@ import placeholder from "../../res/img/placeholder.png";
 import AttributeSelector from "../attribute-selector/AttributeSelector";
 import  withRouter  from "../../utils/withRouter";
 // import { fetchProduct, selectAttribute } from "../../lib/productSlice";
-import { selectAttribute, removeFromCart,checkProductSelector, getProductData as getPD, addToCart as addTC } from "../../lib/cartSlice";
+import { 
+  selectAttribute, 
+  removeFromCart,
+  checkProductSelector, 
+  fetchProductData as getPD, 
+  addToCart as addTC 
+} from "../../lib/cartSlice";
 import { connect } from "react-redux";
 
 class ProductView extends Component {
@@ -23,7 +29,14 @@ class ProductView extends Component {
     getProductData(productId)
   }
 
-  buildContent = ({ gallery, id, brand, name, description, attributes, prices, }, removeProduct, onAddToCart, currency, selectAttr, inCart) => {
+  buildContent = (
+    { gallery, id, brand, name, description, attributes, prices, }, 
+    removeProduct, 
+    onAddToCart, 
+    currency, 
+    selectAttr, 
+    inCart
+  ) => {
     let { focusImg } = this.state;
 
     // HACK: There should be a better method to set a default focused image
@@ -32,7 +45,6 @@ class ProductView extends Component {
       focusImg = gallery[0]
     }
 
-    console.dir(prices)
    return (
       <div className="row-g8 wrap pt80">
         <div className="row">
@@ -120,7 +132,6 @@ const mapStateToProps = ({cart, currency}) => {
   return {
     product: cart.productViewData,
     currency: currency.globalCurrency,
-    // HACK: Maybe create a function inside the slice to check for presence in cart?
     products: cart.products,
     inCart: (productId) => checkProductSelector(cart, productId),
   }
@@ -131,7 +142,7 @@ const mapDispatchToProps = (dispatch) => {
     selectAttr: (attrId, value) => dispatch(selectAttribute(attrId, value)),
     getProductData: (productId) => dispatch(getPD(productId)),
     addToCart: () => dispatch(addTC()),
-    removeProduct: (productId) => dispatch(removeFromCart({id: productId})),
+    removeProduct: (productId) => dispatch(removeFromCart({productId})),
   }
 }
 

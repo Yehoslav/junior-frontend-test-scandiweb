@@ -69,7 +69,7 @@ class StoreView extends Component {
               linkPath={`/product/${id}`}
               brand={brand}
               gallery={gallery}
-            price={prices.find((item) => item.currency.symbol === globalCurrency.symbol)}
+              price={prices.find((item) => item.currency.symbol === globalCurrency.symbol)}
               {...getAction(id)}
             />)
         });
@@ -104,7 +104,11 @@ class StoreView extends Component {
   }
 }
 
-const mapStateToProps = ({ store: { products, status, error }, cart, currency: {globalCurrency} }) => ({
+const mapStateToProps = ({
+  store: { products, status, error }, 
+  cart, 
+  currency: {globalCurrency} 
+}) => ({
   products,
   status,
   error,
