@@ -25,95 +25,89 @@ class ProductView extends Component {
   }
 
   componentDidMount = () => {
-    const { getProductData, router: { params: {productId}} } = this.props;
+    const { 
+      getProductData, 
+      router: { params: {productId}} 
+    } = this.props;
+
     getProductData(productId)
   }
 
-  buildContent = (
-    { gallery, id, brand, name, description, attributes, prices, }, 
-    removeProduct, 
-    onAddToCart, 
-    currency, 
-    selectAttr, 
-    inCart
-  ) => {
-    let { focusImg } = this.state;
+  render() {
+    const {
+      product, inCart, addToCart, currency, removeProduct, selectAttr, products
+    } = this.props
+    
+    switch (product.status) {
+      case "succeeded":
+        let { focusImg } = this.state;
 
-    // HACK: There should be a better method to set a default focused image
-    if (focusImg === placeholder || gallery.filter((item) => item === focusImg).length === 0) {
-      // this.selectImage(gallery[0])
-      focusImg = gallery[0]
-    }
+        const {
+          brand, name, prices, attributes, gallery, id, 
+        } = inCart(product.id)
+          ? products.find((item) => item.id === product.id) 
+          : product
 
-   return (
-      <div className="row-g8 wrap pt80">
-        <div className="row">
-          <div className="col-g8 preview">
-            {
-              gallery.map(img => (
-                <div 
-                  key={img}
-                  onClick={() => this.selectImage(img)}
-                  className="prd-thumb">
-                  <img src={img} alt={img} />
-                </div>
-              ))
-            }
-          </div>
-          <div className="img">
-            <div className="prod-img">
-              <img src={focusImg} alt="Placeholder" />
-            </div>
-          </div>
-        </div>
-        <div className="col-g4 info">
-          <div className="fp-b f-30 pb5">{brand}</div>
-          <div className="fp f-30 pb10">{name}</div>
-          {attributes.map(attr => (
+        // HACK: There should be a better method to set a default focused image
+        if ( focusImg === placeholder 
+          || gallery.filter((item) => item === focusImg).length === 0)
+          focusImg = gallery[0]
+
+        const attributeItems = attributes.map(attr => (
           <AttributeSelector 
             key={attr.name}
             title={attr.name}
             selected={attr.selectedAttr}
             color={attr.type === "swatch"}
-            onAttributeSelect={(value) => {
-                const payload = {productId: id, attrId: attr.name,  value}
-                selectAttr(payload)
-              }}
+            onAttributeSelect={value => selectAttr({productId: id, attrId: attr.name,  value}) }
             attributes={attr.items.map((item) => item.value)}
           />
-          ))}
-          <div className="fp-b mt20" >
-            PRICE:
-          </div>
-          <div className="fp-b f-24">
-            {currency.symbol}
-            {prices.find((item) => item.currency.symbol === currency.symbol).amount}
-          </div>
+        ))
+
+        {/* TODO: Create a button component */}
+        const button = (
           <button 
-            onClick={inCart? () => removeProduct(id) : () => onAddToCart()}
-            className={`btn ${inCart? "btn__sec":"btn__pri"} f-16 p16 mt25`} 
+            onClick={inCart(id)? () => removeProduct(id) : () => addToCart()}
+            className={`btn ${inCart(id)? "btn__sec":"btn__pri"} f-16 p16 mt25`} 
             style={{ height: 50 }}>
-            {inCart? "remove from cart" : "add to cart"}
+            {inCart(id)? "remove from cart" : "add to cart"}
           </button>
-          <div className="f-16 mt30" dangerouslySetInnerHTML={{__html: description}}></div>
-        </div>
-      </div>
-    )
-  }
+        )
 
-  render() {
-    const {product, inCart, addToCart, currency, removeProduct, selectAttr, products} = this.props
+        const images = (
+          <div className="row">
+            <div className="col-g8 preview">
+              {
+                gallery.map((img, count) => (
+                  <div 
+                    key={ id + `-${count}` }
+                    onClick={() => this.selectImage(img)}
+                    className="prd-thumb">
+                    <img src={img} alt={brand + name + ` preview ${count}`} />
+                  </div>
+                ))
+              }
+            </div>
+            <div className="img">
+              <div className="prod-img">
+                <img src={focusImg} alt="Placeholder" />
+              </div>
+            </div>
+          </div>
+        )
 
-    switch (product.status) {
-      case "succeeded":
-        // TODO: Create a more comprehensive component
-        const productData = inCart(product.id)
-          ? products.find((item) => item.id === product.id) 
-          : product
-
-        return this.buildContent(
-          {...productData, description: product.description}, 
-          removeProduct, addToCart, currency, selectAttr, inCart(product.id)) 
+        return (
+          <View
+            brand={brand}
+            name={name}
+            images={images}
+            currency={currency.symbol}
+            price={prices.find((item) => item.currency.symbol === currency.symbol).amount}
+            attributes= {attributeItems}
+            button={button}
+            description={product.description}
+          />
+        )
 
       case "loading":
         return <h1>loading</h1>
@@ -125,6 +119,36 @@ class ProductView extends Component {
         break;
     }
 
+  }
+}
+
+class View extends Component {
+  render () {
+    const {
+      brand, name, currency, images, price, attributes, button, description 
+    } = this.props
+
+    return (
+      <div className="row-g8 wrap pt80">
+        {images}
+        <div className="col-g4 info">
+          <div className="fp-b f-30 pb5">{brand}</div>
+          <div className="fp f-30 pb10">{name}</div>
+          {attributes}
+          <div className="fp-b mt20" >
+            PRICE:
+          </div>
+          <div className="fp-b f-24">
+            {currency}
+            {price}
+          </div>
+          <div 
+            className="f-16 mt30" 
+            dangerouslySetInnerHTML={{__html: description}}></div>
+          {button}
+        </div>
+      </div>
+    )
   }
 }
 
