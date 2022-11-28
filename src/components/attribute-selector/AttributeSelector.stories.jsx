@@ -14,12 +14,13 @@ Default.args = {
   title: "Size",
   color: false,
   attributes: ["XL", "XXL", "S"],
+  inMiniCart: false,
 }
 
 export const InMiniCart = Template.bind({});
 InMiniCart.args = {
   ...Default.args,
-  inMinicart: true,
+  inMiniCart: true,
 }
 
 export const ColorAttributes = Template.bind({});
@@ -27,6 +28,7 @@ ColorAttributes.args = {
   title: "Color",
   selected: "red",
   color: true,
-  attributes: ["yellow", "red", "green"]
+  attributes: ["yellow", "red", "green"],
+  inMiniCart: false,
 }
 
