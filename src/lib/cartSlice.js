@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
+import { createSelector, createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
 import { getProduct } from "./database";
 
 const initialState = {
@@ -19,12 +19,13 @@ const initialState = {
  */
 export const fetchAndAddToCart = createAsyncThunk(
   "cart/addItem",
-  async (itemId, thunkAPI) => {
-    const inCart = thunkAPI.getState().cart.products.find((item) => item.id === itemId)
+  async ({ productId }, thunkAPI) => {
+    
+    const inCart = thunkAPI.getState().cart.products.find((item) => item.id === productId)
     if (inCart)
       return thunkAPI.rejectWithValue("Product already in cart");
 
-    const { product } = await getProduct(itemId);
+    const { product } = await getProduct(productId);
     return {
       ...product,
       amount: 1,
@@ -70,7 +71,11 @@ const cartSlice = createSlice({
       const {id, name, brand, gallery, prices, attributes } = state.productViewData;
       return {
         ...state,
-        products: [...state.products, {id, name, brand, gallery, prices, attributes, amount: 1 } ]
+        products: [...state.products, {id, name, brand, gallery, prices, attributes, amount: 1 } ],
+        productViewData: {
+        ...state.productViewData,
+          inCart: false
+      },
       }
     },
     selectAttribute: (state, action) => {
@@ -122,7 +127,7 @@ const cartSlice = createSlice({
     removeFromCart: (state, action) => {
       return { 
         ...state,
-        products: state.products.filter((item) => item.id !== action.payload.id) }
+        products: state.products.filter((item) => item.id !== action.payload.productId) }
     }
   },
   extraReducers: (builder) => {
@@ -173,6 +178,11 @@ const cartSlice = createSlice({
       }));
   },
 });
+
+export const checkProductSelector = createSelector(
+  [(state) => state.products, (_, productId) => productId],
+  (products, productId) => products.find((item) => item.id === productId) !== undefined
+)
 
 export const { increaseProductAmmount, addToCart, selectAttribute, decreaseProductAmmount, removeFromCart } =
   cartSlice.actions;
