@@ -1,4 +1,4 @@
-import { createSelector, createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
+import { createSelector, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getProductData } from "./database";
 
 const initialState = {
@@ -107,7 +107,6 @@ const cartSlice = createSlice({
       }
     },
     removeFromCart: (state, action) => {
-      console.dir(action)
       return { 
         ...state,
         products: state.products.filter((item) => item.id !== action.payload.productId) }
