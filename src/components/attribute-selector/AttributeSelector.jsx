@@ -50,6 +50,7 @@ class AttributeSelector extends Component {
 
       return (
         <button 
+          key={item}
           onClick={() => onAttributeSelect(item)}
           style={style}
           className={`bbtn ${baseClass}`}>
