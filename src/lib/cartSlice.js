@@ -1,5 +1,5 @@
 import { createSelector, createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
-import { getProduct } from "./database";
+import { getProductData } from "./database";
 
 const initialState = {
   products: [],
@@ -20,7 +20,7 @@ export const fetchAndAddToCart = createAsyncThunk(
     if (inCart)
       return thunkAPI.rejectWithValue("Product already in cart");
 
-    const { product } = await getProduct(productId);
+    const { product } = await getProductData(productId, ["id", "name", "brand", "gallery"]);
     return {
       ...product,
       amount: 1,
@@ -32,19 +32,19 @@ export const fetchAndAddToCart = createAsyncThunk(
   }
 );
 
-export const getProductData = createAsyncThunk(
+export const fetchProductData = createAsyncThunk(
   "store/getProduct",
   async (productId, thunkAPI) => {
     const inCart = thunkAPI.getState().cart.products.find((item) => item.id === productId)
     if (inCart) {
-      const { product: product } = await getProduct(productId, ["description"]);
+      const { product: product } = await getProductData(productId, ["id", "name", "brand", "gallery", "description"]);
       return {
         ...inCart, 
         description: product.description
       }
     }
 
-    const { product: product } = await getProduct(productId, ["description"]);
+    const { product: product } = await getProductData(productId, ["id", "name", "brand", "gallery", "description"]);
     return {
       ...product,
       attributes: product.attributes.map((att) => ({
@@ -107,6 +107,7 @@ const cartSlice = createSlice({
       }
     },
     removeFromCart: (state, action) => {
+      console.dir(action)
       return { 
         ...state,
         products: state.products.filter((item) => item.id !== action.payload.productId) }
@@ -132,7 +133,7 @@ const cartSlice = createSlice({
         error: "Somethin went wrong.",
         products: state.products,
       }))
-      .addCase(getProductData.fulfilled, (state, action) => ({
+      .addCase(fetchProductData.fulfilled, (state, action) => ({
         ...state,
         productViewData: { 
           ...action.payload,
@@ -140,7 +141,7 @@ const cartSlice = createSlice({
           error: null,
         },
       }))
-      .addCase(getProductData.pending, (state) => ({
+      .addCase(fetchProductData.pending, (state) => ({
         ...state,
         productViewData: { 
           inCart: false, 
@@ -149,7 +150,7 @@ const cartSlice = createSlice({
           error: null,
         },
       }))
-      .addCase(getProductData.rejected, (state) => ({
+      .addCase(fetchProductData.rejected, (state) => ({
         ...state,
         productViewData: { 
           inCart: false, 

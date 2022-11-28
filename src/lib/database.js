@@ -16,7 +16,7 @@ export const getCurrencies = async () => {
 };
 
 export const getProductList = async (category) => {
-  const productFields = ["id", "name", "inStock", "gallery"];
+  const productFields = ["brand", "id", "name", "inStock", "gallery"];
   const productsQuery = new Query("category", false)
     .addArgument("input", "CategoryInput", { title: category })
     .addField(
@@ -32,8 +32,8 @@ export const getProductList = async (category) => {
   return await client.post(productsQuery);
 };
 
-export const getProduct = async (productId, addtitionaFields=[]) => {
-  const productFields = ["id", "name", "brand", "gallery", ...addtitionaFields];
+export const getProductData = async (productId, addtitionaFields) => {
+  const productFields = addtitionaFields;
 
   const productQuery = new Query("product", false)
     .addArgument("id", "String!", productId)
