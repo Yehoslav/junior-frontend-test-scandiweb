@@ -1,4 +1,5 @@
 import { Component } from "react";
+import PropTypes from "prop-types";
 
 import "./cart-item.scss";
 // import placeholder from "../../res/img/placeholder.png";
@@ -115,6 +116,32 @@ const mapDispatchToProps = (dispatch) => {
   return {
     selectAttr: (payload) => dispatch(selectAttribute(payload))
   }
+}
+
+CartItem.propTypes = {
+  id: PropTypes.string.isRequired,
+  price: PropTypes.shape({
+    currency: PropTypes.shape(
+      {currency: PropTypes.string.isRequired}),
+    amount: PropTypes.number.isRequired,
+  }),
+  name: PropTypes.string.isRequired,
+  brand: PropTypes.string.isRequired,
+  amount: PropTypes.number.isRequired,
+  attributes: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      selectedAttr: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+      items: PropTypes.arrayOf(
+        PropTypes.shape({
+          value: PropTypes.string.isRequired,
+        })
+      )
+    })
+  ),
+  onIncrease: PropTypes.func.isRequired,
+  onDecrease: PropTypes.func.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartItem);
