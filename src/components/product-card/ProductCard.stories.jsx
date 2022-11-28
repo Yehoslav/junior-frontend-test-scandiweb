@@ -13,14 +13,14 @@ const Template = (args) => <ProductCard {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  id: "apollo-something-there",
+  linkPath: "/product/apollo-something-there",
   brand: "Apollo",
   name: "Something There",
   gallery: [placeholder],
   price: {
     amount: 600,
     currency: {
-      symbol: "€",
+      symbol: "$",
     },
   },
   btnAction: "ADD",
