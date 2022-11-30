@@ -14,7 +14,7 @@ import {
   addToCart as addTC 
 } from "../../lib/cartSlice";
 import { connect } from "react-redux";
-import  Button  from "../button";
+import  Button, { ImageButton }  from "../button";
 
 class ProductView extends Component {
   state = {
@@ -84,12 +84,15 @@ class ProductView extends Component {
             <div className="col-g8 preview">
               {
                 gallery.map((img, count) => (
-                  <div 
+                  <ImageButton 
                     key={ id + `-${count}` }
                     onClick={() => this.selectImage(img)}
-                    className="prd-thumb">
-                    <img src={img} alt={brand + name + ` preview ${count}`} />
-                  </div>
+                    selected={focusImg === img}
+                    className="prd-thumb"
+                    size="small"
+                    value={img} 
+                    alt={brand + name + ` preview ${count}`}
+                  />
                 ))
               }
             </div>
