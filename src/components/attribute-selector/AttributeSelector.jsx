@@ -44,7 +44,7 @@ class AttributeSelector extends Component {
           classes="pl5 pr5"
           size={inMiniCart ? "tiny" : "small"}
         >
-          {item.displayValue}
+          {item.value}
         </Button>
       );
     });
