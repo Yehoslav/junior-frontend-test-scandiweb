@@ -27,7 +27,7 @@ class AttributeSelector extends Component {
         selected: item.id === selected,
         value: item.displayValue,
         key: item.id, 
-        onClick: () => onAttributeSelect(item),
+        onClick: () => onAttributeSelect(item.id),
       }
 
       if (color) return (
