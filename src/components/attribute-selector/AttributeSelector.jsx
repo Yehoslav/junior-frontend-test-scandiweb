@@ -37,6 +37,7 @@ class AttributeSelector extends Component {
           type="secondary"
           onClick={() => onAttributeSelect(item)}
           value={item}
+          classes="pl5 pr5"
           selected={item === selected}
           size={inMiniCart? "tiny":"small"}
         />
