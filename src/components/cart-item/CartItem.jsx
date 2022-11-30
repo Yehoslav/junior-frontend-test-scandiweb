@@ -16,7 +16,6 @@ class CartItem extends Component {
     const { selectAttr } = this.props 
 
     const attrItems = attributes.map((attr) => {
-      console.log(attr);
 
       return (<AttributeSelector
         key={attr.name}
@@ -28,8 +27,6 @@ class CartItem extends Component {
         attributes={attr.items.map((attr) => attr.value)}
       />)
     });
-
-    console.dir(attrItems)
 
     const imgStyle = () => {
       if (inMiniCart) return { minWidth: 121, height: 190 };

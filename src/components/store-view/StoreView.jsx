@@ -38,7 +38,6 @@ class StoreView extends Component {
     const {inCart, removeFromCart, addToCart} = this.props
 
     const getAction = (productId) => {
-      console.log(`(inCart ${productId})? ${inCart(productId)}`)
       if (inCart(productId)) return {
         onCartClick: () => removeFromCart(productId),
         btnAction: "REMOVE",
@@ -49,9 +48,7 @@ class StoreView extends Component {
       }
     }
 
-    console.log(`Product list status: ${status}`);
     switch (status) {
-
       case "loading":
         return (
           <>

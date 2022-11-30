@@ -28,8 +28,6 @@ class Button extends Component {
     };
     const className = `${classes || "" } p0 btn__${getType(type)} ${selected? "sel":""} ${fontSize || ""}` 
 
-    console.log(className)
-
     return (
       <button 
         onClick={onClick} 
