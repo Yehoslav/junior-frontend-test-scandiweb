@@ -5,7 +5,7 @@ const initialState = {
   products: [],
   productViewData: { 
     id: null,
-    status: "loading",
+    status: "idle",
     error: null,
   },
   status: "idle",
@@ -37,7 +37,7 @@ export const fetchProductData = createAsyncThunk(
   async (productId, thunkAPI) => {
     const inCart = thunkAPI.getState().cart.products.find((item) => item.id === productId)
     if (inCart) {
-      const { product: product } = await getProductData(productId, ["id", "name", "brand", "gallery", "description"]);
+      const { product: product } = await getProductData(productId, ["description"]);
       return {
         ...inCart, 
         description: product.description
@@ -143,19 +143,17 @@ const cartSlice = createSlice({
       .addCase(fetchProductData.pending, (state) => ({
         ...state,
         productViewData: { 
-          inCart: false, 
           id: null,
           status: "loading",
           error: null,
         },
       }))
-      .addCase(fetchProductData.rejected, (state) => ({
+      .addCase(fetchProductData.rejected, (state, action) => ({
         ...state,
         productViewData: { 
-          inCart: false, 
           id: null,
           status: "failed",
-          error: null,
+          error: action.error,
         },
       }));
   },
