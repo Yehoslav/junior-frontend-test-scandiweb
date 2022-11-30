@@ -26,21 +26,19 @@ export default {
 
 const Template = () => <StoreView />;
 
-// const github = graphql.link('http://localhost:4000')
-
 export const Default = Template.bind({});
 Default.parameters = {
   msw: {
     handlers: [
-      graphql.operation(async (req, res, ctx) => {
+      graphql.operation(async (_, res, ctx) => {
         return res(
           ctx.data({
             category: {
               products: [
-                { ...ProductStories.Default.args, prices: [ProductStories.Default.args.price], id: "appolo1", name: "appolo1", },
-                { ...ProductStories.Default.args, prices: [ProductStories.Default.args.price], id: "appolo2", name: "appolo2", },
-                { ...ProductStories.Default.args, prices: [ProductStories.Default.args.price], id: "appolo3", name: "appolo3", },
-                { ...ProductStories.Default.args, prices: [ProductStories.Default.args.price], id: "appolo6", name: "appolo6", },
+                { ...ProductStories.Default.args, prices: [ProductStories.Default.args.price], id: "appolo1", name: "Appolo 1", },
+                { ...ProductStories.Default.args, prices: [ProductStories.Default.args.price], id: "appolo2", name: "Appolo 2", },
+                { ...ProductStories.Default.args, prices: [ProductStories.Default.args.price], id: "appolo3", name: "Appolo 3", },
+                { ...ProductStories.Default.args, prices: [ProductStories.Default.args.price], id: "appolo6", name: "Appolo 6", },
               ],
             },
           })
@@ -54,7 +52,7 @@ export const Error = Template.bind({});
 Error.parameters = {
   msw: {
     handlers: [
-      graphql.operation((req, res, ctx) => {
+      graphql.operation((_, res, ctx) => {
         return res(
           ctx.errors([
             {
