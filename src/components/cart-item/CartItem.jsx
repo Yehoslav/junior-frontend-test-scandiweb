@@ -7,6 +7,7 @@ import AttributeSelector from "../attribute-selector/AttributeSelector";
 import { connect } from "react-redux";
 
 import { selectAttribute } from "../../lib/cartSlice";
+import { Link } from "react-router-dom";
 
 class CartItem extends Component {
 
@@ -45,10 +46,12 @@ class CartItem extends Component {
         className="row-g4"
       >
         <div className="attributes">
-          <div className={inMiniCart ? "fp-l" : "fp-sb f-30 pb10"}>
-            {brand}
-          </div>
-          <div className={inMiniCart ? "fp-l" : "fp f-30 pb16"}>{name}</div>
+            <div className={inMiniCart ? "fp-l" : "fp-sb f-30 pb10"}>
+              {brand}
+            </div>
+          <Link className="link" to={`/product/${id}`}>
+            <div className={inMiniCart ? "fp-l" : "fp f-30 pb16"}>{name}</div>
+          </Link>
           <div className={inMiniCart ? "fp-sb" : "fp-b f-24 pb16"}>
             {price.currency.symbol}
             {price.amount}

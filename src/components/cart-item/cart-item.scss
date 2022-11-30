@@ -10,6 +10,12 @@
   }
 }
 
+.link {
+  color: var(--black);
+  text-decoration: none;
+  cursor: pointer;
+}
+
 .cart-icon {
   fill: var(--black);
 }
