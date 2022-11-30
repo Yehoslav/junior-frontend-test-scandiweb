@@ -17,9 +17,9 @@ class Button extends Component {
 
   render() {
     const { onClick, type, size, selected, classes, style } = this.props;
-    const value = type === "color" ? "" : this.props.value;
 
     const [btnSize, fontSize] = this.getSize(size);
+    // console.dir(this.props.children)
 
     const getType = (type) => {
       if (type === "primary") return "pri";
@@ -34,14 +34,13 @@ class Button extends Component {
         className={className} 
         style={{...style, ...btnSize}}
       >
-        {value}
+        {this.props.children}
       </button>
     );
   }
 }
 
 Button.propTypes = {
-  value: PropTypes.string.isRequired,
   type: PropTypes.oneOf(["primary", "secondary", "color"]).isRequired,
   style: PropTypes.object,
   size: PropTypes.string,
