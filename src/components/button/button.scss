@@ -1,0 +1,33 @@
+.btn {
+  &__pri {
+    background-color: var(--primary);
+    border: 1px solid var(--primary);
+    color: var(--white);
+  }
+
+  &__sec {
+    background-color: var(--white);
+    border: 1px solid var(--black);
+    color: var(--black);
+
+    &.sel {
+      transition: 0.3s ;
+      background-color: var(--black);
+      color: var(--white);
+    }
+  }
+
+  &__color {
+    border: 1px solid var(--black);
+  }
+
+  &__pri, &__sec, &__col  {
+    cursor: pointer;
+    transition: 0.3s ;
+    
+
+    &:active {
+      transform: scale(0.9);
+    }
+  }
+}

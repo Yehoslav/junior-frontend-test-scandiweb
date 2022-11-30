@@ -14,6 +14,7 @@ import {
   addToCart as addTC 
 } from "../../lib/cartSlice";
 import { connect } from "react-redux";
+import  Button  from "../button";
 
 class ProductView extends Component {
   state = {
@@ -64,15 +65,24 @@ class ProductView extends Component {
           />
         ))
 
-        {/* TODO: Create a button component */}
-        const button = (
-          <button 
-            onClick={inCart(id)? () => removeProduct(id) : () => addToCart()}
-            className={`btn ${inCart(id)? "btn__sec":"btn__pri"} f-16 p16 mt25`} 
-            style={{ height: 50 }}>
-            {inCart(id)? "remove from cart" : "add to cart"}
-          </button>
-        )
+        const btnProps = inCart(product.id) 
+          ? {
+            type:"secondary",
+            onClick:() => removeProduct(product.id),
+            value:"remove from cart",
+          }
+          : {
+            type:"primary",
+            onClick:addToCart,
+            value:"add to cart",
+          }
+
+        const button = 
+           <Button
+              {...btnProps}
+              size="big"
+              classes="mt42 p16 t__upper"
+            />
 
         const images = (
           <div className="row">
