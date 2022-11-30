@@ -21,25 +21,28 @@ class AttributeSelector extends Component {
     }
 
     const attrs = attributes.map((item) => {
+      console.dir(item)
+
+      const btnProps = {
+        selected: item.id === selected,
+        value: item.displayValue,
+        key: item.id, 
+        onClick: () => onAttributeSelect(item),
+      }
+
       if (color) return (
         <ColorButton
-          key={`${item}-wrapper`}
-          onClick={() => onAttributeSelect(item)}
-          selected={item === selected}
-          size={inMiniCart? "small":"big"}
-          value={item}
+          {...btnProps}
+          size= {inMiniCart? "small":"big"}
         />
       );
 
       return (
         <Button 
-          key={item}
+          {...btnProps}
           type="secondary"
-          onClick={() => onAttributeSelect(item)}
-          value={item}
           classes="pl5 pr5"
-          selected={item === selected}
-          size={inMiniCart? "tiny":"small"}
+          size= {inMiniCart? "tiny":"small"}
         />
       );
     });
