@@ -192,11 +192,17 @@ class LoadingView extends Component {
       <div className="row-g8 wrap pt80">
         <div className="row">
           <div className="col-g8 preview">
-            <div className="prd-thumb loading"> </div>
-            <div className="prd-thumb loading"> </div>
-            <div className="prd-thumb loading"> </div>
+            <div style={{ width: 85, height: 85 }} className="loading">
+              {" "}
+            </div>
+            <div style={{ width: 85, height: 85 }} className="loading">
+              {" "}
+            </div>
+            <div style={{ width: 85, height: 85 }} className="loading">
+              {" "}
+            </div>
           </div>
-          <div className="img">
+          <div className="pl25">
             <div className="prod-img loading"> </div>
           </div>
         </div>
