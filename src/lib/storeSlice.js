@@ -11,23 +11,27 @@ const initialState = {
  * You can read more about Redux Toolkit's thunks in the docs:
  * https://redux-toolkit.js.org/api/createAsyncThunk
  */
-export const fetchProducts = createAsyncThunk("store/getProducts", async (category) => {
-  const { category: {products: products} } = await getProductList(category);
-    console.dir(products)
+export const fetchProducts = createAsyncThunk(
+  "store/getProducts",
+  async (category) => {
+    const {
+      category: { products: products },
+    } = await getProductList(category);
     return products;
-});
+  }
+);
 
 const cartSlice = createSlice({
   name: "products",
   initialState,
-  reducers: { },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchProducts.fulfilled, (_, action) => ({
         status: "succeeded",
         error: null,
         // products: [...state.products, ...action.payload],
-        products: action.payload
+        products: action.payload,
       }))
       .addCase(fetchProducts.pending, (state) => ({
         status: "loading",
@@ -41,6 +45,5 @@ const cartSlice = createSlice({
       }));
   },
 });
-
 
 export default cartSlice.reducer;
