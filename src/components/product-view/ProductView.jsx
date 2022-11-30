@@ -34,14 +34,9 @@ class ProductView extends Component {
     getProductData(productId)
   }
 
-  render() {
-    const {
-      product, inCart, addToCart, currency, removeProduct, selectAttr, products
-    } = this.props
-    
-    switch (product.status) {
-      case "succeeded":
+  createView = () => {
         let { focusImg } = this.state;
+        const { product, inCart, addToCart, currency, removeProduct, selectAttr, products } = this.props;
 
         const {
           brand, name, prices, attributes, gallery, id, 
@@ -81,7 +76,7 @@ class ProductView extends Component {
            <Button
               {...btnProps}
               size="big"
-              classes="mt42 p16 t__upper"
+              classes="mt42 f-16 p16 t__upper"
             />
 
         const images = (
@@ -100,7 +95,7 @@ class ProductView extends Component {
             </div>
             <div className="img">
               <div className="prod-img">
-                <img src={focusImg} alt="Placeholder" />
+                <img src={focusImg} alt={brand + name + " preview"} />
               </div>
             </div>
           </div>
@@ -119,14 +114,23 @@ class ProductView extends Component {
           />
         )
 
+  }
+
+  render() {
+    const { product: {status}, } = this.props
+    
+    switch (status) {
+      case "succeeded":
+        return this.createView()
+
       case "loading":
-        return <h1>loading</h1>
+        return <LoadingView />
 
       case "error":
         return <h1>An error occured.</h1>
 
       default:
-        break;
+        return <h1>Unknown a status.</h1>
     }
 
   }
@@ -156,6 +160,47 @@ class View extends Component {
             className="f-16 mt30" 
             dangerouslySetInnerHTML={{__html: description}}></div>
           {button}
+        </div>
+      </div>
+    )
+  }
+}
+
+class LoadingView extends Component {
+  render () {
+    return (
+      <div className="row-g8 wrap pt80">
+        <div className="row">
+          <div className="col-g8 preview">
+            <div className="prd-thumb loading"> </div>
+            <div className="prd-thumb loading"> </div>
+            <div className="prd-thumb loading"> </div>
+          </div>
+            <div className="img">
+              <div className="prod-img loading"> </div>
+            </div>
+        </div>
+        <div className="col-g4 info">
+          <div className="pb35 mb5 loading"
+            style={{minWidth: 300}}
+          ></div>
+          <div className="pb35 mb5 loading"
+            style={{minWidth: 300}}
+          ></div>
+          <div style={{width: 100}} className="pb30 mt10 loading"></div>
+          <div className="row-g8">
+            <div style={{minWidth: 65}} className="pb45 loading"></div>
+            <div style={{minWidth: 65}} className="pb45 loading"></div>
+            <div style={{minWidth: 65}} className="pb45 loading"></div>
+            <div style={{minWidth: 65}} className="pb45 loading"></div>
+          </div>
+          <div style={{width: 100}} className="pb30 mt10 loading"></div>
+          <div className="row-g8">
+            <div style={{minWidth: 65}} className="pb45 loading"></div>
+            <div style={{minWidth: 65}} className="pb45 loading"></div>
+            <div style={{minWidth: 65}} className="pb45 loading"></div>
+            <div style={{minWidth: 65}} className="pb45 loading"></div>
+          </div>
         </div>
       </div>
     )
