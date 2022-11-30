@@ -56,7 +56,7 @@ class ProductView extends Component {
             selected={attr.selectedAttr}
             color={attr.type === "swatch"}
             onAttributeSelect={value => selectAttr({productId: id, attrId: attr.name,  value}) }
-            attributes={attr.items.map((item) => item.value)}
+            attributes={attr.items}
           />
         ))
 

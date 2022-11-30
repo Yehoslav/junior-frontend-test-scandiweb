@@ -24,7 +24,7 @@ class CartItem extends Component {
         inMiniCart={inMiniCart}
         onAttributeSelect={(value) => selectAttr({productId: id, attrId: attr.name, value})}
         color={attr.type === "swatch"}
-        attributes={attr.items.map((attr) => attr.value)}
+        attributes={attr.items}
       />)
     });
 
