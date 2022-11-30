@@ -62,7 +62,11 @@ AttributeSelector.propTypes = {
   inMiniCart: PropTypes.bool, 
   selected: PropTypes.string, 
   attributes: PropTypes.arrayOf(
-      PropTypes.string
+      PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      displayValue: PropTypes.string.isRequired,
+      value: PropTypes.string,
+    })
     ).isRequired, 
   onAttributeSelect: PropTypes.func.isRequired,
 }
