@@ -6,6 +6,8 @@ import placeholder from "../../res/img/placeholder.png";
 import { Provider } from "react-redux";
 // import { configureStore, createSlice } from "@reduxjs/toolkit";
 import { graphql } from "msw";
+import { createSlice, configureStore } from "@reduxjs/toolkit";
+
 
 export default {
   component: ProductView,
@@ -14,11 +16,47 @@ export default {
     (story) => <Provider store={store}>{story()}</Provider>,
     withRouter,
   ],
+  excludeStories: /.*MockedState$/,
   parameters: {
     reactRouter: {
       routePath: "/product/:productId",
       routeParams: { productId: "apolo1" },
     },
+  msw: {
+    handlers: [
+      graphql.operation(async (req, res, ctx) => {
+        return res(
+          ctx.data({
+            product: { 
+              id: "apolo1",
+              brand: "Apollo",
+              name: "Product 1",
+              gallery: [placeholder],
+              description: "short description",
+              prices: [{
+                currency: {symbol: "$"},
+                amount: 100,
+              }],
+              attributes: [{
+                id: "Size",
+                type: "text",
+                name: "Size",
+                items: [ {
+                  id: "xl",
+                  value: "xl",
+                  displayValue: "xl",
+                },{
+                  id: "xxl",
+                  value: "xxl",
+                  displayValue: "xxl",
+                } ]
+              }]
+            },
+          })
+        );
+      }),
+    ],
+  },
   },
 };
 
@@ -32,10 +70,10 @@ Default.parameters = {
         return res(
           ctx.data({
             product: { 
-              id: "product-id",
-              brand: "Productia",
-              name: "product",
-              gallery: placeholder,
+              id: "apolo1",
+              brand: "Apollo",
+              name: "Product 1",
+              gallery: [placeholder],
               description: "short description",
               prices: [{
                 currency: {symbol: "$"},
@@ -45,11 +83,15 @@ Default.parameters = {
                 id: "Size",
                 type: "text",
                 name: "Size",
-                items: {
+                items: [ {
                   id: "xl",
                   value: "xl",
                   displayValue: "xl",
-                }
+                },{
+                  id: "xxl",
+                  value: "xxl",
+                  displayValue: "xxl",
+                } ]
               }]
             },
           })
@@ -58,3 +100,41 @@ Default.parameters = {
     ],
   },
 };
+
+export const MockedState = {
+  cart: {
+    productViewData: {
+      status: "loading"
+    },
+    products: []
+  },
+  currency: {
+    globalCurrency: "$",
+  }
+}
+
+// A super-simple mock of a redux store
+const Mockstore = ({ taskboxState, children }) => (
+  <Provider
+    store={configureStore({
+      reducer: {
+        cart: createSlice({
+          name: 'cart',
+          initialState: taskboxState.cart,
+        }).reducer,
+        currency: createSlice({
+          name: 'currency',
+          initialState: taskboxState.currency,
+        }).reducer,
+      },
+    })}
+  >
+    {children}
+  </Provider>
+);
+
+export const Loading = Template.bind({});
+Loading.decorators = [
+  (story) => <Mockstore taskboxState={MockedState}>{story()}</Mockstore>
+];
+
