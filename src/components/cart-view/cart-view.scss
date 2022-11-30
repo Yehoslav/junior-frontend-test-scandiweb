@@ -1,18 +1,20 @@
 .grid {
-    display: grid;
-    grid-template-columns: min-content min-content;
-    grid-column-gap: 7px;
+  display: grid;
+  grid-template-columns: min-content min-content;
+  grid-column-gap: 7px;
 }
 
 .ws {
-    width: 100%;
+  width: 100%;
 }
 
 .hug {
-    min-width: 279px;
-    width: fit-content;
+  min-width: 279px;
+  width: fit-content;
 }
 
 hr {
-    width: 100%;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #cecece;
 }
