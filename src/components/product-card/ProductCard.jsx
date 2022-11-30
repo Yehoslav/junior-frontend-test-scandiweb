@@ -46,7 +46,7 @@ class ProductCard extends Component {
           <CartIcon />
         </button>
 
-        <Link to={linkPath} className="fp-l">
+        <Link to={linkPath} className="fp-l link">
           {brand} {name}
         </Link>
 
