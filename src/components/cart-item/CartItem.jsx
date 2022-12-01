@@ -122,7 +122,7 @@ CartItem.propTypes = {
   id: PropTypes.string.isRequired,
   price: PropTypes.shape({
     currency: PropTypes.shape(
-      {currency: PropTypes.string.isRequired}),
+      {symbol: PropTypes.string.isRequired}),
     amount: PropTypes.number.isRequired,
   }),
   name: PropTypes.string.isRequired,
