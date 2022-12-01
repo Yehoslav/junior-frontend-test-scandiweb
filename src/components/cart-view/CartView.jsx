@@ -1,18 +1,21 @@
 import { Component } from "react";
-import CartItem from "../cart-item";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+
+import { round, totalPrice } from "../../utils/funcs.js";
+import "./cart-view.scss";
+
+import CartItem from "../cart-item";
 import {
   increaseProductAmmount,
   decreaseProductAmmount,
 } from "../../lib/cartSlice";
-import { round, totalPrice } from "../../utils/funcs.js";
 
-import "./cart-view.scss";
 
 class CartView extends Component {
   render() {
     const { symbol, products } = this.props;
-    const { increaseAmount, decreaseAmount } = this.props;
+    const { onIncreaseAmount, onDecreaseAmount } = this.props;
 
     const items =
       products.length > 0 ? (
@@ -24,14 +27,18 @@ class CartView extends Component {
               price={item.prices.find(
                 (price) => price.currency.symbol === symbol
               )}
-              onIncrease={() => increaseAmount(item.id)}
-              onDecrease={() => decreaseAmount(item.id)}
+              onIncrease={() => onIncreaseAmount(item.id)}
+              onDecrease={() => onDecreaseAmount(item.id)}
             />
             <hr />
           </>
         ))
       ) : (
-        <h3>No items</h3>
+        <div className="f-24">
+          <h3>There are no items in the cart :(</h3>
+          <p>Check our <Link to="/store/all">latest products</Link>.</p>
+          <hr />
+        </div>
       );
 
     return (
@@ -72,14 +79,13 @@ class CartView extends Component {
 
 const mapStateToProps = (state) => ({
   products: state.cart.products,
-  status: state.cart.status,
   symbol: state.currency.globalCurrency.symbol,
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    increaseAmount: (id) => dispatch(increaseProductAmmount(id)),
-    decreaseAmount: (id) => dispatch(decreaseProductAmmount(id)),
+    onIncreaseAmount: (id) => dispatch(increaseProductAmmount(id)),
+    onDecreaseAmount: (id) => dispatch(decreaseProductAmmount(id)),
   };
 };
 
