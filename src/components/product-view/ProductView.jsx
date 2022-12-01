@@ -1,11 +1,10 @@
 import { Component } from "react";
+import { connect } from "react-redux";
 
 import "./product-view.scss";
 import placeholder from "../../res/img/placeholder.png";
-
-import AttributeSelector from "../attribute-selector/AttributeSelector";
 import withRouter from "../../utils/withRouter";
-// import { fetchProduct, selectAttribute } from "../../lib/productSlice";
+
 import {
   selectAttribute,
   removeFromCart,
@@ -13,7 +12,7 @@ import {
   fetchProductData as getPD,
   addToCart as addTC,
 } from "../../lib/cartSlice";
-import { connect } from "react-redux";
+import AttributeSelector from "../attribute-selector";
 import Button, { ImageButton } from "../button";
 
 class ProductView extends Component {
