@@ -8,8 +8,6 @@ class ColorButton extends Component {
     const style =
       size === "small" ? { width: 20, height: 20 } : { width: 32, height: 32 };
 
-    console.dir(this.props.children);
-
     return (
       <div className={`p1 w ${selected ? "sel" : ""}`} style={style}>
         <Button

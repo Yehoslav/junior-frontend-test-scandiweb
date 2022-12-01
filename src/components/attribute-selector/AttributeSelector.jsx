@@ -21,8 +21,6 @@ class AttributeSelector extends Component {
     };
 
     const attrs = attributes.map((item) => {
-      console.dir(item);
-
       const btnProps = {
         selected: item.id === selected,
         value: item.displayValue,

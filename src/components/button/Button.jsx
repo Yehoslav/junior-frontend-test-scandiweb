@@ -19,7 +19,6 @@ class Button extends Component {
     const { onClick, type, size, selected, classes, style } = this.props;
 
     const [btnSize, fontSize] = this.getSize(size);
-    // console.dir(this.props.children)
 
     const getType = (type) => {
       if (type === "primary") return "pri";
