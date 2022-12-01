@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import "./product-card.scss";
 
-// import placeholder from "../../res/img/placeholder.png";
+import placeholder from "../../res/img/placeholder.png";
 
 import { CartIcon } from "../mini-cart";
 
@@ -39,7 +39,7 @@ class ProductCard extends Component {
     return (
       <div className="card">
         <div className="image">
-          <img src={gallery[0]} alt="Product image" />
+          <img src={gallery[0] || placeholder} alt={brand + name} />
         </div>
 
         <button onClick={onCartClick} className={btnClass(btnAction)}>
