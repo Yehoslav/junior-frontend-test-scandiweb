@@ -25,3 +25,9 @@ Default.args = {
   },
   btnAction: "ADD",
 };
+
+export const NoImages = Template.bind({});
+NoImages.args = {
+  ...Default.args,
+  gallery: [],
+};
