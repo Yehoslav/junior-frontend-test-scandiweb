@@ -14,3 +14,12 @@
   padding-left: 96px;
   max-width: 400px;
 }
+
+@media screen and (max-width: 1300px) {
+  .info {
+    max-width: 72%;
+    padding: 0;
+  }
+}
+
+
