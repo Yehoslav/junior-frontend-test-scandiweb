@@ -31,6 +31,9 @@ class ProductCard extends Component {
         case "ADD":
           return "prd-btn add";
 
+        case "OUT OF STOCK":
+          return "prd-btn"
+
         default:
           return "";
       }
@@ -40,6 +43,11 @@ class ProductCard extends Component {
       <div className="card">
         <div className="image">
           <img src={gallery[0] || placeholder} alt={brand + name} />
+          {
+          ( btnAction === "OUT OF STOCK")
+            ? (<div className="f-30 fp">OUT OF STOCK</div>)
+            : ""
+          }
         </div>
 
         <button onClick={onCartClick} className={btnClass(btnAction)}>
@@ -51,8 +59,7 @@ class ProductCard extends Component {
         </Link>
 
         <div className="fp-m">
-          {symbol}
-          {amount}
+          {symbol} {amount}
         </div>
       </div>
     );
@@ -82,7 +89,7 @@ ProductCard.propTypes = {
       symbol: PropTypes.string.isRequired,
     }),
   }),
-  btnAction: PropTypes.oneOf(["ADD", "REMOVE"]).isRequired,
+  btnAction: PropTypes.oneOf(["ADD", "OUT OF STOCK", "REMOVE"]).isRequired,
   onCartClick: PropTypes.func.isRequired,
 };
 

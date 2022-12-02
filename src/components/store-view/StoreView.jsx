@@ -37,7 +37,11 @@ class StoreView extends Component {
   buildProductList = (products, globalCurrency, status, error) => {
     const {inCart, removeFromCart, addToCart} = this.props
 
-    const getAction = (productId) => {
+    const getAction = (productId, inStock) => {
+      if (!inStock) return {
+        onCartClick: () => console.log("Out of stock notification!"),
+        btnAction: "OUT OF STOCK",
+      }
       if (inCart(productId)) return {
         onCartClick: () => removeFromCart(productId),
         btnAction: "REMOVE",
@@ -59,7 +63,7 @@ class StoreView extends Component {
         );
 
       case "succeeded":
-        return products.map(({id, prices, name, brand, gallery}) => { 
+        return products.map(({id, prices, inStock, name, brand, gallery}) => { 
           return (<ProductCard 
               key={id} 
               name={name}
@@ -67,7 +71,7 @@ class StoreView extends Component {
               brand={brand}
               gallery={gallery}
               price={prices.find((item) => item.currency.symbol === globalCurrency.symbol)}
-              {...getAction(id)}
+              {...getAction(id, inStock)}
             />)
         });
 

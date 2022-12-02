@@ -59,6 +59,23 @@
     width: 354px;
     height: 330px;
     margin-bottom: 24px;
+    position: relative;
+
+
+    div {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: inherit;
+      height: inherit;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      background-color: #fff8;
+      color: #8D8F9A;
+    }
   }
 }
 
