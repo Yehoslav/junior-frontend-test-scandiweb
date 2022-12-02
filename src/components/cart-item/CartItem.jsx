@@ -2,7 +2,7 @@ import { Component } from "react";
 import PropTypes from "prop-types";
 
 import "./cart-item.scss";
-// import placeholder from "../../res/img/placeholder.png";
+import placeholder from "../../res/img/placeholder.png";
 import AttributeSelector from "../attribute-selector/AttributeSelector";
 import { connect } from "react-redux";
 
@@ -76,7 +76,7 @@ class CartItem extends Component {
         </div>
 
         <div className="image" style={imgStyle()}>
-          <img src={gallery[0]} alt="Placeholder" />
+          <img src={gallery[0] || placeholder} alt="Placeholder" />
         </div>
       </div>
     );
