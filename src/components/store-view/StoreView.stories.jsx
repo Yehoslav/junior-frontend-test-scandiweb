@@ -1,11 +1,11 @@
 import StoreView from "./StoreView";
 import { withRouter } from "storybook-addon-react-router-v6";
-import { store } from "../../lib/store";
-
-import * as ProductStories from "../product-card/ProductCard.stories";
 import { Provider } from "react-redux";
-// import { configureStore, createSlice } from "@reduxjs/toolkit";
 import { graphql } from "msw";
+
+import { store } from "../../lib/store";
+import * as ProductStories from "../product-card/ProductCard.stories";
+// import { configureStore, createSlice } from "@reduxjs/toolkit";
 import ProductCard from "../product-card";
 
 export default {
@@ -35,10 +35,10 @@ Default.parameters = {
           ctx.data({
             category: {
               products: [
-                { ...ProductStories.Default.args, prices: [ProductStories.Default.args.price], id: "appolo1", name: "Appolo 1", },
-                { ...ProductStories.Default.args, prices: [ProductStories.Default.args.price], id: "appolo2", name: "Appolo 2", },
-                { ...ProductStories.Default.args, prices: [ProductStories.Default.args.price], id: "appolo3", name: "Appolo 3", },
-                { ...ProductStories.Default.args, prices: [ProductStories.Default.args.price], id: "appolo6", name: "Appolo 6", },
+                { ...ProductStories.Default.args, prices: [ProductStories.Default.args.price], id: "appolo1", name: "Appolo 1", inStock: true },
+                { ...ProductStories.Default.args, prices: [ProductStories.Default.args.price], id: "appolo2", name: "Appolo 2", inStock: true },
+                { ...ProductStories.Default.args, prices: [ProductStories.Default.args.price], id: "appolo3", name: "Appolo 3", inStock: false },
+                { ...ProductStories.Default.args, prices: [ProductStories.Default.args.price], id: "appolo6", name: "Appolo 6", inStock: true },
               ],
             },
           })
@@ -56,7 +56,7 @@ Error.parameters = {
         return res(
           ctx.errors([
             {
-              message: "Not found",
+              message: "Category not found",
             },
           ])
         );
