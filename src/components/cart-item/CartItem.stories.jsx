@@ -1,13 +1,17 @@
 import CartItem from './CartItem';
 import { store } from "../../lib/store";
 import { Provider } from "react-redux";
+import { withRouter } from "storybook-addon-react-router-v6";
 
 import placeholder from "../../res/img/placeholder.png";
 
 export default {
   component: CartItem,
   title: "CartItem",
-  decorators: [(story) => <Provider store={store}><div style={{padding: "2rem"}}>{story()}</div></Provider>],
+  decorators: [
+    (story) => <Provider store={store}><div style={{padding: "2rem"}}>{story()}</div></Provider>,
+    withRouter,
+  ],
 }
 
 const Template = (args) => <CartItem {...args} />
