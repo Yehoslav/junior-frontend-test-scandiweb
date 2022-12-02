@@ -11,8 +11,8 @@ const Template = (args) => <Button {...args} />
 export const Default = Template.bind({})
 Default.args = {
   type: "primary",
-  value: "Click me",
-  classes: "t__upper",
-  size: {minWidth: "100px", minHeight: "40px"},
+  children: "Click me",
+  classes: "fc",
+  size: {minWidth: "200px", minHeight: "40px"},
   selected: true,
 }
