@@ -94,8 +94,7 @@ class StoreView extends Component {
     return (
       <div>
         <p className="mt80 mb80 fp f-42 t__cap">{category}</p>
-        {/* FIXME: Make the component responsive */}
-        <div className="row-g12 wrap">{productCards}</div>
+        <div className="row-g12 cards-wraper">{productCards}</div>
       </div>
     );
   }

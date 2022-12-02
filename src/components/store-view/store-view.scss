@@ -1,0 +1,19 @@
+.cards-wraper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+
+
+@media screen and (max-width: 1300px) {
+  .cards-wraper {
+    justify-content: space-between;
+  }
+}
+
+@media screen and (max-width: 813px) {
+  .cards-wraper {
+    justify-content: center;
+  }
+}

@@ -30,8 +30,8 @@ class CartItem extends Component {
     });
 
     const imgStyle = () => {
-      if (inMiniCart) return { minWidth: 121, height: 190 };
-      return { minWidth: 200, height: 288 };
+      if (inMiniCart) return { flex: "0 0 121px", height: 190 };
+      return { flex: "0 0 200px", height: 288 };
     };
 
     const btnStyle = () => {

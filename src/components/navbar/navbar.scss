@@ -125,15 +125,20 @@ nav {
   left: 0;
 }
 
-@media screen and (max-width: 1000px) {
-  .navbar {
-    width: 700px;
-  }
-}
-
 @media screen and (max-width: 1300px) {
   .navbar {
     width: 950px;
   }
 }
+
+@media screen and (max-width: 965px) {
+  nav {
+    width: 100vw;
+    padding-right: 15px;
+  }
+  .navbar {
+    width: 100%;
+  }
+}
+
 
