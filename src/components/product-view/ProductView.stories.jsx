@@ -61,39 +61,39 @@ export default {
 
 const Template = () => <ProductView />;
 
+const product = {
+  id: "apolo1",
+  brand: "Apollo",
+  name: "Product 1",
+  gallery: [placeholder],
+  description: "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat. Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat. Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat. Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat. Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat. Lorem ipsum dolor sit amet, qui minim labore",
+  prices: [{
+    currency: {symbol: "$"},
+    amount: 100,
+  }],
+  attributes: [{
+    id: "Size",
+    type: "text",
+    name: "Size",
+    items: [ {
+      id: "xl",
+      value: "xl",
+      displayValue: "xl",
+    },{
+        id: "xxl",
+        value: "xxl",
+        displayValue: "xxl",
+      } ]
+  }]
+}
+
 export const Default = Template.bind({});
 Default.parameters = {
   msw: {
     handlers: [
       graphql.operation(async (req, res, ctx) => {
         return res(
-          ctx.data({
-            product: { 
-              id: "apolo1",
-              brand: "Apollo",
-              name: "Product 1",
-              gallery: [placeholder],
-              description: "short description",
-              prices: [{
-                currency: {symbol: "$"},
-                amount: 100,
-              }],
-              attributes: [{
-                id: "Size",
-                type: "text",
-                name: "Size",
-                items: [ {
-                  id: "xl",
-                  value: "xl",
-                  displayValue: "xl",
-                },{
-                  id: "xxl",
-                  value: "xxl",
-                  displayValue: "xxl",
-                } ]
-              }]
-            },
-          })
+          ctx.data({ product })
         );
       }),
     ],
@@ -137,3 +137,20 @@ Loading.decorators = [
   (story) => <Mockstore taskboxState={MockedState}>{story()}</Mockstore>
 ];
 
+export const LongDescription = Template.bind({});
+LongDescription.parameters = {
+  msw: {
+    handlers: [
+      graphql.operation(async (req, res, ctx) => {
+        return res(
+          ctx.data({ product:
+            {
+              ...product,
+              description: " Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat. Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat. Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat. Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat. Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat. Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat. Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat. Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat. Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat. Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat. ",
+            }
+          })
+        );
+      }),
+    ],
+  },
+};
