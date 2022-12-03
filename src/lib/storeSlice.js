@@ -30,7 +30,6 @@ const cartSlice = createSlice({
       .addCase(fetchProducts.fulfilled, (_, action) => ({
         status: "succeeded",
         error: null,
-        // products: [...state.products, ...action.payload],
         products: action.payload,
       }))
       .addCase(fetchProducts.pending, (state) => ({
@@ -38,9 +37,9 @@ const cartSlice = createSlice({
         error: null,
         products: state.products,
       }))
-      .addCase(fetchProducts.rejected, (state) => ({
+      .addCase(fetchProducts.rejected, (state, action) => ({
         status: "failed",
-        error: "Somethin went wrong.",
+        error: action.error,
         products: state.products,
       }));
   },
