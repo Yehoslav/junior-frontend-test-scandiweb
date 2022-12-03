@@ -92,7 +92,7 @@ class ProductView extends Component {
     })()
 
     const button = (
-      <Button {...btnProps} size="big" classes="mt42 f-16 t__upper">
+      <Button {...btnProps} size="big" classes="mt40 f-16 t__upper">
         {btnProps.value}
       </Button>
     );
@@ -158,6 +158,14 @@ class ProductView extends Component {
 }
 
 class View extends Component {
+  state = {
+    fullDescription: false,
+  }
+
+  showDescription = () => {
+    this.setState(({fullDescription}) => ({fullDescription: !fullDescription}))
+  }
+
   render() {
     const {
       brand,
@@ -169,6 +177,10 @@ class View extends Component {
       button,
       description,
     } = this.props;
+
+    const showDescription = description.length > 560
+      ? this.state.fullDescription 
+      : true
 
     return (
       <div className="row-g8 wrap pt80">
@@ -182,10 +194,39 @@ class View extends Component {
             {currency}
             {price}
           </div>
-          <div
-            className="f-16 mt30"
-            dangerouslySetInnerHTML={{ __html: description }}
-          ></div>
+          <div>
+            <div
+              style={showDescription
+                ? {
+                    maxHeight: "fit-content",
+                    overflowY: "hidden"
+                  }
+                : {
+                    maxHeight: 300,
+                    overflowY: "hidden"
+                  }}
+              className="f-16 mt30"
+              dangerouslySetInnerHTML={{ __html: description }}
+            >
+            </div>
+            { (description.length > 560)
+            ? <button 
+              className="t__upper pt10 pb5 f-14"
+              style={{
+                border: "none",
+                backgroundColor: "white",
+                width: "100%",}}
+              onClick={this.showDescription}
+            >
+              {
+              showDescription
+                ? "Show less"
+                : "Show more"
+            }
+            </button>
+          : ""
+          }
+          </div>
           {button}
         </div>
       </div>
