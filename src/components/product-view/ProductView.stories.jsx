@@ -4,9 +4,8 @@ import { store } from "../../lib/store";
 
 import placeholder from "../../res/img/placeholder.png";
 import { Provider } from "react-redux";
-// import { configureStore, createSlice } from "@reduxjs/toolkit";
-import { graphql } from "msw";
 import { createSlice, configureStore } from "@reduxjs/toolkit";
+import { graphql } from "msw";
 
 
 export default {
