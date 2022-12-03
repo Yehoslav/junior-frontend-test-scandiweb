@@ -13,7 +13,7 @@ Default.args = {
   selected: "XL",
   title: "Size",
   color: false,
-  attributes: ["XL", "XXL", "S"],
+  attributes: [{displayValue: "extra large", id: "XL", value: "XL"}, {displayValue: "extra extra large", id: "XXL", value: "XXL"},{displayValue: "small", id: "S", value: "S"}],
   inMiniCart: false,
 }
 
@@ -28,7 +28,7 @@ ColorAttributes.args = {
   title: "Color",
   selected: "red",
   color: true,
-  attributes: ["yellow", "red", "green"],
+  attributes: [{displayValue: "#000", id: "black", value: "black"}, {displayValue: "#f00", id: "red", value: "red"},{displayValue: "#fff", id: "white", value: "white"}],
   inMiniCart: false,
 }
 
