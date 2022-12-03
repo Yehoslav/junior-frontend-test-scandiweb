@@ -47,7 +47,7 @@ class ProductView extends Component {
       products,
     } = this.props;
 
-    const { brand, name, prices, attributes, gallery, id } = inCart(product.id)
+    const { brand, inStock, name, prices, attributes, gallery, id } = inCart(product.id)
       ? products.find((item) => item.id === product.id)
       : product;
 
@@ -71,20 +71,28 @@ class ProductView extends Component {
       />
     ));
 
-    const btnProps = inCart(product.id)
-      ? {
-          type: "secondary",
-          onClick: () => removeProduct(product.id),
-          value: "remove from cart",
-        }
-      : {
-          type: "primary",
-          onClick: addToCart,
-          value: "add to cart",
-        };
+    const btnProps = ( () => {
+      if (!inStock) return {
+        type: "inactive",
+        onClick: () => console.log(inStock),
+        value: "out of stock",
+      }
+
+      if (inCart(product.id)) return {
+        type: "secondary",
+        onClick: () => removeProduct(product.id),
+        value: "remove from cart",
+      }
+
+      return {
+        type: "primary",
+        onClick: addToCart,
+        value: "add to cart",
+      };
+    })()
 
     const button = (
-      <Button {...btnProps} size="big" classes="mt42 f-16 p16 t__upper">
+      <Button {...btnProps} size="big" classes="mt42 f-16 t__upper">
         {btnProps.value}
       </Button>
     );
