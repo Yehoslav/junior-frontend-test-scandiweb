@@ -76,7 +76,8 @@ class StoreView extends Component {
         });
 
       case "failed":
-        return <h3>{error}</h3>;
+        console.error(error)
+        return <h3>An error occured when fetching data.</h3>
 
       default:
         return <h3>{status}</h3>;
