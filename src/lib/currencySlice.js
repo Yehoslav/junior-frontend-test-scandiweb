@@ -8,10 +8,6 @@ const initialState = {
   error: null,
 };
 
-/* Creates an asyncThunk to fetch tasks from a remote endpoint.
- * You can read more about Redux Toolkit's thunks in the docs:
- * https://redux-toolkit.js.org/api/createAsyncThunk
- */
 export const fetchCurrencies = createAsyncThunk(
   "store/getCurrencies",
   async () => await getCurrencies()
@@ -40,12 +36,11 @@ const currencySlice = createSlice({
         status: "loading",
         currencies: [],
       }))
-      .addCase(fetchCurrencies.rejected, (state) => ({
+      .addCase(fetchCurrencies.rejected, (state, action) => ({
         ...state, 
         status: "failed",
         currencies: [],
-        // HACK: return a more explicit error message.
-        error: "Something went wrong"
+        error: action.error
       }))
   }
 });
