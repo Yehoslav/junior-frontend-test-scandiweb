@@ -7,10 +7,6 @@ const initialState = {
   error: null,
 };
 
-/* Creates an asyncThunk to fetch tasks from a remote endpoint.
- * You can read more about Redux Toolkit's thunks in the docs:
- * https://redux-toolkit.js.org/api/createAsyncThunk
- */
 export const fetchProducts = createAsyncThunk(
   "store/getProducts",
   async (category) => {
