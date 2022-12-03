@@ -10,6 +10,7 @@ import {
   increaseProductAmmount,
   decreaseProductAmmount,
 } from "../../lib/cartSlice";
+import Button from "../button/Button.jsx";
 
 
 class CartView extends Component {
@@ -18,8 +19,8 @@ class CartView extends Component {
     const { onIncreaseAmount, onDecreaseAmount } = this.props;
 
     const items =
-      products.length > 0 ? (
-        products.map((item) => (
+      products.length > 0 
+        ? products.map((item) => (
           <>
             <CartItem
               key={item.id}
@@ -29,17 +30,17 @@ class CartView extends Component {
               )}
               onIncrease={() => onIncreaseAmount(item.id)}
               onDecrease={() => onDecreaseAmount(item.id)}
-            />
+              />
             <hr />
           </>
         ))
-      ) : (
-        <div className="f-24">
-          <h3>There are no items in the cart :(</h3>
-          <p>Check our <Link to="/store/all">latest products</Link>.</p>
-          <hr />
-        </div>
-      );
+        : (
+          <div className="f-24">
+            <h3>There are no items in the cart :(</h3>
+            <p>Check our <Link to="/store/all">latest products</Link>.</p>
+            <hr />
+          </div>
+        );
 
     return (
       <div className="col-g8">
@@ -65,12 +66,13 @@ class CartView extends Component {
               {totalPrice(products, symbol)}
             </div>
           </div>
-          <button
+          <Button
+            type={products.length > 0 ? "primary" : "inactive"}
             style={{ height: 43 }}
-            className="btn btn__pri f-14 t__upper ws"
+            classes="f-14 t__upper ws"
           >
             Order
-          </button>
+          </Button>
         </div>
       </div>
     );
