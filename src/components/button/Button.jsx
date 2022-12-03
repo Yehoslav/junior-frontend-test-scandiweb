@@ -11,7 +11,7 @@ class Button extends Component {
       case "small":
         return [{minWidth: 60, height: 45}, "f-16"]
       case "big":
-        return [{maxWidth: 250, height: 45}, "f-16"]
+        return [{width: 400, height: 45}, "pl10 pr10 f-16"]
       default:
         return [{}, null]
     }
