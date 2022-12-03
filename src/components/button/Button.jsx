@@ -10,6 +10,8 @@ class Button extends Component {
         return [{minWidth: 24, height: 24}, "f-14"]
       case "small":
         return [{minWidth: 60, height: 45}, "f-16"]
+      case "big":
+        return [{maxWidth: 250, height: 45}, "f-16"]
       default:
         return [{}, null]
     }
@@ -23,6 +25,7 @@ class Button extends Component {
     const getType = (type) => {
       if (type === "primary") return "pri";
       if (type === "color") return "color";
+      if (type === "inactive") return "wobble";
       return "sec";
     };
     const className = `${classes || "" } p0 btn__${getType(type)} ${selected? "sel":""} ${fontSize || ""}` 
@@ -40,7 +43,7 @@ class Button extends Component {
 }
 
 Button.propTypes = {
-  type: PropTypes.oneOf(["primary", "secondary", "color"]).isRequired,
+  type: PropTypes.oneOf(["primary", "inactive", "secondary", "color"]).isRequired,
   style: PropTypes.object,
   size: PropTypes.string,
   selected: PropTypes.bool,
