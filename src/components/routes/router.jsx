@@ -1,41 +1,57 @@
 import {
   createBrowserRouter,
-  Route
+  useRouteError 
 } from "react-router-dom";
 
+import {action as indexAction} from 'index.jsx';
 
-
-import {action as indexAction} from '.';
-import App from "../app/App";
-import CartView from "../cart-view/CartView";
-import ProductView from "../product-view/ProductView";
+import CartView from "../cart-view";
+import ProductView from "../product-view";
 import StoreView from "../store-view";
+import App from "../app/App";
+
+function ErrorPage() {
+  const error = useRouteError();
+  console.error(error);
+
+  return (
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '100%',
+    }}>
+      <h1>Oops!</h1>
+      <p>Sorry, an unexpected error has occurred.</p>
+      <p>
+        <i>{error.statusText || error.message}</i>
+      </p>
+    </div>
+  );
+}
 
 const router = createBrowserRouter ([
   {
     path: "/",
     element: <App />,
-    // FIXME: ADD error element :)
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true, 
-        // loader: storeLoader,
         loader: indexAction,
-        element: <h1> Loading the page </h1>
+        element: <h1>Loading all categories.</h1>
       },
       {
         path: "store/:category",
-        // loader: storeLoader,
         element: <StoreView />
       },
       {
         path: "product/:productId",
-        // loader: storeLoader,
         element: <ProductView />
       },
       {
         path: "cart",
-        // loader: storeLoader,
         element: <CartView />
       },
     ],
