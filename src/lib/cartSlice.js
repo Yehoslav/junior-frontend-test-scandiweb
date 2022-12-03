@@ -65,38 +65,33 @@ const cartSlice = createSlice({
         products: [...state.products, {...product, amount: 1 } ],
       }
     },
+
     selectAttribute: (state, action) => {
       const product = state.productViewData;
       const {productId, attrId, value} = action.payload;
 
-      // HACK: This return statement is too ugly
-      return {
-        ...state,
-        products: state.products.map(item => {
-          if (item.id !== productId) return item 
-          return { 
+      const selectAttr = (item) => {
+        if (item.id !== productId) return item 
+        return { 
           ...item,
           attributes: item.attributes.map((att) => {
-
             if (attrId === att.id) return { ...att, selectedAttr: value }
             return att;
-          }
-        )}}),
+          })
+        }
+      }
 
-        productViewData: (productId === product.id) ? {
-          ...product,
-          attributes: product.attributes.map((att) => {
+      const products = state.products.map(selectAttr)
+      const productViewData = selectAttr(product)
 
-            if (attrId === att.id) return { ...att, selectedAttr: value }
-            return att;
-        }),
-        } : product,
-      };
+      return { ...state, products, productViewData, };
     },
+
     increaseProductAmmount: (state, action) => {
       const { payload: productId } = action;
       state.products.find((item) => item.id === productId).amount += 1;
     },
+
     decreaseProductAmmount: (state, action) => {
       const { payload: productId } = action;
       const product = state.products.find((item) => item.id === productId);
@@ -106,6 +101,7 @@ const cartSlice = createSlice({
         return state;
       }
     },
+
     removeFromCart: (state, action) => {
       return { 
         ...state,
