@@ -6,15 +6,15 @@
   gap: $gap;
 }
 
-ul {
-  list-style: none;
-}
 
 nav {
   position: sticky;
   background-color: white;
   top: 0;
   z-index: 100;
+  ul {
+    list-style: none;
+  }
 }
 
 .navbar {
