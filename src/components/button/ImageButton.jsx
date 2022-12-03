@@ -8,7 +8,7 @@ class ImageButton extends Component {
     const style = { width: 80, height: 80 };
 
     return (
-      <div className={`p1 w ${selected ? "sel" : ""}`} style={style}>
+      <div className={`p1 btnw ${selected ? "sel" : ""}`} style={style}>
         <Button
           type="secondary"
           classes={classes}
