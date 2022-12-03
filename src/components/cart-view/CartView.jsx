@@ -1,15 +1,15 @@
-import { Component } from "react";
-import { Link } from "react-router-dom";
+import { Component, Fragment } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 import { round, totalPrice } from "../../utils/funcs.js";
 import "./cart-view.scss";
-
-import CartItem from "../cart-item";
 import {
   increaseProductAmmount,
   decreaseProductAmmount,
 } from "../../lib/cartSlice";
+
+import CartItem from "../cart-item";
 import Button from "../button/Button.jsx";
 
 
@@ -21,7 +21,7 @@ class CartView extends Component {
     const items =
       products.length > 0 
         ? products.map((item) => (
-          <>
+          <Fragment key={item.id +"-wraper"}>
             <CartItem
               key={item.id}
               {...item}
@@ -32,7 +32,7 @@ class CartView extends Component {
               onDecrease={() => onDecreaseAmount(item.id)}
               />
             <hr />
-          </>
+          </Fragment>
         ))
         : (
           <div className="f-24">
