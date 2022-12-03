@@ -9,7 +9,7 @@ class ColorButton extends Component {
       size === "small" ? { width: 20, height: 20 } : { width: 32, height: 32 };
 
     return (
-      <div className={`p1 w ${selected ? "sel" : ""}`} style={style}>
+      <div className={`p1 btnw ${selected ? "sel" : ""}`} style={style}>
         <Button
           type="color"
           style={{
