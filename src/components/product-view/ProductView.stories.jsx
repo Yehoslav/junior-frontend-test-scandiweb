@@ -7,60 +7,6 @@ import { Provider } from "react-redux";
 import { createSlice, configureStore } from "@reduxjs/toolkit";
 import { graphql } from "msw";
 
-
-export default {
-  component: ProductView,
-  title: "ProductView",
-  decorators: [
-    (story) => <Provider store={store}>{story()}</Provider>,
-    withRouter,
-  ],
-  excludeStories: /.*MockedState$/,
-  parameters: {
-    reactRouter: {
-      routePath: "/product/:productId",
-      routeParams: { productId: "apolo1" },
-    },
-  msw: {
-    handlers: [
-      graphql.operation(async (req, res, ctx) => {
-        return res(
-          ctx.data({
-            product: { 
-              id: "apolo1",
-              brand: "Apollo",
-              name: "Product 1",
-              gallery: [placeholder],
-              description: "short description",
-              prices: [{
-                currency: {symbol: "$"},
-                amount: 100,
-              }],
-              attributes: [{
-                id: "Size",
-                type: "text",
-                name: "Size",
-                items: [ {
-                  id: "xl",
-                  value: "xl",
-                  displayValue: "xl",
-                },{
-                  id: "xxl",
-                  value: "xxl",
-                  displayValue: "xxl",
-                } ]
-              }]
-            },
-          })
-        );
-      }),
-    ],
-  },
-  },
-};
-
-const Template = () => <ProductView />;
-
 const product = {
   id: "apolo1",
   brand: "Apollo",
@@ -87,11 +33,38 @@ const product = {
   }]
 }
 
+export default {
+  component: ProductView,
+  title: "ProductView",
+  decorators: [
+    (story) => <Provider store={store}>{story()}</Provider>,
+    withRouter,
+  ],
+  excludeStories: /.*MockedState$/,
+  parameters: {
+    reactRouter: {
+      routePath: "/product/:productId",
+      routeParams: { productId: "apolo1" },
+    },
+    msw: {
+      handlers: [
+        graphql.operation(async (_, res, ctx) => {
+          return res(
+            ctx.data({ product })
+          );
+        })
+      ],
+    },
+  },
+};
+
+const Template = () => <ProductView />;
+
 export const Default = Template.bind({});
 Default.parameters = {
   msw: {
     handlers: [
-      graphql.operation(async (req, res, ctx) => {
+      graphql.operation(async (_, res, ctx) => {
         return res(
           ctx.data({ product })
         );
@@ -141,7 +114,7 @@ export const LongDescription = Template.bind({});
 LongDescription.parameters = {
   msw: {
     handlers: [
-      graphql.operation(async (req, res, ctx) => {
+      graphql.operation(async (_, res, ctx) => {
         return res(
           ctx.data({ product:
             {
