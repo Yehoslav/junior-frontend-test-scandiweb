@@ -3,7 +3,7 @@ import {
   useRouteError 
 } from "react-router-dom";
 
-import {action as indexAction} from 'index.jsx';
+import {action as indexAction} from '.';
 
 import CartView from "../cart-view";
 import ProductView from "../product-view";
