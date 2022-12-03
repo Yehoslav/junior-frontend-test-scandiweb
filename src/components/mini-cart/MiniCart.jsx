@@ -64,7 +64,12 @@ class MiniCart extends Component {
               view bag
             </Link>
             <button
-              onClick={() => onToggleDropdown("showMiniCart")}
+              onClick={() => {
+                alert(`Order placed: ${products.reduce((previous, current) => {
+                return previous + current.amount;
+              }, 0)} products.`)
+                onToggleDropdown("showMiniCart")
+              }}
               style={{ width: 140, height: 43 }}
               className="btn btn__pri t__upper f-14 fp-sb"
             >

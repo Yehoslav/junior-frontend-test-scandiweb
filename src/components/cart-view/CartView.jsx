@@ -42,6 +42,10 @@ class CartView extends Component {
           </div>
         );
 
+    const nrProducts = products.reduce((previous, current) => {
+                return previous + current.amount;
+              }, 0)
+
     return (
       <div className="col-g8">
         <h1 className="t_upper fp-b f-32">Cart</h1>
@@ -56,9 +60,7 @@ class CartView extends Component {
             </div>
             <div>Quantity:</div>
             <div className="fp-b">
-              {products.reduce((previous, current) => {
-                return previous + current.amount;
-              }, 0)}
+              {nrProducts}
             </div>
             <div>Total:</div>
             <div className="fp-b">
@@ -69,6 +71,7 @@ class CartView extends Component {
           <Button
             type={products.length > 0 ? "primary" : "inactive"}
             style={{ height: 43 }}
+            onClick={() => alert(`Order placed: ${nrProducts} products.`)}
             classes="f-14 t__upper ws"
           >
             Order
