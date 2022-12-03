@@ -20,7 +20,7 @@ export const fetchAndAddToCart = createAsyncThunk(
     if (inCart)
       return thunkAPI.rejectWithValue("Product already in cart");
 
-    const { product } = await getProductData(productId, ["id", "name", "brand", "gallery"]);
+    const { product } = await getProductData(productId, ["id", "inStock", "name", "brand", "gallery"]);
     return {
       ...product,
       amount: 1,
@@ -37,14 +37,14 @@ export const fetchProductData = createAsyncThunk(
   async (productId, thunkAPI) => {
     const inCart = thunkAPI.getState().cart.products.find((item) => item.id === productId)
     if (inCart) {
-      const { product: product } = await getProductData(productId, ["description"]);
+      const { product: product } = await getProductData(productId, ["inStock", "description"]);
       return {
         ...inCart, 
         description: product.description
       }
     }
 
-    const { product: product } = await getProductData(productId, ["id", "name", "brand", "gallery", "description"]);
+    const { product: product } = await getProductData(productId, ["id", "inStock", "name", "brand", "gallery", "description"]);
     return {
       ...product,
       attributes: product.attributes.map((att) => ({
@@ -59,10 +59,10 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state) => {
-      const {id, name, brand, gallery, prices, attributes } = state.productViewData;
+      const product = state.productViewData;
       return {
         ...state,
-        products: [...state.products, {id, name, brand, gallery, prices, attributes, amount: 1 } ],
+        products: [...state.products, {...product, amount: 1 } ],
       }
     },
     selectAttribute: (state, action) => {
