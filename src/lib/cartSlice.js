@@ -98,7 +98,9 @@ const cartSlice = createSlice({
       if (product.amount > 1) {
         product.amount -= 1;
       } else {
-        return state;
+        return { 
+          ...state,
+          products: state.products.filter((item) => item.id !== productId) }
       }
     },
 
