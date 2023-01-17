@@ -16,6 +16,27 @@ const initialState = {
   error: null,
 };
 
+const organizeProductData = (productData, state) => {
+  const similarProducts = state.products.filter(
+    (product) => product.productId === productData.id
+  );
+
+  const generateId = () => {
+    if (similarProducts.length === 0) return `${productData.id}-0`;
+
+    return `${productData.id}-${
+      parseInt(similarProducts.at(-1).id.split("-").at(-1)) + 1
+    }`;
+  };
+
+  return {
+    ...productData,
+    productId: productData.id,
+    id: generateId(),
+    amount: 1,
+  };
+};
+
 export const fetchAndAddToCart = createAsyncThunk(
   "cart/addItem",
   async ({ productId }, thunkAPI) => {
@@ -81,33 +102,13 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addToCart: (state) => {
-      const newProduct = state.productViewData;
-
-      const similarProducts = state.products.filter(
-        (product) => product.productId === newProduct.id
-      );
-
-      let productId;
-      if (similarProducts.length === 0) productId = `${newProduct.id}-0`;
-      else
-        productId = `${newProduct.id}-${
-          parseInt(similarProducts.at(-1).id.split("-").at(-1)) + 1
-        }`;
-
-      return {
-        ...state,
-        products: [
-          ...state.products,
-          {
-            ...newProduct,
-            productId: newProduct.id,
-            id: productId,
-            amount: 1,
-          },
-        ],
-      };
-    },
+    addToCart: (state) => ({
+      ...state,
+      products: [
+        ...state.products,
+        organizeProductData(state.productViewData, state),
+      ],
+    }),
 
     selectAttribute: (state, action) => {
       const product = state.productViewData;
@@ -164,7 +165,10 @@ const cartSlice = createSlice({
         ...state,
         status: "succeeded",
         error: null,
-        products: [...state.products, action.payload],
+        products: [
+          ...state.products,
+          organizeProductData(action.payload, state),
+        ],
       }))
       .addCase(fetchAndAddToCart.pending, (state) => ({
         ...state,
