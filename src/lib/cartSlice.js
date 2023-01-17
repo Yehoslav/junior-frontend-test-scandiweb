@@ -39,12 +39,7 @@ const organizeProductData = (productData, state) => {
 
 export const fetchAndAddToCart = createAsyncThunk(
   "cart/addItem",
-  async ({ productId }, thunkAPI) => {
-    const inCart = thunkAPI
-      .getState()
-      .cart.products.find((item) => item.id === productId);
-    if (inCart) return thunkAPI.rejectWithValue("Product already in cart");
-
+  async ({ productId }) => {
     const { product } = await getProductData(productId, [
       "id",
       "inStock",
@@ -52,6 +47,7 @@ export const fetchAndAddToCart = createAsyncThunk(
       "brand",
       "gallery",
     ]);
+
     return {
       ...product,
       amount: 1,
