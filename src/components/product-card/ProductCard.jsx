@@ -52,7 +52,7 @@ class ProductCard extends Component {
           </div>
           {brand} {name}
           <div className="fp-m">
-            {symbol} {amount}
+            {symbol}{amount}
           </div>
         </Link>
         <button onClick={onCartClick} className={btnClass(btnAction)}>
