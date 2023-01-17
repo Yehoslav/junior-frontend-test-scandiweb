@@ -1,9 +1,13 @@
-import { createSelector, createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  createSelector,
+  createSlice,
+  createAsyncThunk,
+} from "@reduxjs/toolkit";
 import { getProductData } from "./database";
 
 const initialState = {
   products: [],
-  productViewData: { 
+  productViewData: {
     id: null,
     status: "idle",
     error: null,
@@ -15,12 +19,18 @@ const initialState = {
 export const fetchAndAddToCart = createAsyncThunk(
   "cart/addItem",
   async ({ productId }, thunkAPI) => {
-    
-    const inCart = thunkAPI.getState().cart.products.find((item) => item.id === productId)
-    if (inCart)
-      return thunkAPI.rejectWithValue("Product already in cart");
+    const inCart = thunkAPI
+      .getState()
+      .cart.products.find((item) => item.id === productId);
+    if (inCart) return thunkAPI.rejectWithValue("Product already in cart");
 
-    const { product } = await getProductData(productId, ["id", "inStock", "name", "brand", "gallery"]);
+    const { product } = await getProductData(productId, [
+      "id",
+      "inStock",
+      "name",
+      "brand",
+      "gallery",
+    ]);
     return {
       ...product,
       amount: 1,
@@ -35,16 +45,28 @@ export const fetchAndAddToCart = createAsyncThunk(
 export const fetchProductData = createAsyncThunk(
   "store/getProduct",
   async (productId, thunkAPI) => {
-    const inCart = thunkAPI.getState().cart.products.find((item) => item.id === productId)
+    const inCart = thunkAPI
+      .getState()
+      .cart.products.find((item) => item.id === productId);
     if (inCart) {
-      const { product: product } = await getProductData(productId, ["inStock", "description"]);
+      const { product: product } = await getProductData(productId, [
+        "inStock",
+        "description",
+      ]);
       return {
-        ...inCart, 
-        description: product.description
-      }
+        ...inCart,
+        description: product.description,
+      };
     }
 
-    const { product: product } = await getProductData(productId, ["id", "inStock", "name", "brand", "gallery", "description"]);
+    const { product: product } = await getProductData(productId, [
+      "id",
+      "inStock",
+      "name",
+      "brand",
+      "gallery",
+      "description",
+    ]);
     return {
       ...product,
       attributes: product.attributes.map((att) => ({
@@ -52,39 +74,60 @@ export const fetchProductData = createAsyncThunk(
         selectedAttr: att.items[0].id,
       })),
     };
-  });
+  }
+);
 
 const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
     addToCart: (state) => {
-      const product = state.productViewData;
+      const newProduct = state.productViewData;
+
+      const similarProducts = state.products.filter(
+        (product) => product.productId === newProduct.id
+      );
+
+      let productId;
+      if (similarProducts.length === 0) productId = `${newProduct.id}-0`;
+      else
+        productId = `${newProduct.id}-${
+          parseInt(similarProducts.at(-1).id.split("-").at(-1)) + 1
+        }`;
+
       return {
         ...state,
-        products: [...state.products, {...product, amount: 1 } ],
-      }
+        products: [
+          ...state.products,
+          {
+            ...newProduct,
+            productId: newProduct.id,
+            id: productId,
+            amount: 1,
+          },
+        ],
+      };
     },
 
     selectAttribute: (state, action) => {
       const product = state.productViewData;
-      const {productId, attrId, value} = action.payload;
+      const { productId, attrId, value } = action.payload;
 
       const selectAttr = (item) => {
-        if (item.id !== productId) return item 
-        return { 
+        if (item.id !== productId) return item;
+        return {
           ...item,
           attributes: item.attributes.map((att) => {
-            if (attrId === att.id) return { ...att, selectedAttr: value }
+            if (attrId === att.id) return { ...att, selectedAttr: value };
             return att;
-          })
-        }
-      }
+          }),
+        };
+      };
 
-      const products = state.products.map(selectAttr)
-      const productViewData = selectAttr(product)
+      const products = state.products.map(selectAttr);
+      const productViewData = selectAttr(product);
 
-      return { ...state, products, productViewData, };
+      return { ...state, products, productViewData };
     },
 
     increaseProductAmmount: (state, action) => {
@@ -98,17 +141,22 @@ const cartSlice = createSlice({
       if (product.amount > 1) {
         product.amount -= 1;
       } else {
-        return { 
+        return {
           ...state,
-          products: state.products.filter((item) => item.id !== productId) }
+          products: state.products.filter((item) => item.id !== productId),
+        };
       }
     },
 
+    /* FIXME: Remove the funciton */
     removeFromCart: (state, action) => {
-      return { 
+      return {
         ...state,
-        products: state.products.filter((item) => item.id !== action.payload.productId) }
-    }
+        products: state.products.filter(
+          (item) => item.id !== action.payload.productId
+        ),
+      };
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -132,7 +180,7 @@ const cartSlice = createSlice({
       }))
       .addCase(fetchProductData.fulfilled, (state, action) => ({
         ...state,
-        productViewData: { 
+        productViewData: {
           ...action.payload,
           status: "succeeded",
           error: null,
@@ -140,7 +188,7 @@ const cartSlice = createSlice({
       }))
       .addCase(fetchProductData.pending, (state) => ({
         ...state,
-        productViewData: { 
+        productViewData: {
           id: null,
           status: "loading",
           error: null,
@@ -148,7 +196,7 @@ const cartSlice = createSlice({
       }))
       .addCase(fetchProductData.rejected, (state, action) => ({
         ...state,
-        productViewData: { 
+        productViewData: {
           id: null,
           status: "failed",
           error: action.error,
@@ -159,10 +207,16 @@ const cartSlice = createSlice({
 
 export const checkProductSelector = createSelector(
   [(state) => state.products, (_, productId) => productId],
-  (products, productId) => products.find((item) => item.id === productId) !== undefined
-)
+  (products, productId) =>
+    products.find((item) => item.id === productId) !== undefined
+);
 
-export const { increaseProductAmmount, addToCart, selectAttribute, decreaseProductAmmount, removeFromCart } =
-  cartSlice.actions;
+export const {
+  increaseProductAmmount,
+  addToCart,
+  selectAttribute,
+  decreaseProductAmmount,
+  removeFromCart,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;
