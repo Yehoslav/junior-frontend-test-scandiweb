@@ -41,26 +41,26 @@ class ProductCard extends Component {
 
     return (
       <div className="card">
-        <div className="image">
-          <img src={gallery[0] || placeholder} alt={brand + name} />
-          {
-          ( btnAction === "OUT OF STOCK")
-            ? (<div className="f-30 fp">OUT OF STOCK</div>)
-            : ""
-          }
-        </div>
+        <Link to={linkPath} className="card-link">
+          <div className="image">
+            <img src={gallery[0] || placeholder} alt={brand + name} />
+            {
+            ( btnAction === "OUT OF STOCK")
+              ? (<div className="f-30 fp">OUT OF STOCK</div>)
+              : ""
+            }
+          </div>
 
-        <button onClick={onCartClick} className={btnClass(btnAction)}>
-          <CartIcon />
-        </button>
+          <button onClick={onCartClick} className={btnClass(btnAction)}>
+            <CartIcon />
+          </button>
 
-        <Link to={linkPath} className="fp-l link">
-          {brand} {name}
+            {brand} {name}
+
+          <div className="fp-m">
+            {symbol} {amount}
+          </div>
         </Link>
-
-        <div className="fp-m">
-          {symbol} {amount}
-        </div>
       </div>
     );
   }

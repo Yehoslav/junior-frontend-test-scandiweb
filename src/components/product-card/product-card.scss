@@ -2,9 +2,15 @@
   background-color: white;
   width: 386px;
   height: 444px;
-  padding: 16px;
   position: relative;
   line-height: 160%;
+
+  &-link {
+    padding: 16px;
+    display: block;
+    text-decoration: none;
+    color: var(--black);
+  }
 
   &:hover {
     box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
