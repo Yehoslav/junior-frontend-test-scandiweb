@@ -2,15 +2,10 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  gap: 103px 40px;
 }
 
 
-
-@media screen and (max-width: 1300px) {
-  .cards-wraper {
-    justify-content: space-between;
-  }
-}
 
 @media screen and (max-width: 813px) {
   .cards-wraper {

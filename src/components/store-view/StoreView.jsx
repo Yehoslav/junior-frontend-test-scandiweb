@@ -96,7 +96,7 @@ class StoreView extends Component {
     return (
       <div>
         <p className="mt80 mb80 fp f-42 t__cap">{category}</p>
-        <div className="row-g12 cards-wraper">{productCards}</div>
+        <div className="row cards-wraper">{productCards}</div>
       </div>
     );
   }
