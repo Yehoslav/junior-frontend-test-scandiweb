@@ -7,7 +7,6 @@ import withRouter from "../../utils/withRouter";
 
 import {
   selectAttribute,
-  removeFromCart,
   checkProductSelector,
   fetchProductData as getPD,
   addToCart as addTC,
@@ -42,12 +41,13 @@ class ProductView extends Component {
       inCart,
       addToCart,
       currency,
-      removeProduct,
       selectAttr,
       products,
     } = this.props;
 
-    const { brand, inStock, name, prices, attributes, gallery, id } = inCart(product.id)
+    const { brand, inStock, name, prices, attributes, gallery, id } = inCart(
+      product.id
+    )
       ? products.find((item) => item.id === product.id)
       : product;
 
@@ -71,25 +71,17 @@ class ProductView extends Component {
       />
     ));
 
-    const btnProps = ( () => {
-      if (!inStock) return {
-        type: "inactive",
-        onClick: () => console.log(inStock),
-        value: "out of stock",
-      }
-
-      if (inCart(product.id)) return {
-        type: "secondary",
-        onClick: () => removeProduct(product.id),
-        value: "remove from cart",
-      }
-
-      return {
-        type: "primary",
-        onClick: addToCart,
-        value: "add to cart",
-      };
-    })()
+    const btnProps = !inStock
+      ? {
+          type: "inactive",
+          onClick: () => console.log(inStock),
+          value: "out of stock",
+        }
+      : {
+          type: "primary",
+          onClick: addToCart,
+          value: "add to cart",
+        };
 
     const button = (
       <Button {...btnProps} size="big" classes="mt40 f-16 t__upper">
@@ -97,21 +89,21 @@ class ProductView extends Component {
       </Button>
     );
 
+    const imgButtons = gallery.map((img, count) => (
+      <ImageButton
+        key={id + `-${count}`}
+        onClick={() => this.selectImage(img)}
+        selected={focusImg === img}
+        className="prd-thumb"
+        size="small"
+        value={img}
+        alt={brand + name + ` preview ${count}`}
+      />
+    ));
+
     const images = (
       <div className="row">
-        <div className="col-g8 preview">
-          {gallery.map((img, count) => (
-            <ImageButton
-              key={id + `-${count}`}
-              onClick={() => this.selectImage(img)}
-              selected={focusImg === img}
-              className="prd-thumb"
-              size="small"
-              value={img}
-              alt={brand + name + ` preview ${count}`}
-            />
-          ))}
-        </div>
+        <div className="col-g8 preview">{imgButtons}</div>
         <div className="pl25">
           <div className="prod-img">
             <img src={focusImg} alt={brand + name + " preview"} />
@@ -160,11 +152,13 @@ class ProductView extends Component {
 class View extends Component {
   state = {
     fullDescription: false,
-  }
+  };
 
   showDescription = () => {
-    this.setState(({fullDescription}) => ({fullDescription: !fullDescription}))
-  }
+    this.setState(({ fullDescription }) => ({
+      fullDescription: !fullDescription,
+    }));
+  };
 
   render() {
     const {
@@ -178,9 +172,8 @@ class View extends Component {
       description,
     } = this.props;
 
-    const showDescription = description.length > 560
-      ? this.state.fullDescription 
-      : true
+    const showDescription =
+      description.length > 560 ? this.state.fullDescription : true;
 
     return (
       <div className="row-g8 wrap pt80">
@@ -196,36 +189,35 @@ class View extends Component {
           </div>
           <div>
             <div
-              style={showDescription
-                ? {
-                    maxHeight: "fit-content",
-                    overflowY: "hidden"
-                  }
-                : {
-                    maxHeight: 300,
-                    overflowY: "hidden"
-                  }}
+              style={
+                showDescription
+                  ? {
+                      maxHeight: "fit-content",
+                      overflowY: "hidden",
+                    }
+                  : {
+                      maxHeight: 300,
+                      overflowY: "hidden",
+                    }
+              }
               className="f-16 mt30"
               dangerouslySetInnerHTML={{ __html: description }}
-            >
-            </div>
-            { (description.length > 560)
-            ? <button 
-              className="t__upper pt10 pb5 f-14"
-              style={{
-                border: "none",
-                backgroundColor: "white",
-                width: "100%",}}
-              onClick={this.showDescription}
-            >
-              {
-              showDescription
-                ? "Show less"
-                : "Show more"
-            }
-            </button>
-          : ""
-          }
+            ></div>
+            {description.length > 560 ? (
+              <button
+                className="t__upper pt10 pb5 f-14"
+                style={{
+                  border: "none",
+                  backgroundColor: "white",
+                  width: "100%",
+                }}
+                onClick={this.showDescription}
+              >
+                {showDescription ? "Show less" : "Show more"}
+              </button>
+            ) : (
+              ""
+            )}
           </div>
           {button}
         </div>
@@ -291,7 +283,6 @@ const mapDispatchToProps = (dispatch) => {
     selectAttr: (attrId, value) => dispatch(selectAttribute(attrId, value)),
     getProductData: (productId) => dispatch(getPD(productId)),
     addToCart: () => dispatch(addTC()),
-    removeProduct: (productId) => dispatch(removeFromCart({ productId })),
   };
 };
 
