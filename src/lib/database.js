@@ -1,11 +1,18 @@
 import {
   client,
-  // CombinedField,
   Field,
   Query,
 } from "@tilework/opus";
 
 client.setEndpoint("http://localhost:4000");
+
+export const getCategories = async () => {
+  const query = new Query("categories", true)
+    .addField("name")
+
+  const { categories } = await client.post(query);
+  return categories.map(({name}) => name)
+}
 
 export const getCurrencies = async () => {
   const myQuery = new Query("currencies", true)
