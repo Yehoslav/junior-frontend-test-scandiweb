@@ -13,29 +13,27 @@ import "./mini-cart.scss";
 import { Link } from "react-router-dom";
 
 class MiniCart extends Component {
-  render() {
-    const {
-      symbol,
-      products,
-      onToggleDropdown,
-    } = this.props;
-
+  createCartItems = (product) => {
     const { increaseAmount, decreaseAmount } = this.props;
+
+    return (
+      <CartItem
+        key={product.id}
+        {...product}
+        price={product.prices.find((price) => price.currency.symbol === symbol)}
+        onIncrease={() => increaseAmount(product.id)}
+        onDecrease={() => decreaseAmount(product.id)}
+        inMiniCart={true}
+      />
+    );
+  };
+
+  render() {
+    const { symbol, products, onToggleDropdown } = this.props;
 
     const items =
       products.length > 0 ? (
-        products.map((item) => (
-          <CartItem
-            key={item.id}
-            { ...item}
-            price={item.prices.find(
-              (price) => price.currency.symbol === symbol
-            )}
-            onIncrease={() => increaseAmount(item.id)}
-            onDecrease={() => decreaseAmount(item.id)}
-            inMiniCart={true}
-          />
-        ))
+        products.map(this.createCartItems)
       ) : (
         <h3>No items</h3>
       );
@@ -65,10 +63,12 @@ class MiniCart extends Component {
             </Link>
             <button
               onClick={() => {
-                alert(`Order placed: ${products.reduce((previous, current) => {
-                return previous + current.amount;
-              }, 0)} products.`)
-                onToggleDropdown("showMiniCart")
+                alert(
+                  `Order placed: ${products.reduce((previous, current) => {
+                    return previous + current.amount;
+                  }, 0)} products.`
+                );
+                onToggleDropdown("showMiniCart");
               }}
               style={{ width: 140, height: 43 }}
               className="btn btn__pri t__upper f-14 fp-sb"
