@@ -24,12 +24,8 @@ class ProductView extends Component {
   };
 
   componentDidMount = () => {
-    const {
-      getProductData,
-      router: {
-        params: { productId },
-      },
-    } = this.props;
+    const { getProductData } = this.props;
+    const { productId } = this.props.router.params;
 
     getProductData(productId);
   };

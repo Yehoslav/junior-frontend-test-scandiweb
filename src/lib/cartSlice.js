@@ -66,7 +66,7 @@ export const fetchProductData = createAsyncThunk(
       .getState()
       .cart.products.find((item) => item.id === productId);
     if (inCart) {
-      const { product: product } = await getProductData(productId, [
+      const { product } = await getProductData(productId, [
         "inStock",
         "description",
       ]);
@@ -76,7 +76,7 @@ export const fetchProductData = createAsyncThunk(
       };
     }
 
-    const { product: product } = await getProductData(productId, [
+    const { product } = await getProductData(productId, [
       "id",
       "inStock",
       "name",
@@ -84,6 +84,7 @@ export const fetchProductData = createAsyncThunk(
       "gallery",
       "description",
     ]);
+
     return {
       ...product,
       attributes: product.attributes.map((att) => ({
