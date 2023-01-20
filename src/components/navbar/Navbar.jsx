@@ -11,7 +11,7 @@ import logo from "../../res/img/logo.svg";
 class Navbar extends Component {
   state = {
     activeDropdown: "",
-    categories: []
+    categories: [],
   };
 
   toggleDropdown = (prop) => {
@@ -22,8 +22,8 @@ class Navbar extends Component {
 
   componentDidMount = async () => {
     const categories = await getCategories();
-    this.setState({categories})
-  }
+    this.setState({ categories });
+  };
 
   render() {
     const { activeDropdown, categories } = this.state;
