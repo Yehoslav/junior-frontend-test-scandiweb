@@ -36,14 +36,8 @@ class ProductView extends Component {
 
   createView = () => {
     let { focusImg } = this.state;
-    const {
-      product,
-      inCart,
-      addToCart,
-      currency,
-      selectAttr,
-      products,
-    } = this.props;
+    const { product, inCart, addToCart, currency, selectAttr, products } =
+      this.props;
 
     const { brand, inStock, name, prices, attributes, gallery, id } = inCart(
       product.id
@@ -54,6 +48,7 @@ class ProductView extends Component {
     // HACK: There should be a better method to set a default focused image
     if (
       focusImg === placeholder ||
+      // A check if the image is not from previous accessed products
       gallery.filter((item) => item === focusImg).length === 0
     )
       focusImg = gallery[0];
@@ -74,7 +69,9 @@ class ProductView extends Component {
     const btnProps = !inStock
       ? {
           type: "inactive",
-          onClick: () => console.log(inStock),
+          onClick: () => {
+            alert("Product out of stock.");
+          },
           value: "out of stock",
         }
       : {

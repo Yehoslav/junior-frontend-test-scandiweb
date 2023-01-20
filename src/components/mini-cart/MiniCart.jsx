@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 
 class MiniCart extends Component {
   createCartItems = (product) => {
-    const { increaseAmount, decreaseAmount } = this.props;
+    const { symbol, increaseAmount, decreaseAmount } = this.props;
 
     return (
       <CartItem
