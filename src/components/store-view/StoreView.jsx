@@ -17,12 +17,8 @@ class StoreView extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      router: {
-        params: { category },
-      },
-      getProducts,
-    } = this.props;
+    const {category} = this.props.router.params;
+    const { getProducts } = this.props;
     const prevCategory = prevProps.router.params.category;
 
     if (category !== prevCategory) getProducts(category);
@@ -34,7 +30,7 @@ class StoreView extends Component {
     const getAction = (productId, inStock) => {
       if (!inStock)
         return {
-          onCartClick: () => console.log("Out of stock notification!"),
+          onCartClick: () => alert("Out of stock!"),
           btnAction: "OUT OF STOCK",
         };
       return {
@@ -72,7 +68,7 @@ class StoreView extends Component {
 
       case "failed":
         console.error(error);
-        return <h3>An error occured when fetching data.</h3>;
+        return <h3>An error occured when fetching products.</h3>;
 
       default:
         return <h3>{status}</h3>;
