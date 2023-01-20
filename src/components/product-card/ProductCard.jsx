@@ -44,16 +44,17 @@ class ProductCard extends Component {
         <Link to={linkPath} className="card-link">
           <div className="image">
             <img src={gallery[0] || placeholder} alt={brand + name} />
-            {btnAction === "OUT OF STOCK" ? (
-              <div className="f-30 fp">OUT OF STOCK</div>
-            ) : (
-              ""
-            )}
           </div>
           {brand} {name}
           <div className="fp-m">
-            {symbol}{amount}
+            {symbol}
+            {amount}
           </div>
+          {btnAction === "OUT OF STOCK" ? (
+            <div className="f-30 fp overlay">OUT OF STOCK</div>
+          ) : (
+            ""
+          )}
         </Link>
         <button onClick={onCartClick} className={btnClass(btnAction)}>
           <CartIcon />
