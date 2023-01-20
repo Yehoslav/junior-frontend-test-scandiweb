@@ -11,7 +11,7 @@ export const fetchProducts = createAsyncThunk(
   "store/getProducts",
   async (category) => {
     const {
-      category: { products: products },
+      category: { products },
     } = await getProductList(category);
     return products;
   }
